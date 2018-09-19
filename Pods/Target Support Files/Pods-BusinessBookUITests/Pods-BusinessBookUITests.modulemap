@@ -1,0 +1,6 @@
+framework module Pods_BusinessBookUITests {
+  umbrella header "Pods-BusinessBookUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
