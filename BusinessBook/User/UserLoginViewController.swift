@@ -11,6 +11,7 @@ import Firebase
 import GoogleSignIn
 import SDWebImage
 import FBSDKLoginKit
+import Alamofire
 class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
 
     @IBOutlet weak var lineView: UIView!
@@ -21,8 +22,12 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var loginGoogleBtn: UIButton!
     @IBOutlet weak var loginFacebookBtn: UIButton!
+    var email:String?
+    var name:String?
+    var id:String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = UIColor.white
            GIDSignIn.sharedInstance().uiDelegate = self
@@ -55,7 +60,14 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
                 // do something with your image
             }
             if let name = dict["name"] as? String{
-               nameLBL.text = name 
+               nameLBL.text = name
+                self.name = name 
+            }
+            if let email = dict["email"] as? String{
+                self.email = email 
+            }
+            if let id = dict["id"] as? String{
+                self.id = id
             }
         }
     }
@@ -76,7 +88,7 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
             }
             
             let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-            
+            print("social token \(accessToken.tokenString)")
             // Perform login by calling Firebase APIs
             Auth.auth().signIn(with: credential, completion: { (user, error) in
                 if let error = error {
@@ -113,7 +125,21 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
                     }
                     if let name = userInfo["name"] as? String {
                         self.nameLBL.text = name
+                        self.name = name
+                        
+                        if let id  = userInfo["id"] as? String{
+                            print("id\(id)")
+                            self.id = id
+                           
+                            if let email = userInfo["email"] as? String {
+                               self.email = email
+                            }
+                           
+                           
+                            
+                        }
                     }
+                    
                 })
                 // Present the main view
                 //                if let viewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") {
@@ -134,5 +160,61 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
     }
     
     @IBAction func continueBtnAction(_ sender: Any) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        var parameter :[String:AnyObject] = [String:AnyObject]()
+        parameter["name"] =  name as AnyObject?
+        parameter["social_id"] = id as AnyObject?
+        if email != nil  {
+            parameter["email"] = email as AnyObject?
+        }
+        parameter["token"] = "token" as  AnyObject?
+        let url = Constant.baseURL + Constant.URISearcherlogin
+        Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
+            .responseJSON { response in
+                print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                switch response.result {
+                case .success:
+                    if let datares = response.result.value as? [String:Any]{
+                        if let flag = datares["flag"] as? String {
+                            if flag == "0" {
+                                
+                                let alert = UIAlertController(title: "", message: "Internal error", preferredStyle: UIAlertControllerStyle.alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                                
+                            }
+                        }
+                        if let data  = datares["data"] as? [String:Any]{
+                            if let id = data["id"] as? String {
+                                UserDefaults.standard.set(id, forKey: "user_id")
+                                let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "InterestPopupViewController") as! InterestPopupViewController
+                                self.addChildViewController(popupVC)
+                                popupVC.view.frame = self.view.frame
+                                self.view.addSubview(popupVC.view)
+                            }
+                            if let name = data["name"] as? String{
+                                print(name)
+                            }
+                            
+                        }
+                        
+                    }
+                case .failure(let error):
+                    print(error)
+                    
+                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+        }
+        
+
+
+
+       
     }
 }

@@ -311,7 +311,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
-            Alamofire.request("https://pencilnetwork.com/bussines_book/api/categories", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            Alamofire.request(Constant.baseURL + "categories", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
                     //                    self.activityIndicator.stopAnimating()
@@ -388,7 +388,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
-            Alamofire.request("https://pencilnetwork.com/bussines_book/api/files/\(imageId)", method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            Alamofire.request(Constant.baseURL + "files/\(imageId)", method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
                     switch response.result {
@@ -446,7 +446,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                 multipartFormData.append(cameraImgData, withName:"image", fileName:"image", mimeType: "image/JPEG")
               
         },
-            to: "https://pencilnetwork.com/bussines_book/api/files/\(imageId)",
+            to: Constant.baseURL + "files/\(imageId)",
             method:.post,
             encodingCompletion: { encodingResult in
                 //                self.activityindicator.isHidden = true
@@ -594,7 +594,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
           }else{
               categId =  "\(oldCategory.id!)"
         }
-        
+        //https://pencilnetwork.com/bussines_book/api/
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -621,7 +621,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                 
                 
         },
-            to: "https://pencilnetwork.com/bussines_book/api/bussines/\(busineeId)",
+            to: Constant.baseURL + "bussines/\(busineeId)",
             method:.post,
             encodingCompletion: { encodingResult in
                 self.activityIndicator.isHidden = true
@@ -659,7 +659,8 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
 //        self.activityIndicator.isHidden = false
 //        self.activityIndicator.startAnimating()
          var userid = UserDefaults.standard.value(forKey: "id") as? Int
-        Alamofire.request("https://pencilnetwork.com/bussines_book/api/bussines/\(userid!)", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+         var url = Constant.baseURL + Constant.URIGetBusiness
+        Alamofire.request(url + "\(userid!)", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
 //                self.activityIndicator.stopAnimating()

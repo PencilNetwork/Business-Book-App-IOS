@@ -165,11 +165,12 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
     }
   
     func getData(){
-        //https://pencilnetwork.com/bussines_book/api/bussines/{bussines}
+        //"https://pencilnetwork.com/bussines_book/api/bussines/\(userid!)"
              self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
         var userid = UserDefaults.standard.value(forKey: "id") as? Int
-        Alamofire.request("https://pencilnetwork.com/bussines_book/api/bussines/\(userid!)", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+        var url = Constant.baseURL + Constant.URIGetBusiness
+        Alamofire.request(url + "\(userid!)", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
                 self.activityIndicator.stopAnimating()

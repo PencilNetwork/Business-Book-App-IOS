@@ -143,7 +143,8 @@ class LoginViewController: UIViewController {
         parameter["password"] = passwordTxt.text! as AnyObject?
        
         parameter["token"] = "token" as  AnyObject?
-        Alamofire.request("https://pencilnetwork.com/bussines_book/api/owner/login", method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
+        let url = Constant.baseURL + Constant.urILogin
+        Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
                 self.activityIndicator.stopAnimating()

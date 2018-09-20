@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import GoogleMaps
 import GooglePlaces
 import GoogleSignIn
+import Alamofire
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnimationDelegate{
  
@@ -71,18 +72,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
                 print("failed to create a firbase user with google account",error)
                 return
             }
+             guard let uid = user?.userID else {return}
             // User is signed in
             if user.profile.hasImage
             {
                 
                 let pic = user.profile.imageURL(withDimension: 100)
-                let imageDataDict:[String: Any] = ["image": pic! ,"name": user.profile.name!]
+                let imageDataDict:[String: Any] = ["image": pic! ,"name": user.profile.name!,"email": user.profile.email,"id":uid]
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "putName"), object: nil, userInfo: imageDataDict)
                 
                 print(pic)
             }
-            guard let uid = user?.userID else {return}
+           
             print("successfully logged into firbase with google",user?.userID)
+          
+          
+            
+                 let idToken = user.authentication.idToken 
             //            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             //            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
             //            self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -95,11 +101,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
         // Perform any operations when the user disconnects from app here.
         // ...
     }
+    @available(iOS 9.0, *)    // 9 or above
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let facebookDidHandle = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-        let googleDidHandle = GIDSignIn.sharedInstance().handle(url,
-                                                                sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-                                                                annotation: [:])
+     
+            let googleDidHandle = GIDSignIn.sharedInstance().handle(url,
+                                                                    sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                                    annotation: [:])
+   
+        return googleDidHandle || facebookDidHandle
+    }
+    //for iOS 8, check availability
+    @available(iOS, introduced : 8.0, deprecated: 9.0)
+    func application(application: UIApplication,openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        let facebookDidHandle = FBSDKApplicationDelegate.sharedInstance().application(application, open: url as URL!, sourceApplication: sourceApplication, annotation: annotation)
+        let googleDidHandle = GIDSignIn.sharedInstance().handle(url as URL!, sourceApplication: sourceApplication!, annotation: annotation)
         return googleDidHandle || facebookDidHandle
     }
     
