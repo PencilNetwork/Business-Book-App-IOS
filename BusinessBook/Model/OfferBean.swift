@@ -20,4 +20,8 @@ class OfferBean{
     init(){
         
     }
+    init(image:UIImage,caption:String){
+        self.image = image
+        self.caption = caption
+    }
 }

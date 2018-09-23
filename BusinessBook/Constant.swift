@@ -13,4 +13,6 @@ class Constant {
     public static var URIGetBusiness = "bussines/"
     public static var URISearcherlogin = "searchers/login"
     public static var URICateg = "categories"
+    public static var URIInterests = "interests"
+    public static var URIDefaultSearch = "search/default_search/"
 }

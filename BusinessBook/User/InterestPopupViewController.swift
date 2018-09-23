@@ -32,7 +32,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
     @IBOutlet weak var searchBar: UISearchBar!
     var category:[Interest] = []
     var city :[Interest] = []
-    var region:[Interest] = [Interest(name: "Fashion"),Interest(name: "food"),Interest(name: "Sport"),Interest(name: "Hospital"),Interest(name: "Medical"),Interest(name: "Restaurants"),Interest(name: "Toys"),Interest(name: "others"),Interest(name: "Bags"),Interest(name: "Cafes")]
+    var region:[Interest] = [Interest(name: "Fashion",id:1),Interest(name: "food",id:2),Interest(name: "Sport",id:3),Interest(name: "Hospital",id:4),Interest(name: "Medical",id:5),Interest(name: "Restaurants",id:6),Interest(name: "Toys",id:7),Interest(name: "others",id:8),Interest(name: "Bags",id:9),Interest(name: "Cafes",id:10)]
     var filterData1:[Interest] = []
     var isSearching1 = false
     var filterData2:[Interest] = []
@@ -79,11 +79,11 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
 
 //    override func viewWillLayoutSubviews() {
 //        super.updateViewConstraints()
-//        //         cerealsHeight.constant = cerealsTableView.contentSize.height
-//        categConstraintHeight.constant = CGFloat(50 * (category.count/3))
+
 //    }
-    
+    //MARK:IBAction
     @IBAction func confirmbtnAction(_ sender: Any) {
+        sendData()
     }
     //MARK: collectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -214,6 +214,203 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
         regionCollectionView.reloadData()
     }
     //MARK:Function
+    func sendCondition()->Bool {
+        var validFlag = true
+        var countcateg = 0
+         if isSearching1 {
+            for item in filterData1{
+                if item.checkbox == true{
+                    countcateg = countcateg + 1
+                }
+            }
+         }else{
+            for item in category{
+                if item.checkbox == true{
+                    countcateg = countcateg + 1
+                }
+            }
+        }
+       
+        if countcateg > 0 && countcateg <= 7 {
+        }else{
+            validFlag = false
+            if countcateg == 0 {
+             let alert = UIAlertController(title: "", message: "Select your category" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+           }else{ //> 7
+             let alert = UIAlertController(title: "", message: "Maxium number of selected category 7 " , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+          }
+    
+      }
+        //city
+        var countCity = 0
+        if isSearching2{
+            for item  in filterData2{
+                if item.checkbox == true{
+                    countCity = countCity + 1
+                }
+            }
+        }else{
+            for item  in city{
+                if item.checkbox == true{
+                    countCity = countCity + 1
+                }
+            }
+        }
+        
+        if countCity == 0 || countCity > 1{
+            validFlag = false
+            if countCity == 0 {
+                let alert = UIAlertController(title: "", message: "Select your city " , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                let alert = UIAlertController(title: "", message: "Maxium number of selected City 1 " , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+          
+        }
+        
+        //region
+        var countRegion = 0
+         if issearching3 {
+            for item in filterData3{
+                if item.checkbox == true {
+                    countRegion = countRegion + 1
+                }
+            }
+         }else{
+            for item in region{
+                if item.checkbox == true {
+                    countRegion = countRegion + 1
+                }
+            }
+        }
+        
+        if countRegion == 0 || countRegion > 3 {
+            validFlag = false
+            if countRegion == 0{
+                let alert = UIAlertController(title: "", message: "Select your Region " , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                let alert = UIAlertController(title: "", message: "Maxium number of selected Region 3 " , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        return validFlag
+    }
+    func sendData(){
+        let valid = sendCondition()
+        if valid == true {
+          activityIndicator.isHidden = false
+          activityIndicator.startAnimating()
+          let network = Network()
+          let networkExist = network.isConnectedToNetwork()
+            let user_id = UserDefaults.standard.value(forKey: "user_id") as? String
+          var parameter :[String:AnyObject] = [String:AnyObject]()
+        parameter["searcher_id"] = user_id as? AnyObject
+        parameter["city"] = "1" as? AnyObject
+            var categString = ""
+             if isSearching1 {
+                for i in 0..<filterData1.count{
+                    if filterData1[i].checkbox == true{
+                        if i ==  filterData1.count - 1{
+                            categString = categString + "\(filterData1[i].id)"
+                            
+                        }else{
+                            categString = categString + "\(filterData1[i].id)" + ","
+                        }
+                        
+                    }
+                }
+              
+             }else{
+                for i in 0..<category.count{
+                    if category[i].checkbox == true{
+                        if i ==  category.count - 1{
+                            categString = categString + "\(category[i].id)"
+                            
+                        }else{
+                            categString = categString + "\(category[i].id)" + ","
+                        }
+                        
+                    }
+                }
+            }
+        parameter["categories"] = categString as? AnyObject
+            var regionString = ""
+            if issearching3 {
+                for i in 0..<filterData3.count{
+                    if filterData3[i].checkbox == true {
+                        if i == filterData3.count - 1 {
+                            regionString = regionString +  "\(filterData3[i].id)"
+                        }else{
+                            regionString = regionString +  "\(filterData3[i].id)"  + ","
+                        }
+                    }
+                }
+            }else{
+                for i in 0..<region.count{
+                    if region[i].checkbox == true {
+                        if i == region.count - 1 {
+                            regionString = regionString +  "\(region[i].id)"
+                        }else{
+                            regionString = regionString +  "\(region[i].id)"  + ","
+                        }
+                    }
+                }
+            }
+            
+            parameter["regoins"] = regionString as AnyObject
+        if networkExist == true {
+            let url = Constant.baseURL + Constant.URIInterests
+            Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
+                .responseJSON { response in
+                    print(response)
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    switch response.result {
+                    case .success:
+                        if let datares = response.result.value as? [String:Any]{
+                            if let flag = datares["flag"] as? String{
+                                if flag == "1"{
+                                    self.view.removeFromSuperview()
+                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as? UserHomeViewController
+                                    self.navigationController?.pushViewController(vc!, animated: true)
+                                }else{
+                                    let alert = UIAlertController(title: "", message: " fail" , preferredStyle: UIAlertControllerStyle.alert)
+                                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                            }
+                         
+                           
+                       
+                            
+                        }
+                    case .failure(let error):
+                        print(error)
+                        
+                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        }
+    }
     func getCategory(){
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
@@ -221,7 +418,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
-            var url = Constant.baseURL + Constant.URICateg
+            let url = Constant.baseURL + Constant.URICateg
             Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
@@ -243,7 +440,9 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                                     self.category.append(category)
                                 }
                               self.categCollectionView.reloadData()
-                                self.categConstraintHeight.constant = CGFloat(50 * (self.category.count/3))
+//                                self.categConstraintHeight.constant = CGFloat(50 * (self.category.count/3))
+                                self.categConstraintHeight.constant = self.categCollectionView.collectionViewLayout.collectionViewContentSize.height
+                                self.view.setNeedsLayout()
                             }
                             
                         }
@@ -288,12 +487,12 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
         }
     }
     func setStyle(){
-        chooseCategoryLBL.layer.masksToBounds = true
-        chooseFavRegionLBL.layer.masksToBounds = true
-        chooseFavouriteLBL.layer.masksToBounds = true
-        chooseCategoryLBL.layer.cornerRadius = 5
-        chooseFavouriteLBL.layer.cornerRadius = 5
-        chooseFavRegionLBL.layer.cornerRadius = 5
+//        chooseCategoryLBL.layer.masksToBounds = true
+//        chooseFavRegionLBL.layer.masksToBounds = true
+//        chooseFavouriteLBL.layer.masksToBounds = true
+//        chooseCategoryLBL.layer.cornerRadius = 5
+//        chooseFavouriteLBL.layer.cornerRadius = 5
+//        chooseFavRegionLBL.layer.cornerRadius = 5
 
     }
     func getCity(){

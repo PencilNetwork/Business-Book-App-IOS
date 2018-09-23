@@ -18,4 +18,8 @@ class Interest{
     init(){
         
     }
+    init(name:String,id:Int){
+     self.name = name
+        self.id = id
+    }
 }
