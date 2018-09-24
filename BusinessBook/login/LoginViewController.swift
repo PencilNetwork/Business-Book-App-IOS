@@ -162,17 +162,26 @@ class LoginViewController: UIViewController {
                             }
                         }
                         if let data  = datares["data"] as? [String:Any]{
-                            if let bussines = data["bussines"] as?[Dictionary<String,Any>]{
-                                if let id = bussines[0]["id"] as? Int{
-                                    UserDefaults.standard.setValue(id, forKey: "id")
-                                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "BusinessProfileViewController") as! BusinessProfileViewController
-                                    
-                                    self.navigationController?.pushViewController(viewController, animated: true)
-                                }
-                            }
                             if let owner_Id = data["owner_id"] as? Int {
                                 UserDefaults.standard.setValue(owner_Id, forKey: "ownerId")
                             }
+                            if let bussines = data["bussines"] as?[Dictionary<String,Any>]{
+                                if bussines.count > 0 {
+                                   if let id = bussines[0]["id"] as? Int{
+                                      UserDefaults.standard.setValue(id, forKey: "id")
+                                      let viewController = self.storyboard?.instantiateViewController(withIdentifier: "BusinessProfileViewController") as! BusinessProfileViewController
+                                    
+                                    self.navigationController?.pushViewController(viewController, animated: true)
+                                   }
+                                }else{
+                                    var ownerId = UserDefaults.standard.value(forKey: "ownerId") as! Int
+                                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as! RegisterViewController
+                                    viewController.id = ownerId
+                                   
+                                    self.navigationController?.pushViewController(viewController, animated: true)
+                                }
+                            }
+                           
                            
                         }
                         

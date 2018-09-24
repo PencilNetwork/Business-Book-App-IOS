@@ -15,15 +15,20 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
     @IBOutlet weak var collectionView: UICollectionView!
     var relatedList:[UIImage] = []
     var pickerController = UIImagePickerController()
+      var menuDel:menuDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
+          NotificationCenter.default.addObserver(self, selector: #selector(deletefiles(_:)), name: NSNotification.Name(rawValue: "deletefiles"), object: nil)
         // Do any additional setup after loading the view.
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("appear")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -74,6 +79,11 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
         return cell
     }
     //MARK:Function
+     @objc func deletefiles(_ notification: NSNotification){
+        relatedList = []
+        collectionView.reloadData()
+         defaultImg.isHidden = false
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         defaultImg.isHidden = true
         relatedList.append(info[UIImagePickerControllerEditedImage] as! UIImage)
@@ -104,18 +114,20 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
             to: "https://pencilnetwork.com/bussines_book/api/files/store",
             method:.post,
             encodingCompletion: { encodingResult in
-                self.activityIndicator.isHidden = true
-               self.activityIndicator.stopAnimating()
+               
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON{ response in
-                     
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         print(response)
 
                         if let datares = response.result.value as? [String:Any]{
                             if let flag = datares["flag"] as? String {
                                 if flag == "1"{
                                     self.showToast(message : " upload Successfully")
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "returnToBusiness"), object: nil, userInfo: nil)
+                                   
 //                                    let alert = UIAlertController(title: "", message: " upload Successfully" as! String, preferredStyle: UIAlertControllerStyle.alert)
 //                                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
 //                                    self.present(alert, animated: true, completion: nil)
@@ -134,7 +146,8 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
                     }
                 case .failure(let error):
                     print(error)
-
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     let alert = UIAlertController(title: "", message: error as! String, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)

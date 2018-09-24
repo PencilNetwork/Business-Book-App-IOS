@@ -23,6 +23,9 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
         self.activityIndicator.isHidden = true
         
         hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateOfferViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateOfferViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(deleteCreateOffer(_:)), name: NSNotification.Name(rawValue: "deleteCreateOffer"), object: nil)
         // Do any additional setup after loading the view.
     }
 
@@ -61,7 +64,7 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
         }
     }
     
-   
+    //MARK:Function
    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         flag = true
@@ -79,12 +82,7 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
     }
     func checkTxtField()->Bool{
         var validFlag = true
-        if caption.text == "" {
-            validFlag = false
-            let alert = UIAlertController(title: "alert", message: "You should enter caption", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
+      
         if flag == false{
             validFlag = false
             let alert = UIAlertController(title: "alert", message: "You should enter offer image", preferredStyle: UIAlertControllerStyle.alert)
@@ -98,13 +96,21 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
         self.activityIndicator.startAnimating()
         let cameraImgData = UIImageJPEGRepresentation(self.defaultImg.image!, 0.5)!
 //        let bussines_id = "\()"
-        var captiontxt = caption.text!
+        var captiontxt = ""
+        if self.caption.text != ""{
+             captiontxt = self.caption.text!
+            
+        }
         var busineeId = UserDefaults.standard.value(forKey: "id") as! Int
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
                 multipartFormData.append((("\(busineeId)".data(using: .utf8)!)), withName: "bussines_id")
-                multipartFormData.append(((captiontxt).data(using: .utf8)!), withName: "caption")
+                if captiontxt != ""{
+                   
+                    multipartFormData.append(((captiontxt).data(using: .utf8)!), withName: "caption")
+                }
+                
                 multipartFormData.append(cameraImgData, withName:"image", fileName:"image", mimeType: "image/JPEG")
             
                 
@@ -113,20 +119,21 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
             to: "https://pencilnetwork.com/bussines_book/api/offers",
             method:.post,
             encodingCompletion: { encodingResult in
-                self.activityIndicator.isHidden = true
-                self.activityIndicator.stopAnimating()
+               
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON{ response in
                         //   self.activityIndicator.stopAnimating()
                         print(response)
-                        
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         if let data = response.result.value as? [String:Any]{
                             if let flag = data["flag"] as? String{
                                 if flag == "0"{
                                      self.showToast(message : " create fail")
                                 }else{
                                      self.showToast(message : " create Success")
+                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "returnToBusiness"), object: nil, userInfo: nil)
                                 }
                             }
                            
@@ -134,7 +141,8 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
                     }
                 case .failure(let error):
                     print(error)
-                    
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     let alert = UIAlertController(title: "", message: error as! String, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
@@ -143,5 +151,26 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
         }
         )
         
+    }
+      @objc func deleteCreateOffer(_ notification: NSNotification){
+        defaultImg.image = UIImage(named:"car3.png")
+        self.caption.text = ""
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+           // if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+          
+            //}
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+          //  if self.view.frame.origin.y != 0{
+//                self.view.frame.origin.y += keyboardSize.height
+             self.view.frame.origin.y  = 0
+           // }
+        }
     }
 }

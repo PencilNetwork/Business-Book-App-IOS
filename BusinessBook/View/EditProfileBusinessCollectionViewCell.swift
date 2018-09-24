@@ -14,7 +14,7 @@ class EditProfileBusinessCollectionViewCell: UICollectionViewCell {
     var imageId:Int?
     @IBOutlet weak var photo: UIImageView!
     
-    @IBOutlet weak var editfileBtn: UIButton!
+    
     @IBAction func addBtnAction(_ sender: Any) {
         changeImageDelegate?.addImage(index: index!)
     }
@@ -23,8 +23,5 @@ class EditProfileBusinessCollectionViewCell: UICollectionViewCell {
         changeImageDelegate?.minusImage(index: index!,imageId:imageId!)
     }
     
-    @IBAction func editFileAction(_ sender: Any) {
-        
-        changeImageDelegate?.editImage(index: index!,imageId:imageId!)
-    }
+   
 }

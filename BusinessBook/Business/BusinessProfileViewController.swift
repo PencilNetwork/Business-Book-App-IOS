@@ -36,6 +36,7 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
         self.view.addGestureRecognizer(swipeRight)
         self.view.addGestureRecognizer(swipeLeft)
         // Do any additional setup after loading the view.
+         NotificationCenter.default.addObserver(self, selector: #selector(returnToBusiness(_:)), name: NSNotification.Name(rawValue: "returnToBusiness"), object: nil)
     }
         //MARK:Function
     @objc func respondToGesture(gesture:UISwipeGestureRecognizer){
@@ -63,6 +64,15 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
             closeMenu()
         }
     }
+      @objc func returnToBusiness(_ notification: NSNotification){
+        view1.isHidden = false
+        view2.isHidden = true
+        view3.isHidden = true
+        view4.isHidden = true
+        view5.isHidden = true
+         segmentControl.selectedSegmentIndex = 0
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshOffer"), object: nil, userInfo: nil)
+     }
     func close_on_swipe(){
         if  AppDelegate.menu_bool{
             
@@ -91,20 +101,29 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
         AppDelegate.menu_bool = true
     }
     func menuActionDelegate(number:Int){
-        if number == 1{
+        if number == 2{
            view3.isHidden = false
              view4.isHidden = true
             view5.isHidden = true
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object: nil, userInfo: nil)
-        }else if number == 0 {
+        }else if number == 1 { // addrelated files
+            
             view4.isHidden = false
             view5.isHidden = true
             view3.isHidden = true
-        }else if number ==  2{
+              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deletefiles"), object: nil, userInfo: nil)
+        }else if number == 3{
             view5.isHidden = false
              view3.isHidden = true
             view4.isHidden = true
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshPageOffer"), object: nil, userInfo: nil)
+        }else if number == 0{
+            view1.isHidden = false
+            view2.isHidden = true
+            view3.isHidden = true
+            view4.isHidden = true
+            view5.isHidden = true
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshOffer"), object: nil, userInfo: nil)
         }
     }
     @IBAction func menuBtnAction(_ sender: Any) {
@@ -131,8 +150,10 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
             view3.isHidden = true
             view4.isHidden = true
             view5.isHidden = true
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteCreateOffer"), object: nil, userInfo: nil)
         default:
             print("")
         }
     }
+    
 }

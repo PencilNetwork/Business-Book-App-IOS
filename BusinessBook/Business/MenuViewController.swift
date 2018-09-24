@@ -9,7 +9,7 @@
 import UIKit
 
 class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-    var menuList = ["Add related files","Edit Business Profile","Edit offers","LOGOUT"]
+    var menuList = ["Home","Add related files","Edit Business Profile","Edit offers","LOGOUT"]
     
 
     @IBOutlet weak var menuTopConstraint: NSLayoutConstraint!
@@ -21,7 +21,7 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
         menuTableView.delegate = self
         menuTableView.tableFooterView = UIView()
        menuTableView.backgroundColor = UIColor.gray
-         if UIDevice.isIphoneX {
+         if UIDevice.isIphoneX { // it is iphone x or iphonesx or xs max 
             menuTopConstraint.constant = 24
         }
         // Do any additional setup after loading the view.
@@ -33,7 +33,7 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -43,10 +43,10 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
         return cell
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if  indexPath.row == 1 || indexPath.row == 0 || indexPath.row == 2{
+        if  indexPath.row == 2 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 0{
        menuDel?.menuActionDelegate(number: indexPath.row)
               self.view.removeFromSuperview()
-        }else if  indexPath.row == 3{
+        }else if  indexPath.row == 4{
               self.view.removeFromSuperview()
             let viewControllers: [UIViewController] = self.navigationController!.viewControllers
             for aViewController in viewControllers {
@@ -76,8 +76,8 @@ extension UIDevice {
             sysctlbyname("hw.machine", &machine, &size, nil, 0)
             modelIdentifier = String(cString: machine)
         }
-        
-        return modelIdentifier == "iPhone10,3" || modelIdentifier == "iPhone10,6"
+        //include iPhone XS, XS Max and XR, simply look for models starting with "iPhone11,
+        return modelIdentifier == "iPhone10,3" || modelIdentifier == "iPhone10,6" || modelIdentifier.starts(with: "iPhone11,")
     }
     
     

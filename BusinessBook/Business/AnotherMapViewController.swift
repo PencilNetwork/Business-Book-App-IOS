@@ -129,9 +129,10 @@ class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnThe
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         let placeClient = GMSPlacesClient()
-        //
-        //
-                placeClient.autocompleteQuery(searchText, bounds: nil, filter: nil)  {(results, error: Error?) -> Void in
+       
+        let filter = GMSAutocompleteFilter()
+        filter.country = "EG"
+                placeClient.autocompleteQuery(searchText, bounds: nil, filter: filter)  {(results, error: Error?) -> Void in
                    // NSError myerr = Error;
                     print("Error @%",Error.self)
 

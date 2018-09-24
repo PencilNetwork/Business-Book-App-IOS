@@ -87,7 +87,20 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
          if collectionView == offerCollectionView {
-            return CGSize(width: 110, height: 150)
+            
+            let captionTextWidth = 190
+            let size = CGSize(width:captionTextWidth,height:1000)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
+            if offerList[indexPath.row].caption != "" && offerList[indexPath.row].caption != nil {
+            let estimateFrame = NSString(string: offerList[indexPath.row].caption!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 130
+                return CGSize(width: 200, height: height)
+            }else{
+                 let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 130
+                return CGSize(width: 110, height: height)
+            }
+            
          }else{
             return CGSize(width: 120, height: 120)
         }

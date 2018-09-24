@@ -371,19 +371,20 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         }
         cell.index = indexPath.row
         cell.changeImageDelegate = self
-        cell.editfileBtn.layer.cornerRadius = 10
+      
         cell.imageId = relatedFileList[indexPath.row].id
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: 120, height: 158)
+        return CGSize(width: 130, height: 130)
     }
     //MARK: delegatefunction
     func editOffer(index:Int,imageId:Int,caption:String){
         
     }
-    func minusImage(index:Int,imageId:Int){
-        //https://pencilnetwork.com/bussines_book/api/files/2
+    func deleterelatedFiles(index:Int,imageId:Int){
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -391,12 +392,14 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             Alamofire.request(Constant.baseURL + "files/\(imageId)", method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
+                     self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     switch response.result {
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
                             if let flag = datares["flag"] as? String {
                                 if flag == "0" {
-                                   
+                                    
                                     self.showToast(message : "delete fail ")
                                 }else{
                                     self.showToast(message : "deleted Successfully")
@@ -404,7 +407,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                             }
                             
                             
-            }
+                        }
                     case .failure(let error):
                         print(error)
                         if let errorstring  = error as?String {
@@ -420,64 +423,53 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
-      
+        
         relatedFileList.remove(at: index)
         collectionView.reloadData()
         
+    }
+    func minusImage(index:Int,imageId:Int){
+        //https://pencilnetwork.com/bussines_book/api/files/2
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure you want to delete related file?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            print("Handle Ok logic here")
+            self.deleterelatedFiles(index:index,imageId:imageId)
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+      
         
     }
     func addImage(index:Int){
         self.index = index
         type = 1
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            pickerController.delegate = self
-            pickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            pickerController.allowsEditing = true
-            
-            self.present(pickerController, animated: true, completion: nil)
-        }
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure you want to replace related file?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            print("Handle Ok logic here")
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+                self.pickerController.delegate = self
+                self.pickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.pickerController.allowsEditing = true
+                
+                self.present(self.pickerController, animated: true, completion: nil)
+            }
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+       
     }
     func editImage(index:Int,imageId:Int){
-        let cameraImgData = UIImageJPEGRepresentation(self.relatedFileList[index].photo!, 0.5)!
-      
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-//                multipartFormData.append(((busnessId).data(using: .utf8)!), withName: "bussines_id")
-                multipartFormData.append(cameraImgData, withName:"image", fileName:"image", mimeType: "image/JPEG")
-              
-        },
-            to: Constant.baseURL + "files/\(imageId)",
-            method:.post,
-            encodingCompletion: { encodingResult in
-                //                self.activityindicator.isHidden = true
-                //                self.activityindicator.stopAnimating()
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.responseJSON{ response in
-                        //   self.activityIndicator.stopAnimating()
-                        print(response)
-                        
-                        if let data = response.result.value as? [String:Any]{
-                            if let flag = data["flag"] as? String{
-                                if flag == "1"{
-                                    self.showToast(message : "Edit Successfully")
-                                }else{
-                                     self.showToast(message : "fail")
-                                }
-                            }
-                           
-                        }
-                    }
-                case .failure(let error):
-                    print(error)
-                    
-                    let alert = UIAlertController(title: "", message: error as! String, preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    
-                }
-        }
-        )
+       
     }
       //MARK: function
     func checkTxtField()->Bool{
@@ -545,12 +537,58 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
     @objc func textFieldDidChange(textField: UITextField){
         textField.backgroundColor = UIColor.white
     }
+    func replaceRelatedFiles(){
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        let cameraImgData = UIImageJPEGRepresentation(self.relatedFileList[index!].photo!, 0.5)!
+        
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                //                multipartFormData.append(((busnessId).data(using: .utf8)!), withName: "bussines_id")
+                multipartFormData.append(cameraImgData, withName:"image", fileName:"image", mimeType: "image/JPEG")
+                
+        },
+            to: Constant.baseURL + "files/\(relatedFileList[index!].id!)",
+            method:.post,
+            encodingCompletion: { encodingResult in
+                
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON{ response in
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        print(response)
+                        
+                        if let data = response.result.value as? [String:Any]{
+                            if let flag = data["flag"] as? String{
+                                if flag == "1"{
+                                    self.showToast(message : "Edit Successfully")
+                                }else{
+                                    self.showToast(message : "fail")
+                                }
+                            }
+                            
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
+                    let alert = UIAlertController(title: "", message: error as! String, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+        }
+        )
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         if type == 1{
        relatedFileList[index!].photo = info[UIImagePickerControllerEditedImage] as! UIImage
        
         dismiss(animated:true, completion: nil)
         collectionView.reloadData()
+           replaceRelatedFiles()
         }else{  // edit gallery
            logoImg = info[UIImagePickerControllerEditedImage] as! UIImage
             galleryBtn.setImage(info[UIImagePickerControllerEditedImage] as! UIImage, for: .normal)

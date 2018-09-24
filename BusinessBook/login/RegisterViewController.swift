@@ -308,6 +308,18 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
     }
     func checkTxtField()->Bool{
         var validFlag = true
+        if imageflag == false{
+            validFlag = false
+            let alert = UIAlertController(title: "alert", message: "You should enter image", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        if categSelected == -1 {
+            validFlag = false
+            let alert = UIAlertController(title: "Warning", message: "select your category ", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         if locationFlag == false {
             validFlag = false
             let alert = UIAlertController(title: "Warning", message: "select your Location ", preferredStyle: UIAlertControllerStyle.alert)
@@ -327,22 +339,12 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
             addressTxt.backgroundColor = .red
         }
        
-        if categSelected == -1 {
-            validFlag = false
-            let alert = UIAlertController(title: "Warning", message: "select your category ", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
+       
         if businessdesTxt.text ==  "" {
             validFlag = false
             businessdesTxt.backgroundColor = .red
         }
-        if imageflag == false{
-            validFlag = false
-            let alert = UIAlertController(title: "alert", message: "You should enter image", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
+       
         return validFlag
     }
     func isValidEmail(testStr:String) -> Bool {
