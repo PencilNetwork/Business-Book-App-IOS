@@ -15,4 +15,5 @@ class Constant {
     public static var URICateg = "categories"
     public static var URIInterests = "interests"
     public static var URIDefaultSearch = "search/default_search/"
+    public static var URICategorySearch = "search/category"
 }

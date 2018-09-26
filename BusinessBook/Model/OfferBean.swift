@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 class OfferBean{
+    var bussines_id:Int?
     var photo:String?
     var image:UIImage?
     var caption:String?

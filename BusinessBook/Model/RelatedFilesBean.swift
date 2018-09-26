@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 class RelatedFilesBean{
+    var bussines_id:Int?
     var id:Int?
     var image:String?
     var photo:UIImage?

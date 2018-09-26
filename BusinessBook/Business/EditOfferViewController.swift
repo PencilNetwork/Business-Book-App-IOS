@@ -56,18 +56,18 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
         return cell!
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let captionTextWidth = 123
+        let captionTextWidth = ((view.frame.width - 20 )/3) - 20
         let size = CGSize(width:captionTextWidth,height:1000)
         let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
         if offerList[indexPath.row].caption != "" && offerList[indexPath.row].caption != nil {
             let estimateFrame = NSString(string: offerList[indexPath.row].caption!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
             let height  = estimateFrame.height + 158
-            return CGSize(width: (view.frame.width - 20 )/4 , height: height)
+            return CGSize(width: (view.frame.width - 30 )/3 , height: height)
         }else{
             let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
             let height  = estimateFrame.height + 158
           //  return CGSize(width: 133, height: height)
-              return CGSize(width: (view.frame.width - 20)/4 , height: height)
+              return CGSize(width: (view.frame.width - 30)/3 , height: height)
         }
        
     }
@@ -97,14 +97,14 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
                 to: "https://pencilnetwork.com/bussines_book/api/offers/\(imageId)",
                 method:.post,
                 encodingCompletion: { encodingResult in
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
+                  
                     switch encodingResult {
                     case .success(let upload, _, _):
                         upload.responseJSON{ response in
                             //   self.activityIndicator.stopAnimating()
                             print(response)
-                            
+                            self.activityIndicator.stopAnimating()
+                            self.activityIndicator.isHidden = true
                             if let data = response.result.value as? [String:Any]{
                                 if let flag = data["flag"] as? String{
                                     if flag == "1"{
@@ -118,7 +118,8 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
                         }
                     case .failure(let error):
                         print(error)
-                        
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
                         let alert = UIAlertController(title: "", message: error as! String, preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)

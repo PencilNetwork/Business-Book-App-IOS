@@ -249,11 +249,13 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
+            self.activityindicator.isHidden = false
+            self.activityindicator.startAnimating()
             Alamofire.request("https://pencilnetwork.com/bussines_book/api/categories", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
-//                    self.activityIndicator.stopAnimating()
-//                    self.activityIndicator.isHidden = true
+                    self.activityindicator.stopAnimating()
+                    self.activityindicator.isHidden = true
                     switch response.result {
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
@@ -402,11 +404,12 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
             to: "https://pencilnetwork.com/bussines_book/api/bussines/store",
              method:.post,
             encodingCompletion: { encodingResult in
-               self.activityindicator.isHidden = true
-                self.activityindicator.stopAnimating()
+              
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON{ response in
+                        self.activityindicator.isHidden = true
+                        self.activityindicator.stopAnimating()
                         switch response.result {
                          case .success:
                      //   self.activityIndicator.stopAnimating()
@@ -436,7 +439,8 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
                     }
                 case .failure(let error):
                     print(error)
-                    
+                    self.activityindicator.isHidden = true
+                    self.activityindicator.stopAnimating()
                     let alert = UIAlertController(title: "", message: error as! String, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)

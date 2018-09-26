@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
 
     var window: UIWindow?
  static var menu_bool = true
+    static var userMenu_bool = true 
     var deviceToKen:String = ""
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 //self.splashScreen()

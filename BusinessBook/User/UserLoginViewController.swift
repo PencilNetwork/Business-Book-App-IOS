@@ -160,6 +160,7 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
     }
     
     @IBAction func continueBtnAction(_ sender: Any) {
+        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         var parameter :[String:AnyObject] = [String:AnyObject]()

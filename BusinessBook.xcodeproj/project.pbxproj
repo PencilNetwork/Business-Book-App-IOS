@@ -14,6 +14,13 @@
 		041880A92146B4EC0051BD37 /* PopUpCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041880A82146B4EC0051BD37 /* PopUpCategoryViewController.swift */; };
 		0419370521411AEA0062582A /* AlertImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419370421411AEA0062582A /* AlertImageViewController.swift */; };
 		041A8FCD214A4E6C00B94439 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A8FCC214A4E6C00B94439 /* IntroViewController.swift */; };
+		0439A7CA215B83C60007068A /* UserFavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7C9215B83C60007068A /* UserFavouriteViewController.swift */; };
+		0439A7CC215B89460007068A /* UserFavouriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7CB215B89460007068A /* UserFavouriteCollectionViewCell.swift */; };
+		0439A7CE215B8AC20007068A /* FavouriteBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7CD215B8AC20007068A /* FavouriteBean.swift */; };
+		0439A7D0215B90CC0007068A /* AllCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7CF215B90CC0007068A /* AllCategoryViewController.swift */; };
+		0439A7D2215B961F0007068A /* AllCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7D1215B961F0007068A /* AllCategoryCollectionViewCell.swift */; };
+		0439A7D4215BA2980007068A /* EditDefaultSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7D3215BA2980007068A /* EditDefaultSearchViewController.swift */; };
+		0439A7D6215BB2810007068A /* DetailBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7D5215BB2810007068A /* DetailBusinessViewController.swift */; };
 		0440C1AF213FF19F00082DB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440C1AE213FF19F00082DB9 /* AppDelegate.swift */; };
 		0440C1B1213FF19F00082DB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440C1B0213FF19F00082DB9 /* ViewController.swift */; };
 		0440C1B4213FF19F00082DB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0440C1B2213FF19F00082DB9 /* Main.storyboard */; };
@@ -32,6 +39,10 @@
 		0442147D214A6FB700D4C798 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0442147C214A6FB700D4C798 /* SignUpViewController.swift */; };
 		0442147F214A9A3900D4C798 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0442147E214A9A3800D4C798 /* Network.swift */; };
 		0446417121526FEF007E1F8B /* CategoryBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446417021526FEF007E1F8B /* CategoryBean.swift */; };
+		044CC47E215A4D110028C8BC /* BusinessBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC47D215A4D110028C8BC /* BusinessBean.swift */; };
+		044CC480215A4EC50028C8BC /* OwnerBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC47F215A4EC50028C8BC /* OwnerBean.swift */; };
+		044CC482215A61C30028C8BC /* UserOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC481215A61C30028C8BC /* UserOfferViewController.swift */; };
+		044CC484215A77AC0028C8BC /* UserMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC483215A77AC0028C8BC /* UserMenuViewController.swift */; };
 		045265CA21539A6800DB1774 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045265C921539A6700DB1774 /* Constant.swift */; };
 		045265CC2153C32700DB1774 /* Interest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045265CB2153C32700DB1774 /* Interest.swift */; };
 		045265CE2153C33400DB1774 /* InterestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045265CD2153C33400DB1774 /* InterestCollectionViewCell.swift */; };
@@ -87,6 +98,13 @@
 		041880A82146B4EC0051BD37 /* PopUpCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCategoryViewController.swift; sourceTree = "<group>"; };
 		0419370421411AEA0062582A /* AlertImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertImageViewController.swift; sourceTree = "<group>"; };
 		041A8FCC214A4E6C00B94439 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		0439A7C9215B83C60007068A /* UserFavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFavouriteViewController.swift; sourceTree = "<group>"; };
+		0439A7CB215B89460007068A /* UserFavouriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFavouriteCollectionViewCell.swift; sourceTree = "<group>"; };
+		0439A7CD215B8AC20007068A /* FavouriteBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteBean.swift; sourceTree = "<group>"; };
+		0439A7CF215B90CC0007068A /* AllCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryViewController.swift; sourceTree = "<group>"; };
+		0439A7D1215B961F0007068A /* AllCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		0439A7D3215BA2980007068A /* EditDefaultSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDefaultSearchViewController.swift; sourceTree = "<group>"; };
+		0439A7D5215BB2810007068A /* DetailBusinessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBusinessViewController.swift; sourceTree = "<group>"; };
 		0440C1AB213FF19F00082DB9 /* BusinessBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0440C1AE213FF19F00082DB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0440C1B0213FF19F00082DB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +129,10 @@
 		0442147C214A6FB700D4C798 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		0442147E214A9A3800D4C798 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		0446417021526FEF007E1F8B /* CategoryBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBean.swift; sourceTree = "<group>"; };
+		044CC47D215A4D110028C8BC /* BusinessBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessBean.swift; sourceTree = "<group>"; };
+		044CC47F215A4EC50028C8BC /* OwnerBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerBean.swift; sourceTree = "<group>"; };
+		044CC481215A61C30028C8BC /* UserOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOfferViewController.swift; sourceTree = "<group>"; };
+		044CC483215A77AC0028C8BC /* UserMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMenuViewController.swift; sourceTree = "<group>"; };
 		045265C921539A6700DB1774 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		045265CB2153C32700DB1774 /* Interest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interest.swift; sourceTree = "<group>"; };
 		045265CD2153C33400DB1774 /* InterestCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -286,6 +308,9 @@
 				0480B57E2141628C001D759B /* OfferBean.swift */,
 				0462C3EE215123F50054C1F5 /* RelatedFilesBean.swift */,
 				0446417021526FEF007E1F8B /* CategoryBean.swift */,
+				044CC47D215A4D110028C8BC /* BusinessBean.swift */,
+				044CC47F215A4EC50028C8BC /* OwnerBean.swift */,
+				0439A7CD215B8AC20007068A /* FavouriteBean.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -301,6 +326,8 @@
 				045265D12153D90F00DB1774 /* InterestTableViewCell.swift */,
 				04612C7C2157B0F900A6306E /* GradientButton.swift */,
 				04612C7E2157C16100A6306E /* UserHomeOfferCollectionViewCell.swift */,
+				0439A7CB215B89460007068A /* UserFavouriteCollectionViewCell.swift */,
+				0439A7D1215B961F0007068A /* AllCategoryCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -312,6 +339,12 @@
 				041880A0214667B80051BD37 /* UserLoginViewController.swift */,
 				041880A82146B4EC0051BD37 /* PopUpCategoryViewController.swift */,
 				04612C7A215790B900A6306E /* UserHomeViewController.swift */,
+				044CC481215A61C30028C8BC /* UserOfferViewController.swift */,
+				044CC483215A77AC0028C8BC /* UserMenuViewController.swift */,
+				0439A7C9215B83C60007068A /* UserFavouriteViewController.swift */,
+				0439A7CF215B90CC0007068A /* AllCategoryViewController.swift */,
+				0439A7D3215BA2980007068A /* EditDefaultSearchViewController.swift */,
+				0439A7D5215BB2810007068A /* DetailBusinessViewController.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -593,24 +626,32 @@
 			files = (
 				0440C1B1213FF19F00082DB9 /* ViewController.swift in Sources */,
 				0480B57D2141606B001D759B /* OfferCollectionViewCell.swift in Sources */,
+				044CC484215A77AC0028C8BC /* UserMenuViewController.swift in Sources */,
 				0440C1EE2140210B00082DB9 /* RegisterViewController.swift in Sources */,
 				0480B57721414280001D759B /* MenuTableViewCell.swift in Sources */,
 				041880A62146720B0051BD37 /* SearchResultsController.swift in Sources */,
 				0446417121526FEF007E1F8B /* CategoryBean.swift in Sources */,
+				0439A7D4215BA2980007068A /* EditDefaultSearchViewController.swift in Sources */,
 				0442147F214A9A3900D4C798 /* Network.swift in Sources */,
+				0439A7D2215B961F0007068A /* AllCategoryCollectionViewCell.swift in Sources */,
 				04612C7D2157B0F900A6306E /* GradientButton.swift in Sources */,
+				0439A7CE215B8AC20007068A /* FavouriteBean.swift in Sources */,
 				045265CC2153C32700DB1774 /* Interest.swift in Sources */,
 				0480B57921415F8F001D759B /* BusinessSubProfileViewController.swift in Sources */,
 				041880A1214667B80051BD37 /* UserLoginViewController.swift in Sources */,
 				0480B57321413CEE001D759B /* BusinessProfileViewController.swift in Sources */,
+				0439A7CA215B83C60007068A /* UserFavouriteViewController.swift in Sources */,
 				0440C1E3213FF32200082DB9 /* Intro1ViewController.swift in Sources */,
 				045265CE2153C33400DB1774 /* InterestCollectionViewCell.swift in Sources */,
 				045265CA21539A6800DB1774 /* Constant.swift in Sources */,
+				044CC47E215A4D110028C8BC /* BusinessBean.swift in Sources */,
+				0439A7CC215B89460007068A /* UserFavouriteCollectionViewCell.swift in Sources */,
 				045A4704214659FA00D2BF71 /* ForgetPasswordViewController.swift in Sources */,
 				0442147D214A6FB700D4C798 /* SignUpViewController.swift in Sources */,
 				0440C1E5213FF33300082DB9 /* Intro2ViewController.swift in Sources */,
 				045F746A214510FB00E90970 /* EditBusinessProfileViewController.swift in Sources */,
 				0440C1AF213FF19F00082DB9 /* AppDelegate.swift in Sources */,
+				0439A7D0215B90CC0007068A /* AllCategoryViewController.swift in Sources */,
 				0480B583214173F1001D759B /* CreateOfferViewController.swift in Sources */,
 				0440C1EA214010CB00082DB9 /* LoginViewController.swift in Sources */,
 				0480B575214141C9001D759B /* MenuViewController.swift in Sources */,
@@ -626,12 +667,15 @@
 				04612C7B215790B900A6306E /* UserHomeViewController.swift in Sources */,
 				041880A92146B4EC0051BD37 /* PopUpCategoryViewController.swift in Sources */,
 				045265D22153D90F00DB1774 /* InterestTableViewCell.swift in Sources */,
+				0439A7D6215BB2810007068A /* DetailBusinessViewController.swift in Sources */,
 				0440C1E1213FF30100082DB9 /* RootViewController.swift in Sources */,
 				041880A72146720B0051BD37 /* AnotherMapViewController.swift in Sources */,
+				044CC482215A61C30028C8BC /* UserOfferViewController.swift in Sources */,
 				045265D02153C34900DB1774 /* InterestPopupViewController.swift in Sources */,
 				0440C1B7213FF1A000082DB9 /* BusinessBook.xcdatamodeld in Sources */,
 				045F74702145598600E90970 /* EditOfferViewController.swift in Sources */,
 				0462C3EF215123F60054C1F5 /* RelatedFilesBean.swift in Sources */,
+				044CC480215A4EC50028C8BC /* OwnerBean.swift in Sources */,
 				045F746C214528BA00E90970 /* EditProfileBusinessCollectionViewCell.swift in Sources */,
 				0440C1E7213FF34200082DB9 /* Intro3ViewController.swift in Sources */,
 			);
