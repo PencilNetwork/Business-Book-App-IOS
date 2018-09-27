@@ -16,6 +16,7 @@ pod 'GoogleSignIn'
  pod 'FBSDKLoginKit'
   pod 'FBSDKCoreKit'
   pod 'Bolts'
+pod 'SwiftyStarRatingView'
   target 'BusinessBookTests' do
     inherit! :search_paths
     # Pods for testing

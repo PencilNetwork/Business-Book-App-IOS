@@ -67,6 +67,8 @@
 		0480B57F2141628C001D759B /* OfferBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480B57E2141628C001D759B /* OfferBean.swift */; };
 		0480B581214169C6001D759B /* relatedFilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480B580214169C6001D759B /* relatedFilesCollectionViewCell.swift */; };
 		0480B583214173F1001D759B /* CreateOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480B582214173F1001D759B /* CreateOfferViewController.swift */; };
+		04C2DE33215CDF9200211E5C /* CityBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C2DE32215CDF9200211E5C /* CityBean.swift */; };
+		04C2DE35215CE28800211E5C /* RegionBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C2DE34215CE28800211E5C /* RegionBean.swift */; };
 		24BB0D300B5A0613B5A753CD /* Pods_BusinessBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BD53F9D0568B4DBA35F16E /* Pods_BusinessBook.framework */; };
 		69D4AFA4EF45C5404A8E965D /* Pods_BusinessBookTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C07085D43400BA64F5E2B173 /* Pods_BusinessBookTests.framework */; };
 		78CFCD8F48D3374318DFA856 /* Pods_BusinessBookUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFFFA19026EEE0E88A93E86 /* Pods_BusinessBookUITests.framework */; };
@@ -157,6 +159,8 @@
 		0480B57E2141628C001D759B /* OfferBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferBean.swift; sourceTree = "<group>"; };
 		0480B580214169C6001D759B /* relatedFilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = relatedFilesCollectionViewCell.swift; sourceTree = "<group>"; };
 		0480B582214173F1001D759B /* CreateOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOfferViewController.swift; sourceTree = "<group>"; };
+		04C2DE32215CDF9200211E5C /* CityBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityBean.swift; sourceTree = "<group>"; };
+		04C2DE34215CE28800211E5C /* RegionBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionBean.swift; sourceTree = "<group>"; };
 		0B4F58C79C8F53D154DFD7F2 /* Pods-BusinessBookTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessBookTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessBookTests/Pods-BusinessBookTests.release.xcconfig"; sourceTree = "<group>"; };
 		183406AD37B970842F635EFC /* Pods-BusinessBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessBook/Pods-BusinessBook.release.xcconfig"; sourceTree = "<group>"; };
 		7DFFFA19026EEE0E88A93E86 /* Pods_BusinessBookUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BusinessBookUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +315,8 @@
 				044CC47D215A4D110028C8BC /* BusinessBean.swift */,
 				044CC47F215A4EC50028C8BC /* OwnerBean.swift */,
 				0439A7CD215B8AC20007068A /* FavouriteBean.swift */,
+				04C2DE32215CDF9200211E5C /* CityBean.swift */,
+				04C2DE34215CE28800211E5C /* RegionBean.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -521,6 +527,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStarRatingView/SwiftyStarRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -534,6 +541,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStarRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -645,6 +653,7 @@
 				045265CE2153C33400DB1774 /* InterestCollectionViewCell.swift in Sources */,
 				045265CA21539A6800DB1774 /* Constant.swift in Sources */,
 				044CC47E215A4D110028C8BC /* BusinessBean.swift in Sources */,
+				04C2DE35215CE28800211E5C /* RegionBean.swift in Sources */,
 				0439A7CC215B89460007068A /* UserFavouriteCollectionViewCell.swift in Sources */,
 				045A4704214659FA00D2BF71 /* ForgetPasswordViewController.swift in Sources */,
 				0442147D214A6FB700D4C798 /* SignUpViewController.swift in Sources */,
@@ -660,6 +669,7 @@
 				046CA94321493F9F00E40F65 /* SecondViewController.swift in Sources */,
 				0480B581214169C6001D759B /* relatedFilesCollectionViewCell.swift in Sources */,
 				04612C7F2157C16100A6306E /* UserHomeOfferCollectionViewCell.swift in Sources */,
+				04C2DE33215CDF9200211E5C /* CityBean.swift in Sources */,
 				0480B57F2141628C001D759B /* OfferBean.swift in Sources */,
 				041A8FCD214A4E6C00B94439 /* IntroViewController.swift in Sources */,
 				045F747221455F4B00E90970 /* EditOfferCollectionViewCell.swift in Sources */,

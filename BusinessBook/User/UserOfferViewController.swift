@@ -34,7 +34,25 @@ class UserOfferViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func getDefaultOffer(){
+        let network = Network()
+        
+        let networkExist = network.isConnectedToNetwork()
+        
+        if networkExist == true {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            let userId = UserDefaults.standard.value(forKey: "user_id") as? String
+            let url = Constant.baseURL + Constant.URIDefaultOfferSearch + userId!
+            
+            
+        } else{
     
+    let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+    }
+    }
     func getCategory(){
        
         let network = Network()

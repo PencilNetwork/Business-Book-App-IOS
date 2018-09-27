@@ -16,4 +16,9 @@ class Constant {
     public static var URIInterests = "interests"
     public static var URIDefaultSearch = "search/default_search/"
     public static var URICategorySearch = "search/category"
+    public static var URIBusinessSearch = "bussines_search"
+    public static var URICities = "cities"
+    public static var URIRegion = "regoins/"
+    public static var URIRatings = "ratings"
+    public static var URIDefaultOfferSearch = "offer/default_search/"
 }

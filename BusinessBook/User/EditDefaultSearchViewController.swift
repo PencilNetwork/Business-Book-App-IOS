@@ -32,7 +32,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         super.viewDidLoad()
         setStyle()
         setTable()
-        getCity()
+       // getCity()
         getCategory()
         //        self.searchBar.layer.borderColor = UIColor.red.cgColor
         //        self.searchBar.layer.borderWidth = 1
