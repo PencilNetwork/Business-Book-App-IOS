@@ -11,8 +11,13 @@ class FavouriteBean{
     var id:Int?
     var image:String?
     var favourite:Bool?
+    var bussines_id :Int?
+    var searcher_id:Int?
     init(image:String,favourite:Bool){
         self.image = image
         self.favourite = favourite
+    }
+    init(){
+        
     }
 }

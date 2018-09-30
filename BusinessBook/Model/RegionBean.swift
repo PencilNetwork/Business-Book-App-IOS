@@ -11,4 +11,5 @@ class RegionBean{
     var id:Int?
     var name:String?
     var cityId:Int?
+    var checkbox:Bool = false 
 }

@@ -793,10 +793,10 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
     //MARK:IBAction
     
     @IBAction func searchBtnAction(_ sender: Any) {
-        if searchName.text == "" &&  categSelected == -1{
+        if searchName.text != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
             
-        }else{
-            //searchBusiness(categoryId:categoryList[categSelected].id!,cityId:Int,regionId:Int)
+       
+            searchBusiness(categoryId:categoryList[categSelected].id!,cityId:cityList[citySelected].id!,regionId:regionList[regionSelected].id!)
         }
     }
     

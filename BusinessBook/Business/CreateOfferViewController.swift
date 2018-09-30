@@ -101,6 +101,7 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
              captiontxt = self.caption.text!
             
         }
+        let url = Constant.baseURL + Constant.URICreateOffer
         var busineeId = UserDefaults.standard.value(forKey: "id") as! Int
         Alamofire.upload(
             multipartFormData: { multipartFormData in
@@ -116,7 +117,7 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
                 
                 
         },
-            to: "https://pencilnetwork.com/bussines_book/api/offers",
+            to: url,
             method:.post,
             encodingCompletion: { encodingResult in
                

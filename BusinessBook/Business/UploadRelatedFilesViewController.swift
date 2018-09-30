@@ -93,6 +93,7 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
     func sendData(){
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+        let url = Constant.baseURL + Constant.URIUploadFiles
         var imagesData:[Data] = []
         for item in relatedList{
             var cameraImgData = UIImageJPEGRepresentation(item, 0.5)!
@@ -111,7 +112,7 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
                 }
 
         },
-            to: "https://pencilnetwork.com/bussines_book/api/files/store",
+            to: url,
             method:.post,
             encodingCompletion: { encodingResult in
                

@@ -76,7 +76,7 @@ class SignUpViewController: UIViewController {
         parameter["email"] = emailTxt.text! as AnyObject?
         parameter["password"] = passwordTxt.text! as  AnyObject?
      parameter["token"] = "token" as  AnyObject?
-        Alamofire.request("https://pencilnetwork.com/bussines_book/api/owner/signup", method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
+        Alamofire.request(Constant.baseURL + "owner/signup", method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
                 self.activityIndicator.stopAnimating()

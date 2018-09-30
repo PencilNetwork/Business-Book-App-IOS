@@ -66,7 +66,7 @@ class ForgetPasswordViewController: UIViewController {
         self.activityIndicator.startAnimating()
         var parameter :[String:AnyObject] = [String:AnyObject]()
         parameter["email"] =  email.text! as AnyObject?
-        Alamofire.request("https://pencilnetwork.com/bussines_book/api/owner/mail", method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
+        Alamofire.request(Constant.baseURL + "owner/mail", method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
                 self.activityIndicator.stopAnimating()

@@ -21,18 +21,20 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
     @IBOutlet weak var searchBar: UISearchBar!
     var category:[Interest] = []
     var city :[Interest] = []
-    var region:[Interest] = [Interest(name: "Fashion",id:1),Interest(name: "food",id:2),Interest(name: "Sport",id:3),Interest(name: "Hospital",id:4),Interest(name: "Medical",id:5),Interest(name: "Restaurants",id:6),Interest(name: "Toys",id:7),Interest(name: "others",id:8),Interest(name: "Bags",id:9),Interest(name: "Cafes",id:10)]
+    var region:[RegionBean] = []
     var filterData1:[Interest] = []
     var isSearching1 = false
     var filterData2:[Interest] = []
     var isSearching2 = false
-    var filterData3:[Interest] = []
+    var filterData3:[RegionBean] = []
     var issearching3 = false
+    var selectedRegion:[Int] = []
+    var selectedCity:Int = -1
     override func viewDidLoad() {
         super.viewDidLoad()
         setStyle()
         setTable()
-       // getCity()
+       getCity()
         getCategory()
         //        self.searchBar.layer.borderColor = UIColor.red.cgColor
         //        self.searchBar.layer.borderWidth = 1
@@ -195,6 +197,185 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         regionCollectionView.reloadData()
     }
     //MARK:Function
+  
+    func getCity(){
+        
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        
+        if networkExist == true {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            let url = Constant.baseURL + Constant.URICities
+            Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+                .responseJSON { response in
+                    print(response)
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    switch response.result {
+                    case .success:
+                        if let data = response.result.value as? [[String:Any]]{
+                            for item in data {
+                                let city = Interest()
+                                if let id = item["id"] as? Int {
+                                    city.id = id
+                                }
+                                if let name = item["name"] as? String{
+                                    city.name = name
+                                }
+                                self.city.append(city)
+                            }
+                            self.cityCollectionView.reloadData()
+                            self.getData()
+                        }
+                    case .failure(let error):
+                        print(error)
+                        
+                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    func getRegion(cityId:Int){
+       
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        
+        if networkExist == true {
+            
+            if city.count > 0 && cityId != -1 {
+                activityIndicator.isHidden = false
+                activityIndicator.startAnimating()
+                let url = Constant.baseURL + Constant.URIRegion + "\(cityId)"
+                Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+                    .responseJSON { response in
+                        print(response)
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                        switch response.result {
+                        case .success:
+                            if let data = response.result.value as? [[String:Any]]{
+                                for item in data {
+                                    let regio = RegionBean()
+                                    if let id = item["id"] as? Int {
+                                        regio.id = id
+                                    }
+                                    if let name = item["name"] as? String{
+                                        regio.name = name
+                                    }
+                                    if let cityId = item["city_id"] as? Int{
+                                        regio.cityId = cityId
+                                    }
+                                    self.region.append(regio)
+                                }
+                                
+                                self.regionCollectionView.reloadData()
+                            }
+                        case .failure(let error):
+                            print(error)
+                            
+                            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            
+                        }
+                }
+            }else{
+                let alert = UIAlertController(title: "", message: "select city" , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    func getData(){
+         let user_id = UserDefaults.standard.value(forKey: "user_id") as? String
+        let url = Constant.baseURL + Constant.URIGetInterest + user_id!
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            .responseJSON { response in
+                print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                switch response.result {
+                case .success:
+                    if let datares = response.result.value as? [String:Any]{
+                        if let categories = datares["categories"] as? String{
+                             let arrayCateg = categories.components(separatedBy: ",")
+                            for entry in arrayCateg{
+                                let categId = Int(entry)
+                                for item in self.category {
+                                    
+                                    if categId == item.id {
+                                        item.checkbox = true
+                                        break
+                                    }
+                                }
+                                
+                            }
+                            self.categCollectionView.reloadData()
+                        }
+                        if let cityIds = datares["city"] as? String {
+                            let cityId = Int(cityIds)
+                            self.selectedCity = cityId!
+                            
+                            for item in self.city{
+                                if item.id == cityId{
+                                    item.checkbox = true
+                                   
+                                    break
+                                }
+                            }
+                             self.cityCollectionView.reloadData()
+                        }
+                       
+                        if let regionsIds = datares["regoins"] as? String{
+                            let arrayRegion = regionsIds.components(separatedBy: ",")
+                            
+                            for entry in arrayRegion{
+                                 let regionId = Int(entry)
+                                self.selectedRegion.append(regionId!)
+//                                for item in self.region {
+//
+//                                   if regionId == item.id {
+//                                    item.checkbox = true
+//                                    break
+//                                   }
+//                                }
+                            }
+                           // self.regionCollectionView.reloadData()
+                            
+                        }
+                        
+                        if self.selectedCity != -1 {
+                            self.getRegion(cityId:self.selectedCity)
+                            }
+                        
+                        
+                    }
+                case .failure(let error):
+                    print(error)
+                    
+                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+          }
+    }
     func sendCondition()->Bool {
         var validFlag = true
         var countcateg = 0
@@ -296,7 +477,21 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             let user_id = UserDefaults.standard.value(forKey: "user_id") as? String
             var parameter :[String:AnyObject] = [String:AnyObject]()
             parameter["searcher_id"] = user_id as? AnyObject
-            parameter["city"] = "1" as? AnyObject
+            var selectedCity :Int = -1
+              if isSearching2 {
+                for item in filterData2{
+                    if item.checkbox == true {
+                        selectedCity = item.id!
+                    }
+                }
+              }else{
+            for item in city{
+                if item.checkbox == true {
+                    selectedCity = item.id!
+                }
+            }
+            }
+            parameter["city_id"] = "\(selectedCity)" as? AnyObject
             var categString = ""
             if isSearching1 {
                 for i in 0..<filterData1.count{
@@ -324,7 +519,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                     }
                 }
             }
-            parameter["categories"] = categString as? AnyObject
+            parameter["categories_ids"] = categString as? AnyObject
             var regionString = ""
             if issearching3 {
                 for i in 0..<filterData3.count{
@@ -348,9 +543,10 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                 }
             }
             
-            parameter["regoins"] = regionString as AnyObject
+            parameter["regoins_ids"] = regionString as AnyObject
             if networkExist == true {
-                let url = Constant.baseURL + Constant.URIInterests
+                let user_id = UserDefaults.standard.value(forKey: "user_id") as? String
+                let url = Constant.baseURL + "interests/" + "\(user_id!)"+"/edit"
                 Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
                     .responseJSON { response in
                         print(response)
@@ -361,9 +557,10 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                             if let datares = response.result.value as? [String:Any]{
                                 if let flag = datares["flag"] as? String{
                                     if flag == "1"{
-                                        self.view.removeFromSuperview()
-                                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as? UserHomeViewController
-                                        self.navigationController?.pushViewController(vc!, animated: true)
+                                        let alert = UIAlertController(title: "", message: " success" , preferredStyle: UIAlertControllerStyle.alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                                        self.present(alert, animated: true, completion: nil)
+                                       
                                     }else{
                                         let alert = UIAlertController(title: "", message: " fail" , preferredStyle: UIAlertControllerStyle.alert)
                                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -476,31 +673,11 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         //        chooseFavRegionLBL.layer.cornerRadius = 5
         
     }
-    func getCity(){
-        
-        let header: HTTPHeaders = [
-            "X-Mashape-Key": "DaeEw2QYHHmshJn6SyKcjLvwtzHcp1bKHTkjsnh6ap7T73swhn",
-            "Accept": "application/json"
-        ]
-        
-        Alamofire.request("https://andruxnet-world-cities-v1.p.mashape.com/?query=Egypt&searchby=country", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:header)
-            .responseJSON { response in
-                print("response\(response)")
-                if let data = response.result.value as? [[String:Any]]{
-                    for item in data{
-                        
-                        if let citys = item["city"] as? String{
-                            self.city.append(Interest(name: citys))
-                        }
-                    }
-                    self.cityCollectionView.reloadData()
-                }
-        }
+    
         
         
         
-        
-    }
+   
     
 }
 

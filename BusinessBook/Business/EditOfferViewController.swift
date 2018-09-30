@@ -240,7 +240,8 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
         var userid = UserDefaults.standard.value(forKey: "id") as? Int
-        Alamofire.request("https://pencilnetwork.com/bussines_book/api/bussines/\(userid!)", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+        let url = Constant.baseURL + "bussines/\(userid!)"
+        Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
                 self.activityIndicator.stopAnimating()

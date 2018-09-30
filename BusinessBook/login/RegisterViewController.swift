@@ -251,7 +251,8 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
         if networkExist == true {
             self.activityindicator.isHidden = false
             self.activityindicator.startAnimating()
-            Alamofire.request("https://pencilnetwork.com/bussines_book/api/categories", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            let url = Constant.baseURL + Constant.URICateg
+            Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
                     self.activityindicator.stopAnimating()
@@ -371,12 +372,12 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
         activityindicator.isHidden = false
         activityindicator.startAnimating()
         let cameraImgData = UIImageJPEGRepresentation(self.photoImg!, 0.5)!
-        var ownerId = "\(self.id!)"
-        var categId = "\(categoryList[categSelected].id!)"
-        var contactNo = self.contactNo.text!
-        var businessDes = self.businessdesTxt.text!
-        var addressData = self.addressTxt.text!
-        var businessName = self.businessName.text!
+        let ownerId = "\(self.id!)"
+        let categId = "\(categoryList[categSelected].id!)"
+        let contactNo = self.contactNo.text!
+        let businessDes = self.businessdesTxt.text!
+        let addressData = self.addressTxt.text!
+        let businessName = self.businessName.text!
         
 //        multipartFormData.appendBodyPart(data: image1Data, name: "file", fileName: "myImage.png", mimeType: "image/png")
         Alamofire.upload(
@@ -401,7 +402,7 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
 
 
         },
-            to: "https://pencilnetwork.com/bussines_book/api/bussines/store",
+            to: Constant.baseURL + "bussines/store",
              method:.post,
             encodingCompletion: { encodingResult in
               

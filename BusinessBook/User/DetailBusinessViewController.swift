@@ -15,7 +15,8 @@ import Alamofire
 class DetailBusinessViewController: UIViewController {
     //MARK:IBoutlet
     
-   
+    @IBOutlet weak var favouriteBtn: UIButton!
+    
     @IBOutlet weak var busRatingView: SwiftyStarRatingView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -38,6 +39,7 @@ class DetailBusinessViewController: UIViewController {
     var id:Int?
     var long :Double = 0
     var lat:Double = 0
+    var favourite :Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         relatedFileCollectionView.dataSource = self
@@ -80,7 +82,7 @@ class DetailBusinessViewController: UIViewController {
                 
                 if networkExist == true {
                    getData(busId:id)
-                    
+                    getFavourite()
                 }else{
                     
                     let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
@@ -89,6 +91,100 @@ class DetailBusinessViewController: UIViewController {
                 }
                
             }
+        }
+    }
+    func getFavourite(){
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+         var userId = UserDefaults.standard.value(forKey: "user_id") as? String
+        //https://pencilnetwork.com/bussines_book/api/favoirtes/searcher_id/bussines_id
+        let url = Constant.baseURL + Constant.URIStatusFavourite + userId! + "\(self.id!)"
+        Alamofire.request(url , method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            .responseJSON { response in
+                print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                switch response.result {
+                case .success:
+                    if let data = response.result.value as? [String:Any]{
+                        if let flag = data["flag"] as? String{
+                            if flag == "0" {
+                                self.favouriteBtn.setImage(UIImage(named: "emptyheart.png"), for: .normal)
+                                self.favourite = false
+                            }else{
+                                self.favouriteBtn.setImage(UIImage(named: "heart.png"), for: .normal)
+                                self.favourite = true
+                            }
+                        }
+                        
+                    }
+                case .failure(let error):
+                    print(error)
+                    let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+        }
+    }
+    func insertFavourite(){
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        var userId = UserDefaults.standard.value(forKey: "user_id") as? String
+        let url = Constant.baseURL + Constant.URIInsertFavourite
+          var parameter :[String:AnyObject] = [String:AnyObject]()
+         parameter["bussines_id"] =  "\(id)" as AnyObject?
+         parameter["searcher_id"] = userId as AnyObject?
+        Alamofire.request(url , method:.post, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            .responseJSON { response in
+                print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                switch response.result {
+                case .success:
+                    if let data = response.result.value as? [String:Any]{
+                        if let flag = data["flag"] as? String{
+                            if flag == "0" {
+                                self.showToast(message: "fail to Add to favourite")
+                            }else{
+                                self.showToast(message: "success to Add to favourite")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                    let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+        }
+    }
+    func deleteFavourite(){
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        var userId = UserDefaults.standard.value(forKey: "user_id") as? String
+        let url = Constant.baseURL + Constant.URIDeleteFavourite + "\(self.id)"
+        Alamofire.request(url , method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            .responseJSON { response in
+                print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                switch response.result {
+                case .success:
+                    if let data = response.result.value as? [String:Any]{
+                        if let flag = data["flag"] as? String{
+                            if flag == "0" {
+                                self.showToast(message: "fail to delete from favourite")
+                            }else{
+                                self.showToast(message: "success to delete from favourite")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                    let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
         }
     }
     func createRating(){
@@ -281,6 +377,40 @@ class DetailBusinessViewController: UIViewController {
         })
         
     }
+    func deleteFavourite(businesId:Int){
+        var userId = UserDefaults.standard.value(forKey: "user_id") as? String
+        let url = Constant.baseURL + "favoirtes/ " + "\(userId!)/\(businesId) "
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        
+        Alamofire.request(url , method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            .responseJSON { response in
+                print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                switch response.result {
+                case .success:
+                    
+                    if let data = response.result.value as? [String:Any]{
+                        if let flag = data["flag"] as? String {
+                            if flag == "0"{
+                                self.showToast(message: "fail delete favourite")
+                            }else{
+                               
+                                
+                                self.showToast(message: "success delete favourite")
+                            }
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                    let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -290,7 +420,27 @@ class DetailBusinessViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    //MARK:IBAction
+    
 
+    @IBAction func favouriteBtnAction(_ sender: Any) {
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        
+        if networkExist == true {
+            if favourite == true {
+                insertFavourite()
+            }else{
+                deleteFavourite(businesId:id!)
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+       
+    }
 }
 extension DetailBusinessViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func numberOfSections(in collectionView: UICollectionView) -> Int {

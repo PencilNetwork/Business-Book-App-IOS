@@ -8,7 +8,7 @@
 
 import Foundation
 class Constant {
-    public static var baseURL = "https://pencilnetwork.com/bussines_book/api/"
+    public static var baseURL = "http://pencilnetwork.com/bussines_book/api/"
     public static var urILogin = "owner/login"
     public static var URIGetBusiness = "bussines/"
     public static var URISearcherlogin = "searchers/login"
@@ -21,4 +21,11 @@ class Constant {
     public static var URIRegion = "regoins/"
     public static var URIRatings = "ratings"
     public static var URIDefaultOfferSearch = "offer/default_search/"
+    public static var URIOfferSearch = "offer/search"
+    public static var URIStatusFavourite = "favoirtes/"
+    public static var URIInsertFavourite = "favoirtes"
+    public static var URIDeleteFavourite = "favoirtes/delete/"
+    public static var URIGetInterest = "interests/"
+    public static var URICreateOffer = "offers"
+    public static var URIUploadFiles = "files/store"
 }
