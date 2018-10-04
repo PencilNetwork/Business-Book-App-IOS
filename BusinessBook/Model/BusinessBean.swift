@@ -9,7 +9,7 @@
 import Foundation
 class BusinessBean{
     var address:String?
-    var average_Rating:String?
+    var average_Rating:Double?
     var category:CategoryBean?
     var city:String?
     var contact_number:String?

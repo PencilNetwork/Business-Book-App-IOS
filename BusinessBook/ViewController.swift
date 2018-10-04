@@ -14,12 +14,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var seaImg: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        perform(#selector(showNavigation),with:nil,afterDelay:2)
-        // Do any additional setup after loading the view, typically from a nib.
+//         if UserDefaults.standard.value(forKey: "logout") as? Bool == true {
+//            performSegue(withIdentifier: "showNavigation", sender: self)
+//         }else{
+//            perform(#selector(showNavigation),with:nil,afterDelay:2)
+//        }
         
+        // Do any additional setup after loading the view, typically from a nib.
+         self.navigationController?.isNavigationBarHidden = true
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        if UserDefaults.standard.value(forKey: "logout") as? Bool == true {
+            performSegue(withIdentifier: "showNavigation", sender: self)
+        }else{
+            perform(#selector(showNavigation),with:nil,afterDelay:2)
+        }
        self.shipImg.alpha = 0
       
 //        UIView.animate(withDuration: 4, delay: 0.08, options: [.repeat, .curveLinear], animations: {
@@ -55,8 +70,20 @@ class ViewController: UIViewController {
     }
 
     @objc func showNavigation(){
+    
          if UserDefaults.standard.value(forKey: "Login") as? Bool == true {
-            performSegue(withIdentifier: "showNavigation", sender: self)
+            if UserDefaults.standard.value(forKey: "LoginEnter") as? Bool == false || UserDefaults.standard.value(forKey: "LoginEnter")  == nil {//logout
+              performSegue(withIdentifier: "showNavigation", sender: self)
+            }else{
+                if UserDefaults.standard.value(forKey: "userType") as? String == "Business"{
+                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "BusinessProfileViewController") as! BusinessProfileViewController
+
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
+                    self.navigationController?.pushViewController(vc!, animated: true)
+                }
+            }
          }else{
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewController = storyBoard.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController

@@ -164,10 +164,10 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         var parameter :[String:AnyObject] = [String:AnyObject]()
-        parameter["name"] =  name as AnyObject?
-        parameter["social_id"] = id as AnyObject?
+        parameter["name"] =  name! as AnyObject?
+        parameter["social_id"] = id! as AnyObject?
         if email != nil  {
-            parameter["email"] = email as AnyObject?
+            parameter["email"] = email! as AnyObject?
         }
         parameter["token"] = "token" as  AnyObject?
         let url = Constant.baseURL + Constant.URISearcherlogin
@@ -189,11 +189,13 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
                             }
                         }
                         if let data  = datares["data"] as? [String:Any]{
+                            UserDefaults.standard.set("user", forKey: "userType")
+                            UserDefaults.standard.set(true, forKey: "LoginEnter")
                             if let id = data["id"] as? Int {
                                 UserDefaults.standard.set("\(id)", forKey: "user_id")
                                 if let interest = data["interest"] as? [String:Any]{
                                     
-                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as? UserHomeViewController
+                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
                                     self.navigationController?.pushViewController(vc!, animated: true)
                                     
                                     //

@@ -94,7 +94,7 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
                     }
                     
             },
-                to: "https://pencilnetwork.com/bussines_book/api/offers/\(imageId)",
+                to: Constant.baseURL + "offers/\(imageId)",
                 method:.post,
                 encodingCompletion: { encodingResult in
                   
@@ -141,7 +141,7 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
         if networkExist == true {
             self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
-            Alamofire.request("https://pencilnetwork.com/bussines_book/api/offers/\(imageId)", method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+            Alamofire.request(Constant.baseURL + "offers/\(imageId)", method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
                     self.activityIndicator.stopAnimating()

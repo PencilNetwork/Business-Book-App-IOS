@@ -93,5 +93,11 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
       cell.name.text = categoryList[indexPath.row].name
         return cell
     }
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as! UserHomeViewController
+        vc.searchCategory = true
+        vc.categoryId = categoryList[indexPath.row].id!
+        self.addChildViewController(vc)
+        self.view.addSubview(vc.view)
+    }
 }

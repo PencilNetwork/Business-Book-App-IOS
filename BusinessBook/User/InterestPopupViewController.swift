@@ -48,6 +48,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
          setTable()
    getCity()
         getCategory()
+        hideKeyboardWhenTappedAround()
 //        self.searchBar.layer.borderColor = UIColor.red.cgColor
 //        self.searchBar.layer.borderWidth = 1
         styleSearchBar(searchBar:searchBar)
@@ -105,7 +106,10 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
         }
       
     }
- 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        self.navigationController?.isNavigationBarHidden = false
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == categCollectionView {
             
@@ -195,23 +199,173 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView == cityCollectionView{
-              return CGSize(width: view.frame.width/3 , height: 60)
+            let captionTextWidth = ((view.frame.width - 40 )/2)
+            let size = CGSize(width:captionTextWidth,height:1000)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
+            if city[indexPath.row].name != "" && city[indexPath.row].name != nil {
+                let estimateFrame = NSString(string: city[indexPath.row].name!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 20
+                return CGSize(width: (view.frame.width - 10 )/2 , height: height)
+            }else{
+                let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 30
+                //  return CGSize(width: 133, height: height)
+                return CGSize(width: (view.frame.width - 10)/3 , height: height)
+            }
+//              return CGSize(width: view.frame.width/3 , height: 60)
+        }else if collectionView == regionCollectionView {
+            let captionTextWidth = ((view.frame.width - 40 )/3)
+            let size = CGSize(width:captionTextWidth,height:1000)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
+            if region[indexPath.row].name != "" && region[indexPath.row].name != nil {
+                let estimateFrame = NSString(string: region[indexPath.row].name!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 20
+                return CGSize(width: (view.frame.width - 10 )/3 , height: height)
+            }else{
+                let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 30
+                //  return CGSize(width: 133, height: height)
+                return CGSize(width: (view.frame.width - 10)/3 , height: height)
+            }
+            
+        }else{
+            let captionTextWidth = ((view.frame.width - 40 )/3)
+            let size = CGSize(width:captionTextWidth,height:1000)
+            let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
+            if category[indexPath.row].name != "" && category[indexPath.row].name != nil {
+                let estimateFrame = NSString(string: category[indexPath.row].name!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 20
+                return CGSize(width: (view.frame.width - 10 )/3 , height: height)
+            }else{
+                let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                let height  = estimateFrame.height + 30
+                //  return CGSize(width: 133, height: height)
+                return CGSize(width: (view.frame.width - 10)/3 , height: height)
+            }
         }
         
-            return CGSize(width: view.frame.width/4 , height: 50)
+          
         }
     //MARK: Delegate function
-    func changecheckBox(index: Int, flag: Bool) {
-        category[index].checkbox = flag
-        categCollectionView.reloadData()
+    func changecheckBox(index: Int, flag: Bool) { //category
+          var countcateg = 0
+        if isSearching1{
+            if flag == true {
+                for item in filterData1{
+                    if item.checkbox == true{
+                        countcateg = countcateg + 1
+                    }
+                }
+                if countcateg >= 7 {
+                    let alert = UIAlertController(title: "", message: "Maxium number of selected category 7 " , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    filterData1[index].checkbox = flag
+                }
+                categCollectionView.reloadData()
+            }else{ // false
+                
+                filterData1[index].checkbox = flag
+                categCollectionView.reloadData()
+            }
+            
+        }else{
+            if flag == true {
+                for item in category{
+                    if item.checkbox == true{
+                        countcateg = countcateg + 1
+                    }
+                }
+                if countcateg >= 7 {
+                    let alert = UIAlertController(title: "", message: "Maxium number of selected category 7 " , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    category[index].checkbox = flag
+                }
+                categCollectionView.reloadData()
+            }else{ // false
+                
+                category[index].checkbox = flag
+                categCollectionView.reloadData()
+            }
+        }
+       
     }
+    
     func changeCitycheckBox(index:Int,flag:Bool){
-        city[index].checkbox = flag
-        cityCollectionView.reloadData()
+        if isSearching2 {
+            filterData2[index].checkbox = flag
+            for i in 0..<filterData2.count {
+                if i != index {
+                    if flag == true {
+                        filterData2[i].checkbox = false
+                    }
+                }
+            }
+            if flag == true {
+                getRegion(cityId:filterData2[index].id!)
+            }
+            cityCollectionView.reloadData()
+        }else{
+            city[index].checkbox = flag
+            for i in 0..<city.count {
+                if i != index {
+                    if flag == true {
+                        city[i].checkbox = false
+                    }
+                }
+            }
+            if flag == true {
+                getRegion(cityId:city[index].id!)
+            }
+            cityCollectionView.reloadData()
+        }
+      
     }
     func changeRegioncheckBox(index:Int,flag:Bool){
-        region[index].checkbox = flag
-        regionCollectionView.reloadData()
+        var countRegion = 0
+        if issearching3 {
+            if flag == true {
+                for item in filterData3{
+                    if item.checkbox == true {
+                        countRegion = countRegion + 1
+                    }
+                }
+                if countRegion >= 3{
+                    let alert = UIAlertController(title: "", message: "Maxium number of selected Region 3" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    filterData3[index].checkbox = flag
+                }
+                regionCollectionView.reloadData()
+            }else{
+                filterData3[index].checkbox = flag
+                regionCollectionView.reloadData()
+            }
+        }else{
+            if flag == true {
+                for item in region{
+                    if item.checkbox == true {
+                        countRegion = countRegion + 1
+                    }
+                }
+                if countRegion >= 3{
+                    let alert = UIAlertController(title: "", message: "Maxium number of selected Region 3" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    region[index].checkbox = flag
+                }
+                regionCollectionView.reloadData()
+            }else{
+                region[index].checkbox = flag
+                regionCollectionView.reloadData()
+            }
+        }
+       
     }
     //MARK:Function
     func sendCondition()->Bool {
@@ -329,16 +483,16 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                     }
                 }
             }
-        parameter["city"] = "\(selectedCity)" as? AnyObject
+        parameter["city_id"] = "\(selectedCity)" as? AnyObject
             var categString = ""
              if isSearching1 {
                 for i in 0..<filterData1.count{
                     if filterData1[i].checkbox == true{
-                        if i ==  filterData1.count - 1{
-                            categString = categString + "\(filterData1[i].id)"
+                        if categString == ""{
+                            categString = categString + "\(filterData1[i].id!)"
                             
                         }else{
-                            categString = categString + "\(filterData1[i].id)" + ","
+                            categString = categString + "," + "\(filterData1[i].id!)"
                         }
                         
                     }
@@ -346,42 +500,42 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
               
              }else{
                 for i in 0..<category.count{
-                    if category[i].checkbox == true{
-                        if i ==  category.count - 1{
-                            categString = categString + "\(category[i].id)"
-                            
+                     if category[i].checkbox == true{
+                          if categString == ""{
+                            categString = categString + "\(category[i].id!)"
                         }else{
-                            categString = categString + "\(category[i].id)" + ","
+                            categString = categString + "," + "\(category[i].id!)"
                         }
                         
                     }
                 }
             }
-        parameter["categories"] = categString as? AnyObject
+            print("categString\(categString)")
+        parameter["categories_ids"] = categString as? AnyObject
             var regionString = ""
             if issearching3 {
                 for i in 0..<filterData3.count{
                     if filterData3[i].checkbox == true {
-                        if i == filterData3.count - 1 {
-                            regionString = regionString +  "\(filterData3[i].id)"
+                        if regionString == "" {
+                            regionString = regionString +  "\(filterData3[i].id!)"
                         }else{
-                            regionString = regionString +  "\(filterData3[i].id)"  + ","
+                            regionString = regionString + "," +  "\(filterData3[i].id!)"
                         }
                     }
                 }
             }else{
                 for i in 0..<region.count{
                     if region[i].checkbox == true {
-                        if i == region.count - 1 {
-                            regionString = regionString +  "\(region[i].id)"
+                        if  regionString == "" {
+                            regionString = regionString +  "\(region[i].id!)"
                         }else{
-                            regionString = regionString +  "\(region[i].id)"  + ","
+                            regionString = regionString  + "," +  "\(region[i].id!)"
                         }
                     }
                 }
             }
-            
-            parameter["regoins"] = regionString as AnyObject
+            print("regionString\(regionString)")
+            parameter["regoins_ids"] = regionString as AnyObject
         if networkExist == true {
             let url = Constant.baseURL + Constant.URIInterests
             Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
@@ -394,8 +548,8 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                         if let datares = response.result.value as? [String:Any]{
                             if let flag = datares["flag"] as? String{
                                 if flag == "1"{
-                                    self.view.removeFromSuperview()
-                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as? UserHomeViewController
+                                     self.view.removeFromSuperview()
+                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
                                     self.navigationController?.pushViewController(vc!, animated: true)
                                 }else{
                                     let alert = UIAlertController(title: "", message: " fail" , preferredStyle: UIAlertControllerStyle.alert)
@@ -525,7 +679,8 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                     self.activityIndicator.isHidden = true
                     switch response.result {
                     case .success:
-                        if let data = response.result.value as? [[String:Any]]{
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
                             for item in data {
                                 let city = Interest()
                                 if let id = item["id"] as? Int {
@@ -537,7 +692,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                                 self.city.append(city)
                             }
                             self.cityCollectionView.reloadData()
-                            
+                            }
                         }
                     case .failure(let error):
                         print(error)
@@ -555,22 +710,18 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             self.present(alert, animated: true, completion: nil)
         }
     }
-    func getRegion(){
-        var citySelectedId:Int = -1
-        for item in city{
-            if item.checkbox == true {
-                citySelectedId = item.id!
-            }
-        }
+    func getRegion(cityId:Int){
+        region = []
+       
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
             
-            if city.count > 0 && citySelectedId != -1 {
+            if city.count > 0  {
                 activityIndicator.isHidden = false
                 activityIndicator.startAnimating()
-                let url = Constant.baseURL + Constant.URIRegion + "\(citySelectedId)"
+                let url = Constant.baseURL + Constant.URIRegion + "\(cityId)"
                 Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                     .responseJSON { response in
                         print(response)
@@ -578,7 +729,8 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                         self.activityIndicator.isHidden = true
                         switch response.result {
                         case .success:
-                            if let data = response.result.value as? [[String:Any]]{
+                            if let datares = response.result.value as? [String:Any]{
+                                if let data = datares["data"] as? [Dictionary<String,Any>]{
                                 for item in data {
                                     let regio = RegionBean()
                                     if let id = item["id"] as? Int {
@@ -592,8 +744,9 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                                     }
                                     self.region.append(regio)
                                 }
-                                
+                               
                                 self.regionCollectionView.reloadData()
+                                     }
                             }
                         case .failure(let error):
                             print(error)
@@ -627,6 +780,9 @@ extension InterestPopupViewController:UISearchBarDelegate{
             
             if searchBar.text == nil || searchBar.text == "" {
                 isSearching1 = false
+                for item in category{
+                    item.checkbox = false
+                }
                 view.endEditing(true)
                 categCollectionView.reloadData()
             }else{
@@ -654,6 +810,9 @@ extension InterestPopupViewController:UISearchBarDelegate{
           }else if searchBar == citySearchBar{
             if searchBar.text == nil || searchBar.text == "" {
                 isSearching2 = false
+                for item in city{
+                    item.checkbox = false
+                }
                 view.endEditing(true)
                 cityCollectionView.reloadData()
             }else{
@@ -682,6 +841,9 @@ extension InterestPopupViewController:UISearchBarDelegate{
             
             if searchBar.text == nil || searchBar.text == "" {
                 issearching3 = false
+                for item in region {
+                    item.checkbox = false
+                }
                 view.endEditing(true)
                 regionCollectionView.reloadData()
             }else{
@@ -705,5 +867,12 @@ extension InterestPopupViewController:UISearchBarDelegate{
             
         }
     }
-    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

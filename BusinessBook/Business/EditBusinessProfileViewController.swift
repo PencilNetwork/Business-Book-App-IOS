@@ -19,7 +19,12 @@ protocol ChangeImageDelegate{
 }
 
 class EditBusinessProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,ChangeImageDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDelegateFlowLayout,SendImageDelegate, UIPickerViewDelegate, UIPickerViewDataSource,MapDelegate{
-    
+    @IBOutlet weak var cityDoneBtn: UIButton!
+    @IBOutlet weak var regionBtnDone: UIButton!
+    @IBOutlet weak var regionPickerView: UIPickerView!
+    @IBOutlet weak var cityPickerView: UIPickerView!
+    @IBOutlet weak var cityBtn: UIButton!
+    @IBOutlet weak var regionBtn: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var googleMapsView: GMSMapView!
     @IBOutlet weak var confirmBtn: UIButton!
@@ -47,6 +52,10 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
      var relatedFileList:[RelatedFilesBean] = []
      var categoryList:[CategoryBean] = []
     var categSelected = -1
+    var citySelected = -1
+    var regionSelected = -1
+    var defaultRegionId :Int = -1
+    var defaultCityId:Int = -1
      var pickerController = UIImagePickerController()
     var index:Int?
         var imageflag:Bool = false
@@ -56,6 +65,8 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
     var region:String = ""
     var city:String = ""
     var oldCategory:CategoryBean = CategoryBean()
+    var regionList:[RegionBean] = []
+    var cityList :[Interest] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(editLogoFunc))
@@ -99,6 +110,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             self.present(alert, animated: true, completion: nil)
         }
           NotificationCenter.default.addObserver(self, selector: #selector(refresh(_:)), name: NSNotification.Name(rawValue: "refresh"), object: nil)
+        getCity()
     }
 
     override func didReceiveMemoryWarning() {
@@ -178,6 +190,43 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         viewController.mapDelegate = self
         self.navigationController?.pushViewController(viewController, animated: false)
         
+    }
+    @IBAction func cityDoneBtnAction(_ sender: Any) {
+         regionBtn.setTitle("region", for: .normal)
+        cityPickerView.isHidden = true
+        cityDoneBtn.isHidden = true
+        if cityList.count > 0 {
+            if citySelected == -1 {
+                citySelected = 0
+                cityBtn.setTitle(cityList[0].name, for: .normal)
+                
+            }else{
+                cityBtn.setTitle(cityList[citySelected].name, for: .normal)
+            }
+            getRegion(cityId: cityList[citySelected].id!)
+        }
+        
+    }
+    
+    @IBAction func regionDoneAction(_ sender: Any) {
+        regionPickerView.isHidden = true
+        regionBtnDone.isHidden = true
+        if regionList.count > 0 {
+            if regionSelected == -1 {
+                regionSelected = 0
+                regionBtn.setTitle(regionList[0].name, for: .normal)
+            }else{
+                regionBtn.setTitle(regionList[regionSelected].name, for: .normal)
+            }
+        }
+    }
+    @IBAction func regionBtnAction(_ sender: Any) {
+        regionPickerView.isHidden = !regionPickerView.isHidden
+        regionBtnDone.isHidden = !regionBtnDone.isHidden
+    }
+    @IBAction func cityBtnAction(_ sender: Any) {
+        cityPickerView.isHidden = !cityPickerView.isHidden
+        cityDoneBtn.isHidden = !cityDoneBtn.isHidden
     }
     //Mark:function
     
@@ -472,6 +521,117 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
        
     }
       //MARK: function
+    func getRegion(cityId:Int){
+        regionList = []
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        regionBtn.isEnabled = false
+        if networkExist == true {
+            
+            if cityList.count > 0 && citySelected != -1 || defaultCityId != -1  {
+                activityIndicator.isHidden = false
+                activityIndicator.startAnimating()
+                let url = Constant.baseURL + Constant.URIRegion + "\(cityId)"
+                Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+                    .responseJSON { response in
+                        print(response)
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                        switch response.result {
+                        case .success:
+                            if let datares = response.result.value as? [String:Any]{
+                                if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                    for item in data {
+                                        let region = RegionBean()
+                                        if let id = item["id"] as? Int {
+                                            region.id = id
+                                        }
+                                        if let name = item["name"] as? String{
+                                            region.name = name
+                                        }
+                                        if let cityId = item["city_id"] as? Int{
+                                            region.cityId = cityId
+                                        }
+                                        self.regionList.append(region)
+                                    }
+                                    self.regionBtn.isEnabled = true
+                                    self.regionPickerView.delegate = self
+                                    self.regionPickerView.dataSource = self
+                                }
+                                
+                            }
+                        case .failure(let error):
+                            print(error)
+                            
+                            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            
+                        }
+                }
+            }else{
+                let alert = UIAlertController(title: "", message: "select city" , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    func getCity(){
+        cityList = []
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        
+        if networkExist == true {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            let url = Constant.baseURL + Constant.URICities
+            Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+                .responseJSON { response in
+                    print(response)
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    switch response.result {
+                    case .success:
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                for item in data {
+                                    let city = Interest()
+                                    if let id = item["id"] as? Int {
+                                        city.id = id
+                                    }
+                                    if let name = item["name"] as? String{
+                                        city.name = name
+                                    }
+                                    self.cityList.append(city)
+                                    
+                                }
+                                self.cityPickerView.delegate = self
+                                self.cityPickerView.dataSource = self
+                                
+                            }
+                            
+                        }
+                    case .failure(let error):
+                        print(error)
+                        
+                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     func checkTxtField()->Bool{
         var validFlag = true
         if userNametxt.text == "" {
@@ -602,19 +762,50 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if categoryList.count > 0 {
-        return categoryList.count
-        }else{
-            return 0
-        }
+          if pickerView == self.pickerView {
+              if categoryList.count > 0 {
+                 return categoryList.count
+              }else{
+                return 0
+              }
+        }else if pickerView == cityPickerView {
+             if cityList.count > 0 {
+                return cityList.count
+             }else{
+                return 0
+             }
+    }else{
+           if regionList.count > 0 {
+              return regionList.count
+           }else{
+              return 0
+          }
+       }
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categoryList[row].name
-        
+          if pickerView == self.pickerView {
+             return categoryList[row].name
+          }else if pickerView == cityPickerView {
+             return cityList[row].name
+         }else{
+            return regionList[row].name
+        }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        categSelected = row
-        categoryBtn.setTitle(categoryList[row].name, for: .normal)
+        if pickerView == self.pickerView {
+           categSelected = row
+           categoryBtn.setTitle(categoryList[row].name, for: .normal)
+      }else if pickerView == cityPickerView{
+           citySelected = row
+           cityBtn.setTitle(cityList[row].name, for: .normal)
+    
+    
+          regionBtn.setTitle("region", for: .normal)
+    }else{
+         regionSelected = row
+         regionBtn.setTitle(regionList[row].name, for: .normal)
+    
+    }
     }
     func sendData(){
        
@@ -632,6 +823,25 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
           }else{
               categId =  "\(oldCategory.id!)"
         }
+        
+        var cityId:Int = 0
+        if citySelected != -1 { // change city
+           cityId  = cityList[citySelected].id!
+            defaultRegionId = -1
+        }else{
+            cityId = defaultCityId
+        }
+        var regionId = ""
+        if regionSelected != -1 {
+            regionId = "\(regionList[regionSelected].id!)"
+        }else{ //
+            if  defaultRegionId ==  -1 { // change city and not select tregion
+                regionId = ""
+            }else{ // donot change city and region
+                 regionId = "\(defaultRegionId)"
+            }
+            
+        }
         //https://pencilnetwork.com/bussines_book/api/
         Alamofire.upload(
             multipartFormData: { multipartFormData in
@@ -640,8 +850,8 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                 
                 multipartFormData.append(((desc).data(using: .utf8)!), withName: "description")
                 multipartFormData.append(((contactNo).data(using: .utf8)!), withName: "contact_number")
-                multipartFormData.append(((self.city).data(using: .utf8)!), withName: "city")
-                multipartFormData.append(((self.region).data(using: .utf8)!), withName: "regoin")
+                multipartFormData.append((("\(cityId)").data(using: .utf8)!), withName: "city_id")
+                multipartFormData.append(((regionId).data(using: .utf8)!), withName: "regoin_id")
                 multipartFormData.append(((addrestxt).data(using: .utf8)!), withName: "address")
                  multipartFormData.append((("\(self.lat)").data(using: .utf8)!), withName: "lattitude")
                 multipartFormData.append((("\(self.long)").data(using: .utf8)!), withName: "langitude")
@@ -693,6 +903,8 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         )
     }
     func getData(){
+        defaultRegionId  = -1
+         defaultCityId = -1
         //https://pencilnetwork.com/bussines_book/api/bussines/{bussines}
 //        self.activityIndicator.isHidden = false
 //        self.activityIndicator.startAnimating()
@@ -715,6 +927,21 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                             }
                             if let address = data["address"] as? String{
                                 self.addressTxt.text = address
+                            }
+                            if let city = data["city"] as? String{
+                                self.cityBtn.setTitle(city, for: .normal)
+                            }
+                            if let city_id = data["city_id"] as? Int {
+                                self.defaultCityId = city_id
+                            }
+                            if let region = data["regoin"] as? [String:Any]{
+                                var reg = RegionBean()
+                                if let id = region["id"] as? Int{
+                                   self.defaultRegionId = id
+                                }
+                                if let name = region["name"] as? String{
+                                    self.regionBtn.setTitle(name, for: .normal)
+                                }
                             }
                             if let contact_number = data["contact_number"]as? String{
                                 self.contactTxt.text = contact_number
@@ -777,6 +1004,8 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                         marker.position = CLLocationCoordinate2D(latitude: self.lat, longitude: self.long)
                         self.getAddressFromLatLon(pdblLatitude: self.lat, withLongitude: self.long,marker: marker)
                         marker.map = self.googleMapsView
+                        
+                        self.getRegion(cityId:self.defaultCityId)
                     }
                 case .failure(let error):
                     print(error)

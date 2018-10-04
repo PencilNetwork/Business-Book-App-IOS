@@ -48,16 +48,25 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
               self.view.removeFromSuperview()
         }else if  indexPath.row == 4{
               self.view.removeFromSuperview()
-            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-            for aViewController in viewControllers {
-                if aViewController is LoginViewController {
-                    self.navigationController!.popToViewController(aViewController, animated: true)
-                }
-            }
+            UserDefaults.standard.set("", forKey: "userType")
+            UserDefaults.standard.set(false, forKey: "LoginEnter")
+            UserDefaults.standard.set(true,forKey: "logout")
+             AppDelegate.menu_bool = true
+         self.navigationController?.popToRootViewController( animated: false )
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController
+//            self.navigationController?.pushViewController(vc!, animated: true)
+//            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+//            for aViewController in viewControllers {
+//                if aViewController is HomeViewController {
+//                    UserDefaults.standard.set("", forKey: "userType")
+//                    UserDefaults.standard.set(false, forKey: "LoginEnter")
+//                    self.navigationController!.popToViewController(aViewController, animated: true)
+//                }
+//            }
         }
       
 //        print(AppDelegate.menu_bool)
-//        AppDelegate.menu_bool = true
+   
       
       //
     }

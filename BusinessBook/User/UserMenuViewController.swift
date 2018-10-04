@@ -57,12 +57,19 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
             self.view.removeFromSuperview()
         }else if  indexPath.row == 4{
             self.view.removeFromSuperview()
-            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-            for aViewController in viewControllers {
-                if aViewController is UserLoginViewController {
-                    self.navigationController!.popToViewController(aViewController, animated: true)
-                }
-            }
+            UserDefaults.standard.set("", forKey: "userType")
+            UserDefaults.standard.set(false, forKey: "LoginEnter")
+            UserDefaults.standard.set(true,forKey: "logout")
+            AppDelegate.userMenu_bool = true
+            self.navigationController?.popToRootViewController( animated: false )
+//            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+//            for aViewController in viewControllers {
+//                if aViewController is HomeViewController {
+//                    UserDefaults.standard.set("", forKey: "userType")
+//                    UserDefaults.standard.set(false, forKey: "LoginEnter")
+//                    self.navigationController!.popToViewController(aViewController, animated: true)
+//                }
+//            }
         }
        
     }

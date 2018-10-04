@@ -42,12 +42,13 @@ class DetailBusinessViewController: UIViewController {
     var favourite :Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         relatedFileCollectionView.dataSource = self
         relatedFileCollectionView.delegate = self
         offerCollectionView.dataSource = self
         offerCollectionView.delegate = self
         busRatingView.isEnabled = false
-      NotificationCenter.default.addObserver(self, selector: #selector(SendBusID(_:)), name: NSNotification.Name(rawValue: "SendBusID"), object: nil)
+     // NotificationCenter.default.addObserver(self, selector: #selector(SendBusID(_:)), name: NSNotification.Name(rawValue: "SendBusID"), object: nil)
         rateUsView.addTarget(self, action: #selector(tapFunction), for: .valueChanged)
         // Do any additional setup after loading the view.
     }
@@ -72,16 +73,17 @@ class DetailBusinessViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-      @objc func SendBusID(_ notification: NSNotification){
-        if let dict = notification.userInfo as NSDictionary? {
-            if let id = dict["id"] as? Int{
-                print("id = \(id)")
-                self.id = id
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        getDatasID()
+    }
+    func getDatasID(){
+        
                 let network = Network()
                 let networkExist = network.isConnectedToNetwork()
                 
                 if networkExist == true {
-                   getData(busId:id)
+                    getData(busId:id!)
                     getFavourite()
                 }else{
                     
@@ -90,15 +92,15 @@ class DetailBusinessViewController: UIViewController {
                     self.present(alert, animated: true, completion: nil)
                 }
                
-            }
+        
         }
-    }
+    
     func getFavourite(){
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
          var userId = UserDefaults.standard.value(forKey: "user_id") as? String
         //https://pencilnetwork.com/bussines_book/api/favoirtes/searcher_id/bussines_id
-        let url = Constant.baseURL + Constant.URIStatusFavourite + userId! + "\(self.id!)"
+        let url = Constant.baseURL + Constant.URIStatusFavourite + userId! + "/\(self.id!)"
         Alamofire.request(url , method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -132,9 +134,9 @@ class DetailBusinessViewController: UIViewController {
         var userId = UserDefaults.standard.value(forKey: "user_id") as? String
         let url = Constant.baseURL + Constant.URIInsertFavourite
           var parameter :[String:AnyObject] = [String:AnyObject]()
-         parameter["bussines_id"] =  "\(id)" as AnyObject?
-         parameter["searcher_id"] = userId as AnyObject?
-        Alamofire.request(url , method:.post, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+         parameter["bussines_id"] =  "\(id!)" as AnyObject?
+         parameter["searcher_id"] = userId! as AnyObject?
+        Alamofire.request(url , method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
                 self.activityIndicator.stopAnimating()
@@ -145,55 +147,30 @@ class DetailBusinessViewController: UIViewController {
                         if let flag = data["flag"] as? String{
                             if flag == "0" {
                                 self.showToast(message: "fail to Add to favourite")
+                                self.favourite = false
                             }else{
+                                self.favouriteBtn.setImage(UIImage(named: "heart.png"), for: .normal)
                                 self.showToast(message: "success to Add to favourite")
                             }
                         }
                     }
                 case .failure(let error):
                     print(error)
+                     self.favourite = false
                     let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
         }
     }
-    func deleteFavourite(){
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-        var userId = UserDefaults.standard.value(forKey: "user_id") as? String
-        let url = Constant.baseURL + Constant.URIDeleteFavourite + "\(self.id)"
-        Alamofire.request(url , method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
-            .responseJSON { response in
-                print(response)
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-                switch response.result {
-                case .success:
-                    if let data = response.result.value as? [String:Any]{
-                        if let flag = data["flag"] as? String{
-                            if flag == "0" {
-                                self.showToast(message: "fail to delete from favourite")
-                            }else{
-                                self.showToast(message: "success to delete from favourite")
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    print(error)
-                    let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
-        }
-    }
+   
     func createRating(){
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
         var parameter :[String:AnyObject] = [String:AnyObject]()
-        parameter["bussine_id"] =  "\(id)" as AnyObject?
+        parameter["bussines_id"] =  "\(id!)" as AnyObject?
         var userId = UserDefaults.standard.value(forKey: "user_id") as? String
-        parameter["searcher_id"] = userId as AnyObject?
+        parameter["searcher_id"] = userId! as AnyObject?
         parameter["rating"] = "\(rateUsView.value)" as AnyObject?
         let url = Constant.baseURL + Constant.URIRatings
         Alamofire.request(url , method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
@@ -239,6 +216,9 @@ class DetailBusinessViewController: UIViewController {
                             if let description = data["description"] as? String{
                                 self.businessDescription.text = description
                             }
+                            if let average_rating = data["average_rating"] as? Double {
+                                self.busRatingView.value = CGFloat(average_rating)
+                            }
                             if let name = data["name"] as? String {
                                 self.businessName.text = name
                             }
@@ -255,10 +235,14 @@ class DetailBusinessViewController: UIViewController {
                                 self.contactNO.text = contact_number
                             }
                             if let langitude = data["langitude"] as? String{
-                             //   self.long = Double(langitude)!
+                                if Double(langitude) != nil {
+                                   self.long = Double(langitude)!
+                                }
                             }
                             if let lattitude = data["lattitude"] as? String{
-                               // self.lat = Double(lattitude)!
+                                if   Double(lattitude) != nil {
+                                    self.lat = Double(lattitude)!
+                                }
                             }
                             
                             if let category = data["category"] as? [String:Any]{
@@ -379,10 +363,11 @@ class DetailBusinessViewController: UIViewController {
     }
     func deleteFavourite(businesId:Int){
         var userId = UserDefaults.standard.value(forKey: "user_id") as? String
-        let url = Constant.baseURL + "favoirtes/ " + "\(userId!)/\(businesId) "
+    //    let url = Constant.baseURL + "favoirtes/ " + "\(userId!)/\(businesId) "
+         let url = Constant.baseURL + Constant.URIDeleteFavourite + userId! + "/\(self.id!)"
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
-        
+        print(url)
         Alamofire.request(url , method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -395,9 +380,10 @@ class DetailBusinessViewController: UIViewController {
                         if let flag = data["flag"] as? String {
                             if flag == "0"{
                                 self.showToast(message: "fail delete favourite")
+                                 self.favourite = true
                             }else{
                                
-                                
+                                 self.favouriteBtn.setImage(UIImage(named: "emptyheart.png"), for: .normal)
                                 self.showToast(message: "success delete favourite")
                             }
                         }
@@ -405,6 +391,7 @@ class DetailBusinessViewController: UIViewController {
                     
                 case .failure(let error):
                     print(error)
+                     self.favourite = true
                     let alert = UIAlertController(title: "", message: error.localizedDescription as! String, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
@@ -424,6 +411,7 @@ class DetailBusinessViewController: UIViewController {
     
 
     @IBAction func favouriteBtnAction(_ sender: Any) {
+        favourite = !favourite
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         

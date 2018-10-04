@@ -23,7 +23,7 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         segmentControl.layer.cornerRadius = 10
-        
+        self.navigationController?.isNavigationBarHidden = false
 //        let myimage = UIImage(named: "search.png")?.withRenderingMode(.alwaysOriginal)
 //        let menu = UIBarButtonItem(image: myimage, style: .plain, target: self, action: #selector(ButtonTapped))
 //        self.navigationItem.leftBarButtonItem = menu
@@ -101,6 +101,7 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
         AppDelegate.menu_bool = true
     }
     func menuActionDelegate(number:Int){
+        AppDelegate.menu_bool = true
         if number == 2{
            view3.isHidden = false
              view4.isHidden = true

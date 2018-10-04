@@ -17,6 +17,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var userNameTxt: UITextField!
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    var iconClick = true 
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.isHidden = true
@@ -40,7 +41,15 @@ class SignUpViewController: UIViewController {
     @IBAction func backBtnAction(_ sender: Any) {
         self.view.removeFromSuperview()
     }
-    
+    @IBAction func iconAction(sender: AnyObject) {
+        if(iconClick == true) {
+            passwordTxt.isSecureTextEntry = false
+        } else {
+            passwordTxt.isSecureTextEntry = true
+        }
+        
+        iconClick = !iconClick
+    }
     @IBAction func ConfirmBtnAction(_ sender: Any) {
         var valid = checkTxtField()
         if valid == true {

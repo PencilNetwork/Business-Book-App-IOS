@@ -12,6 +12,8 @@ import GooglePlaces
 import Alamofire
 class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
+    @IBOutlet weak var offerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var nameLBl: UILabel!
     @IBOutlet weak var emailLBL: UILabel!
@@ -87,14 +89,14 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
          if collectionView == offerCollectionView {
-            
-            let captionTextWidth = 190
+           
+            let captionTextWidth = 150
             let size = CGSize(width:captionTextWidth,height:1000)
             let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
             if offerList[indexPath.row].caption != "" && offerList[indexPath.row].caption != nil {
             let estimateFrame = NSString(string: offerList[indexPath.row].caption!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 let height  = estimateFrame.height + 130
-                return CGSize(width: 200, height: height)
+                return CGSize(width: 160, height: height)
             }else{
                  let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 let height  = estimateFrame.height + 130
@@ -238,6 +240,16 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
                                 }
                                self.offerCollectionView.reloadData()
                             }
+                            if self.offerCollectionView.collectionViewLayout.collectionViewContentSize.height > 9000{
+                                
+                            }else{
+                                if self.offerList.count > 0 {
+                                self.offerHeightConstraint.constant = self.offerCollectionView.collectionViewLayout.collectionViewContentSize.height
+                                self.viewHeight.constant = self.offerHeightConstraint.constant + 720
+                                self.view.setNeedsLayout()
+                                }
+                            }
+                           
                             if let files = data["files"] as? [Dictionary<String,Any>]{
                                 
                                 for item in files{

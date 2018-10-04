@@ -18,6 +18,7 @@ class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,
     var favouriteList:[FavouriteBean] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
          collectionView.delegate = self
         collectionView.dataSource = self
         getFavourite()
@@ -56,8 +57,17 @@ class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,
                             if let searcher_id = item["searcher_id"] as? Int {
                                 favourite.searcher_id = searcher_id
                             }
+                            if let bussines_details = item["bussines_details"] as? Dictionary<String,Any>{
+                                if let logo = bussines_details["logo"] as? String {
+                                    favourite.image  = logo
+                                }
+                                if let name = bussines_details["name"] as? String{
+                                    favourite.name = name
+                                }
+                            }
                             self.favouriteList.append(favourite)
                             }
+                            self.collectionView.reloadData()
                         }else{
                             print("no favourite")
                         }
@@ -93,9 +103,10 @@ class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserFavouriteCollectionViewCell", for: indexPath)as? UserFavouriteCollectionViewCell
-        cell?.photo.image = UIImage(named: favouriteList[indexPath.row].image!)
+        cell?.photo.sd_setImage(with: URL(string:favouriteList[indexPath.row].image!), placeholderImage: UIImage(named: "gallery.png"))
         cell?.index = indexPath.row
-        cell?.favouriteDelegate = self 
+        cell?.favouriteDelegate = self
+        cell?.name.text = favouriteList[indexPath.row].name!
         if favouriteList[indexPath.row].favourite == true {
             
         }
@@ -110,10 +121,10 @@ class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,
     }
     func deleteFavourite(businesId:Int,index:Int){
         var userId = UserDefaults.standard.value(forKey: "user_id") as? String
-        let url = Constant.baseURL + "favoirtes/ " + "\(userId!)/\(businesId) "
+        //let url = Constant.baseURL + "favoirtes/ " + "\(userId!)/\(businesId) "
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
-        
+         let url = Constant.baseURL + Constant.URIDeleteFavourite + userId! + "/\(businesId)"
         Alamofire.request(url , method:.delete, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)

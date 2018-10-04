@@ -18,6 +18,12 @@ protocol SendImageDelegate{
 class RegisterViewController: UIViewController,SendImageDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate,MapDelegate{
     //MARK:IBOUtlet
     
+    @IBOutlet weak var cityDoneBtn: UIButton!
+    @IBOutlet weak var regionBtnDone: UIButton!
+    @IBOutlet weak var regionPickerView: UIPickerView!
+    @IBOutlet weak var cityPickerView: UIPickerView!
+    @IBOutlet weak var cityBtn: UIButton!
+    @IBOutlet weak var regionBtn: UIButton!
     @IBOutlet weak var activityindicator: UIActivityIndicatorView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     @IBOutlet weak var confirmBtn: UIButton!
@@ -39,6 +45,8 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
     var imageflag:Bool = false
     var categoryList:[CategoryBean] = []
     var categSelected = -1
+    var citySelected = -1
+    var regionSelected = -1
    var locationManager = CLLocationManager()
     var lat:Double? = 0
     var long:Double? = 0
@@ -51,6 +59,8 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
     var address:String? = ""
     var photoImg:UIImage?
     var logoImg:UIImage?
+    var regionList:[RegionBean] = []
+      var cityList :[Interest] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         activityindicator.isHidden = true
@@ -80,7 +90,8 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
          contactNo.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
          addressTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         getCategory()
-        
+         getCity()
+        regionBtn.isEnabled = false
         // Do any additional setup after loading the view.
     }
 
@@ -92,6 +103,18 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
 
    
     //MARK:IBAction
+    
+
+    
+    
+    @IBAction func regionBtnAction(_ sender: Any) {
+        regionPickerView.isHidden = !regionPickerView.isHidden
+        regionBtnDone.isHidden = !regionBtnDone.isHidden
+    }
+    @IBAction func cityBtnAction(_ sender: Any) {
+        cityPickerView.isHidden = !cityPickerView.isHidden
+        cityDoneBtn.isHidden = !cityDoneBtn.isHidden
+    }
     @IBAction func imageBtnAction(_ sender: Any) {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AlertImageViewController") as! AlertImageViewController
         viewController.providesPresentationContextTransitionStyle = true
@@ -144,6 +167,33 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
             }
            
            
+        }
+    }
+    @IBAction func cityDoneBtnAction(_ sender: Any) {
+         regionBtn.setTitle("region", for: .normal)
+        cityPickerView.isHidden = true
+        cityDoneBtn.isHidden = true
+        if cityList.count > 0 {
+            if citySelected == -1 {
+                citySelected = 0
+                cityBtn.setTitle(cityList[0].name, for: .normal)
+            }else{
+                cityBtn.setTitle(cityList[citySelected].name, for: .normal)
+            }
+             getRegion()
+        }
+    }
+  
+    @IBAction func regionDoneAction(_ sender: Any) {
+        regionPickerView.isHidden = true
+        regionBtnDone.isHidden = true
+        if regionList.count > 0 {
+            if regionSelected == -1 {
+                regionSelected = 0
+                regionBtn.setTitle(regionList[0].name, for: .normal)
+            }else{
+                regionBtn.setTitle(regionList[regionSelected].name, for: .normal)
+            }
         }
     }
     
@@ -244,6 +294,117 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
         })
         
     }
+    func getRegion(){
+        regionList = []
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        regionBtn.isEnabled = false
+        if networkExist == true {
+            
+            if cityList.count > 0 && citySelected != -1 {
+                activityindicator.isHidden = false
+                activityindicator.startAnimating()
+                let url = Constant.baseURL + Constant.URIRegion + "\(cityList[citySelected].id!)"
+                Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+                    .responseJSON { response in
+                        print(response)
+                        self.activityindicator.stopAnimating()
+                        self.activityindicator.isHidden = true
+                        switch response.result {
+                        case .success:
+                            if let datares = response.result.value as? [String:Any]{
+                                if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                for item in data {
+                                    let region = RegionBean()
+                                    if let id = item["id"] as? Int {
+                                        region.id = id
+                                    }
+                                    if let name = item["name"] as? String{
+                                        region.name = name
+                                    }
+                                    if let cityId = item["city_id"] as? Int{
+                                        region.cityId = cityId
+                                    }
+                                    self.regionList.append(region)
+                                }
+                                    self.regionBtn.isEnabled = true
+                                    self.regionPickerView.delegate = self
+                                    self.regionPickerView.dataSource = self
+                                }
+                                
+                            }
+                        case .failure(let error):
+                            print(error)
+                            
+                            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            
+                        }
+                }
+            }else{
+                let alert = UIAlertController(title: "", message: "select city" , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    func getCity(){
+        cityList = []
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        
+        if networkExist == true {
+            activityindicator.isHidden = false
+            activityindicator.startAnimating()
+            let url = Constant.baseURL + Constant.URICities
+            Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
+                .responseJSON { response in
+                    print(response)
+                    self.activityindicator.stopAnimating()
+                    self.activityindicator.isHidden = true
+                    switch response.result {
+                    case .success:
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
+                            for item in data {
+                                let city = Interest()
+                                if let id = item["id"] as? Int {
+                                    city.id = id
+                                }
+                                if let name = item["name"] as? String{
+                                    city.name = name
+                                }
+                                self.cityList.append(city)
+                                
+                            }
+                                self.cityPickerView.delegate = self
+                                self.cityPickerView.dataSource = self
+                                
+                            }
+                            
+                        }
+                    case .failure(let error):
+                        print(error)
+                        
+                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+            }
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     func getCategory(){
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
@@ -317,9 +478,43 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+        if addressTxt.text ==  "" {
+            validFlag = false
+            addressTxt.backgroundColor = .red
+            let alert = UIAlertController(title: "Warning", message: "insert your address", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        if contactNo.text ==  "" {
+            validFlag = false
+            contactNo.backgroundColor = .red
+            let alert = UIAlertController(title: "Warning", message: "insert your Contact Number ", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        if businessName.text ==  "" {
+            validFlag = false
+            businessName.backgroundColor = .red
+            let alert = UIAlertController(title: "Warning", message: "insert your Business Name ", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         if categSelected == -1 {
             validFlag = false
             let alert = UIAlertController(title: "Warning", message: "select your category ", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        if businessdesTxt.text ==  "" {
+            validFlag = false
+            businessdesTxt.backgroundColor = .red
+            let alert = UIAlertController(title: "Warning", message: "insert your Business Description", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        if citySelected == -1 {
+            validFlag = false
+            let alert = UIAlertController(title: "Warning", message: "select your city ", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -329,24 +524,12 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
-        if businessName.text ==  "" {
-            validFlag = false
-            businessName.backgroundColor = .red
-        }
-        if contactNo.text ==  "" {
-            validFlag = false
-            contactNo.backgroundColor = .red
-        }
-        if addressTxt.text ==  "" {
-            validFlag = false
-            addressTxt.backgroundColor = .red
-        }
+       
+        
        
        
-        if businessdesTxt.text ==  "" {
-            validFlag = false
-            businessdesTxt.backgroundColor = .red
-        }
+       
+      
        
         return validFlag
     }
@@ -378,15 +561,22 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
         let businessDes = self.businessdesTxt.text!
         let addressData = self.addressTxt.text!
         let businessName = self.businessName.text!
+        var cityId = cityList[citySelected].id!
         
+        var regionId = ""
+        if regionSelected != -1 {
+             regionId = "\(regionList[regionSelected].id!)"
+        }else{
+             regionId = ""
+        }
 //        multipartFormData.appendBodyPart(data: image1Data, name: "file", fileName: "myImage.png", mimeType: "image/png")
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 multipartFormData.append(((businessName).data(using: .utf8)!), withName: "name")
                 multipartFormData.append(((businessDes).data(using: .utf8)!), withName: "description")
                 multipartFormData.append(((contactNo).data(using: .utf8)!), withName: "contact_number")
-                    multipartFormData.append(((self.city).data(using: .utf8)!), withName: "city")
-                multipartFormData.append(((self.region).data(using: .utf8)!), withName: "regoin")
+                    multipartFormData.append((("\(cityId)").data(using: .utf8)!), withName: "city_id")
+                multipartFormData.append(((regionId).data(using: .utf8)!), withName: "regoin_id")
                 multipartFormData.append(((addressData).data(using: .utf8)!), withName: "address")
                 multipartFormData.append(("\(self.long!)").data(using: .utf8)!, withName: "langitude")
                  multipartFormData.append(("\(self.lat!)").data(using: .utf8)!, withName: "lattitude")
@@ -418,7 +608,10 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
    
                             if let datares = response.result.value as? [String:Any]{
                                 if let data  = datares["data"] as? [String:Any]{
+                                    
                                      if let id = data["id"] as? Int{
+                                        UserDefaults.standard.set("Business", forKey: "userType")
+                                        UserDefaults.standard.set(true, forKey: "LoginEnter")
                                         UserDefaults.standard.setValue(id, forKey: "id")
                                         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "BusinessProfileViewController") as! BusinessProfileViewController
                                         
@@ -464,18 +657,51 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == self.pickerView {
         if categoryList.count > 0{
             return categoryList.count
         }else{
             return 0
         }
+        }else if pickerView == cityPickerView {
+            if cityList.count > 0 {
+                return cityList.count
+            }else{
+                return 0
+            }
+        }else{
+            if regionList.count > 0 {
+                return regionList.count
+            }else{
+                return 0
+            }
+        }
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return categoryList[row].name
-     
+        
+        
+        if pickerView == self.pickerView {
+           return categoryList[row].name
+        }else if pickerView == cityPickerView {
+           return cityList[row].name
+        }else{
+            return regionList[row].name
+        }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == self.pickerView {
         categSelected = row
         category.setTitle(categoryList[row].name, for: .normal)
+        }else if pickerView == cityPickerView{
+            citySelected = row
+            cityBtn.setTitle(cityList[row].name, for: .normal)
+            
+           
+             regionBtn.setTitle("region", for: .normal)
+        }else{
+            regionSelected = row
+            regionBtn.setTitle(regionList[row].name, for: .normal)
+            
+        }
     }
 }

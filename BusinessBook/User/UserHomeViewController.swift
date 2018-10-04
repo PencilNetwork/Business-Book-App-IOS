@@ -11,7 +11,7 @@ import Alamofire
 protocol SendBusinessDelegate{
     func sendBusinessNo(index:Int)
 }
-class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegate{
+class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     //MARK:IBOUTlet
     
     @IBOutlet weak var view6: UIView!
@@ -21,6 +21,7 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
+    @IBOutlet weak var noDataResult: UILabel!
     @IBOutlet weak var regionDone: UIButton!
     @IBOutlet weak var regionPickerView: UIPickerView!
     @IBOutlet weak var cityDone: UIButton!
@@ -53,17 +54,27 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
     var BusinessNo = -1
     var citySelected = -1
     var regionSelected = -1
+    var segmentIndex = 0
+    var searchCategory = false
+    var categoryId:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
          menu_vc = self.storyboard?.instantiateViewController(withIdentifier: "UserMenuViewController") as! UserMenuViewController
         activityIndicator.isHidden = true
          activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         getCategory()
+           getCity()
+        hideKeyboardWhenTappedAround()
         regionBtn.isEnabled = false
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            getData()
+            
+            if searchCategory == true {
+                searchByCategory(categoryId:categoryId!)
+            }else{
+                getData()
+            }
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -73,36 +84,9 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         offerCollectionView.dataSource = self
        
       
-        styleBtn()
+       styleBtn()
         
-        
-        let menuBtn = UIButton(type: .custom)
-        menuBtn.frame = CGRect(x: 0, y: 0.0, width: 20, height: 20)
-        menuBtn.setImage(UIImage(named:"menu.png"), for: .normal)
-        menuBtn.addTarget(self, action: #selector(MenuButtonTapped), for: UIControlEvents.touchUpInside)
-        
-        let menuBarItem = UIBarButtonItem(customView: menuBtn)
-        if #available(iOS 9.0, *) {
-            let currWidth = menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 24)
-            currWidth?.isActive = true
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        if #available(iOS 9.0, *) {
-            let currHeight = menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 24)
-            currHeight?.isActive = true
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        self.navigationItem.leftBarButtonItem = menuBarItem
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToGesture))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.right
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToGesture))
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
-        self.view.addGestureRecognizer(swipeRight)
-        self.view.addGestureRecognizer(swipeLeft)
+      
 //        let myimage = UIImage(named: "menu.png")?.withRenderingMode(.alwaysOriginal)
 //        let barButtonItem2 = UIBarButtonItem(image: myimage, style: .plain, target: self, action: #selector(MenuButtonTapped))
 //        self.navigationItem.leftBarButtonItem = barButtonItem2
@@ -113,45 +97,16 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         // Dispose of any resources that can be recreated.
     }
     //MARK:MENU FUnction
-    @objc func respondToGesture(gesture:UISwipeGestureRecognizer){
-        switch gesture.direction{
-        case UISwipeGestureRecognizerDirection.right:
-            print("right")
-            showMenu()
-        case UISwipeGestureRecognizerDirection.left:
-            print("left Swipe")
-            close_on_swipe()
-        default:
-            print("")
+   
+    override func viewWillAppear(_ animated: Bool) {
+               super.viewWillAppear(true)
+        if segmentIndex == 1 {
+            segmentControl.selectedSegmentIndex = 1
+             view2.isHidden = false
         }
     }
-    func close_on_swipe(){
-        if  AppDelegate.userMenu_bool{
-            
-        }else{
-            closeMenu()
-        }
-    }
-    func showMenu(){
-        UIView.animate(withDuration: 0.3){ ()->Void in
-            self.menu_vc.view.frame = CGRect(x:0,y:60,width:UIScreen.main.bounds.size.width,height:UIScreen.main.bounds.size.height)
-            self.menu_vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            self.menu_vc.menuDel = self
-            self.addChildViewController(self.menu_vc)
-            self.view.addSubview(self.menu_vc.view)
-            AppDelegate.userMenu_bool = false
-        }
-        
-    }
-    func closeMenu(){
-        UIView.animate(withDuration: 0.3, animations: { ()->Void in
-            self.menu_vc.view.frame = CGRect(x:-UIScreen.main.bounds.size.width,y:60,width:UIScreen.main.bounds.size.width,height:UIScreen.main.bounds.size.height)
-        }) { (finished) in
-            self.menu_vc.view.removeFromSuperview()
-        }
-        
-        AppDelegate.userMenu_bool = true
-    }
+   
+   
     //MARK:Function
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailVC" {
@@ -162,37 +117,7 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
     func sendBusinessNo(index:Int){
         BusinessNo = index 
     }
-    func menuActionDelegate(number:Int){
-        switch number{
-        case 0:
-            print("AllCategory")
-            view4.isHidden = false
-             view2.isHidden = true
-            view3.isHidden = true
-              view5.isHidden = true
-            view6.isHidden = true
-        case 1:
-            print("")
-            
-        case 2:
-            print("favourite")
-            view3.isHidden = false 
-            view2.isHidden = true
-            view4.isHidden = true
-              view5.isHidden = true
-            view6.isHidden = true
-        case 3:
-            print("")
-            view5.isHidden = false
-            view4.isHidden = true
-            view3.isHidden = true
-            view2.isHidden = true
-            view6.isHidden = true
-        default:
-            print("")
-            
-        }
-    }
+    
     func styleSearchBar(searchBar:UISearchBar){
         for view in searchBar.subviews.last!.subviews {
             if type(of: view) == NSClassFromString("UISearchBarBackground"){
@@ -207,9 +132,11 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         ineedHotelBtn.layer.borderColor = UIColor.white.cgColor
         iamHungryBtn.layer.borderWidth = 0.5
         iamHungryBtn.layer.borderColor = UIColor.white.cgColor
-        styleGradientBtn(button:ineedHotelBtn,topColor:UIColor.white.cgColor,bottom:UIColor.red.cgColor)
-  styleGradientBtn(button:iamHungryBtn,topColor:UIColor.white.cgColor,bottom:UIColor.green.cgColor)
-        styleGradientBtn(button:anotherBtn,topColor:UIColor.gray.cgColor,bottom:UIColor.white.cgColor)
+       ineedHotelBtn.layer.cornerRadius = 10
+       iamHungryBtn.layer.cornerRadius = 10
+       anotherBtn.layer.cornerRadius = 10 //styleGradientBtn(button:ineedHotelBtn,topColor:UIColor.white.cgColor,bottom:UIColor.red.cgColor)
+//  styleGradientBtn(button:iamHungryBtn,topColor:UIColor.white.cgColor,bottom:UIColor.green.cgColor)
+//        styleGradientBtn(button:anotherBtn,topColor:UIColor.gray.cgColor,bottom:UIColor.white.cgColor)
        
        
     }
@@ -231,6 +158,7 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         if networkExist == true {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
+            
             let url = Constant.baseURL + Constant.URICateg
             Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
@@ -275,7 +203,7 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         }
     }
     func getCity(){
-        
+        cityList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -290,7 +218,8 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                     self.activityIndicator.isHidden = true
                     switch response.result {
                     case .success:
-                        if let data = response.result.value as? [[String:Any]]{
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
                             for item in data {
                                 let city = CityBean()
                                 if let id = item["id"] as? Int {
@@ -301,7 +230,9 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                                 }
                                 self.cityList.append(city)
                             }
-                           
+                                self.cityPickerView.delegate = self
+                                self.cityPickerView.dataSource = self
+                            }
                             
                         }
                     case .failure(let error):
@@ -321,15 +252,16 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         }
     }
     func getRegion(){
+        regionList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
-        
+        regionBtn.isEnabled = false
         if networkExist == true {
            
             if cityList.count > 0 && citySelected != -1 {
                 activityIndicator.isHidden = false
                 activityIndicator.startAnimating()
-            let url = Constant.baseURL + Constant.URIRegion + "\(cityList[citySelected].id)"
+            let url = Constant.baseURL + Constant.URIRegion + "\(cityList[citySelected].id!)"
             Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
@@ -337,7 +269,8 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                     self.activityIndicator.isHidden = true
                     switch response.result {
                     case .success:
-                        if let data = response.result.value as? [[String:Any]]{
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
                             for item in data {
                                let region = RegionBean()
                                 if let id = item["id"] as? Int {
@@ -351,7 +284,10 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                                 }
                                 self.regionList.append(region)
                             }
-                            
+                                self.regionBtn.isEnabled = true
+                                self.regionPickerView.delegate = self
+                                self.regionPickerView.dataSource = self
+                            }
                             
                         }
                     case .failure(let error):
@@ -378,9 +314,9 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
     func getData(){
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
- 
+ BussinessList = []
       var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
-        let url = Constant.baseURL + Constant.URIDefaultSearch + "\(1)"
+        let url = Constant.baseURL + Constant.URIDefaultSearch + "\(user_id)"
         Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -395,13 +331,18 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                             }
                         }
                         if let data  = datares["data"] as? [Dictionary<String,Any>]{
+                            if data.count == 0 {
+                                self.noDataResult.isHidden = false
+                            }else{
+                                self.noDataResult.isHidden = true
+                            }
                             for item in data{
                                 let business = BusinessBean()
                                 if let address = item["address"] as? String{
                                     business.address = address
                                 }
-                                if let average_rating = item["average_rating"] as? String{
-                                    
+                                if let average_rating = item["average_rating"] as? Double{
+                                    business.average_Rating = average_rating
                                 }
                                 if let logo = item["logo"] as? String{
                                     business.logo = logo
@@ -516,7 +457,7 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         var parameter :[String:AnyObject] = [String:AnyObject]()
         parameter["category_id"] =  "\(categoryId)" as AnyObject?
         parameter["searcher_id"] = user_id as AnyObject?
-        let url = Constant.baseURL + Constant.URICategorySearch
+        let url = Constant.baseURL + "bussines/search/category"
         Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -532,6 +473,11 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                         }
                         
                         if let data  = datares["data"] as? [Dictionary<String,Any>]{
+                            if data.count == 0 {
+                                self.noDataResult.isHidden = false
+                            }else{
+                                self.noDataResult.isHidden = true
+                            }
                             for item in data{
                                 let business = BusinessBean()
                                 if let address = item["address"] as? String{
@@ -645,14 +591,22 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                 }
         }
     }
-    func searchBusiness(categoryId:Int,cityId:Int,regionId:Int){
+    func searchBusiness(){
         BussinessList = []
         var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
         var parameter :[String:AnyObject] = [String:AnyObject]()
-        parameter["category_id"] =  "\(categoryId)" as AnyObject?
+        if categSelected != -1 {
+             parameter["category_id"] =  "\(categoryList[categSelected].id!)" as AnyObject?
+        }
       parameter["bussines_name"] = searchName.text!  as AnyObject?
-        parameter["city_id"] = "\(cityId)" as AnyObject?
-        parameter["regoin_id"] = "\(regionId)" as AnyObject?
+        if citySelected != -1 {
+        parameter["city_id"] = "\(cityList[citySelected].id!)" as AnyObject?
+        }
+        if regionSelected != -1 {
+        parameter["regoin_id"] = "\(regionList[regionSelected].id!)" as AnyObject?
+        }
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         let url = Constant.baseURL + Constant.URIBusinessSearch
         Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
@@ -669,6 +623,11 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                         }
                         
                         if let data  = datares["data"] as? [Dictionary<String,Any>]{
+                            if data.count == 0 {
+                                self.noDataResult.isHidden = false
+                            }else{
+                                self.noDataResult.isHidden = true
+                            }
                             for item in data{
                                 let business = BusinessBean()
                                 if let address = item["address"] as? String{
@@ -782,13 +741,13 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
                 }
         }
     }
-    @objc func MenuButtonTapped() {
-        print("Button Tapped")
-        if  AppDelegate.userMenu_bool{
-            showMenu()
-        }else{
-            closeMenu()
-        }
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     //MARK:IBAction
     
@@ -796,7 +755,11 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
         if searchName.text != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
             
        
-            searchBusiness(categoryId:categoryList[categSelected].id!,cityId:cityList[citySelected].id!,regionId:regionList[regionSelected].id!)
+            searchBusiness()
+        }else{
+            let alert = UIAlertController(title: "Warning", message: "You should select region or category or business name", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -890,6 +853,7 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
             }else{
                 cityBtn.setTitle(cityList[citySelected].name, for: .normal)
             }
+            getRegion()
         }
     }
     
@@ -907,11 +871,15 @@ class UserHomeViewController: UIViewController ,menuDelegate,SendBusinessDelegat
     }
     
     @IBAction func cityBtnAction(_ sender: Any) {
-        getCity()
+        cityPickerView.isHidden = !cityPickerView.isHidden
+        cityDone.isHidden = !cityDone.isHidden
+     
     }
     
     @IBAction func regionBtnAction(_ sender: Any) {
-        getRegion()
+        regionPickerView.isHidden = !regionPickerView.isHidden
+        regionDone.isHidden = !regionDone.isHidden
+        
     }
 }
 extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
@@ -922,7 +890,20 @@ extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSo
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: 125, height: 160)
+        let captionTextWidth = ((view.frame.width - 26 )/3)
+        let size = CGSize(width:captionTextWidth,height:1000)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
+        if BussinessList[indexPath.row].name != "" && BussinessList[indexPath.row].name != nil {
+            let estimateFrame = NSString(string: BussinessList[indexPath.row].name!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            let height  = estimateFrame.height + 155
+            return CGSize(width: (view.frame.width - 21 )/3 , height: height)
+        }else{
+            let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            let height  = estimateFrame.height + 155
+            //  return CGSize(width: 133, height: height)
+            return CGSize(width: (view.frame.width - 21)/3 , height: height)
+        }
+     //   return CGSize(width: 125, height: 160)
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserHomeOfferCollectionViewCell", for: indexPath)as? UserHomeOfferCollectionViewCell
@@ -933,9 +914,12 @@ extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        BusinessNo = indexPath.row
         let imageDataDict:[String: Any] = ["id":BussinessList[indexPath.row].id]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SendBusID"), object: nil, userInfo: imageDataDict)
-        view6.isHidden = false
-        
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SendBusID"), object: nil, userInfo: imageDataDict)
+//        view6.isHidden = false
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailBusinessViewController") as! DetailBusinessViewController
+        vc.id = BussinessList[indexPath.row].id!
+        self.addChildViewController(vc)
+        self.view.addSubview(vc.view)
     }
     
 }
@@ -981,10 +965,14 @@ extension UserHomeViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         if pickerView == categoryPickerView{
         categSelected = row
         categoryBtn.setTitle(categoryList[row].name, for: .normal)
+            
         }else if pickerView == cityPickerView{
             citySelected = row
             cityBtn.setTitle(cityList[row].name, for: .normal)
-            regionBtn.isEnabled = true
+           
+            
+            regionBtn.setTitle("region", for: .normal)
+            
         }else{
             regionSelected = row
             regionBtn.setTitle(regionList[row].name, for: .normal)

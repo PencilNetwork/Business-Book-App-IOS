@@ -9,6 +9,7 @@
 import UIKit
 
 class UserFavouriteCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var name: UILabel!
     
     @IBOutlet weak var favouriteBtn: UIButton!
     @IBOutlet weak var photo: UIImageView!

@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+         UserDefaults.standard.set(false,forKey: "logout")
         let myimage = UIImage(named: "advertisment.png")?.withRenderingMode(.alwaysOriginal)
         let barButtonItem2 = UIBarButtonItem(image: myimage, style: .plain, target: self, action: #selector(ButtonTapped))
         self.navigationItem.rightBarButtonItem = barButtonItem2

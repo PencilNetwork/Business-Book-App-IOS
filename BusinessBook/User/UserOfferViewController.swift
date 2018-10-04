@@ -21,6 +21,7 @@ class UserOfferViewController: UIViewController {
     @IBOutlet weak var categoryPickerView: UIPickerView!
     @IBOutlet weak var offerCollectionView: UICollectionView!
     
+    @IBOutlet weak var noofferResult: UILabel!
     @IBOutlet weak var searchName: UITextField!
     var offerList :[OfferBean] = []
       var categoryList:[CategoryBean] = []
@@ -35,7 +36,8 @@ class UserOfferViewController: UIViewController {
          activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         getCategory()
         getDefaultOffer()
-        
+        getCity()
+         regionBtn.isEnabled = false
         offerCollectionView.delegate = self
         offerCollectionView.dataSource = self
         // Do any additional setup after loading the view.
@@ -63,7 +65,14 @@ class UserOfferViewController: UIViewController {
                     self.activityIndicator.isHidden = true
                     switch response.result {
                     case .success:
-                            if let data = response.result.value as? [[String:Any]]{
+                            if let datares = response.result.value as? [String:Any]{
+                                if let data = datares["data"] as? [Dictionary<String,Any>] {
+                                    if data.count == 0 {
+                                        self.noofferResult.isHidden = false
+                                        
+                                    }else{
+                                        self.noofferResult.isHidden = true
+                                    }
                                 for item in data {
                                     var offer = OfferBean()
                                     if let id = item["id"] as? Int{
@@ -79,6 +88,8 @@ class UserOfferViewController: UIViewController {
                                         offer.bussines_id = bussines_id
                                     }
                                     self.offerList.append(offer)
+                                    }
+                                   self.offerCollectionView.reloadData()
                                 }
                                 
                             }else{
@@ -109,15 +120,24 @@ class UserOfferViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
     }
     }
-    func searchBusiness(categoryId:Int,cityId:Int,regionId:Int){
+    func searchBusiness(){
        
+        self.activityIndicator.isHidden = false
+         self.activityIndicator.startAnimating()
             offerList = []
             var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
             var parameter :[String:AnyObject] = [String:AnyObject]()
-            parameter["category_id"] =  "\(categoryId)" as AnyObject?
+        if categSelected != -1 {
+           
+            parameter["category_id"] =  "\(categoryList[categSelected].id!)" as AnyObject?
+        }
             parameter["bussines_name"] = searchName.text!  as AnyObject?
-            parameter["city_id"] = "\(cityId)" as AnyObject?
-            parameter["regoin_id"] = "\(regionId)" as AnyObject?
+        if citySelected != -1 {
+            parameter["city_id"] = "\(cityList[citySelected].id!)" as AnyObject?
+        }
+        if regionSelected != -1 {
+            parameter["regoin_id"] = "\(regionList[regionSelected].id!)" as AnyObject?
+        }
             let url = Constant.baseURL + Constant.URIOfferSearch
             Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
@@ -126,7 +146,14 @@ class UserOfferViewController: UIViewController {
                     self.activityIndicator.isHidden = true
                     switch response.result {
                     case .success:
-                        if let data = response.result.value as? [[String:Any]]{
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                if data.count == 0 {
+                                   self.noofferResult.isHidden = false
+                                    
+                                }else{
+                                    self.noofferResult.isHidden = true
+                                }
                             for item in data {
                                 var offer = OfferBean()
                                 if let id = item["id"] as? Int{
@@ -142,6 +169,8 @@ class UserOfferViewController: UIViewController {
                                     offer.bussines_id = bussines_id
                                 }
                                 self.offerList.append(offer)
+                                }
+                                self.offerCollectionView.reloadData()
                             }
                             
                         }else{
@@ -218,7 +247,7 @@ class UserOfferViewController: UIViewController {
         }
     }
     func getCity(){
-        
+        cityList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -233,18 +262,21 @@ class UserOfferViewController: UIViewController {
                     self.activityIndicator.isHidden = true
                     switch response.result {
                     case .success:
-                        if let data = response.result.value as? [[String:Any]]{
-                            for item in data {
-                                let city = CityBean()
-                                if let id = item["id"] as? Int {
-                                    city.id = id
+                        if let datares = response.result.value as? [String:Any]{
+                            if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                for item in data {
+                                    let city = CityBean()
+                                    if let id = item["id"] as? Int {
+                                        city.id = id
+                                    }
+                                    if let name = item["name"] as? String{
+                                        city.name = name
+                                    }
+                                    self.cityList.append(city)
                                 }
-                                if let name = item["name"] as? String{
-                                    city.name = name
-                                }
-                                self.cityList.append(city)
+                                self.cityPickerView.delegate = self
+                                self.cityPickerView.dataSource = self
                             }
-                            
                             
                         }
                     case .failure(let error):
@@ -264,15 +296,16 @@ class UserOfferViewController: UIViewController {
         }
     }
     func getRegion(){
+        regionList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
-        
+        regionBtn.isEnabled = false
         if networkExist == true {
             
             if cityList.count > 0 && citySelected != -1 {
                 activityIndicator.isHidden = false
                 activityIndicator.startAnimating()
-                let url = Constant.baseURL + Constant.URIRegion + "\(cityList[citySelected].id)"
+                let url = Constant.baseURL + Constant.URIRegion + "\(cityList[citySelected].id!)"
                 Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                     .responseJSON { response in
                         print(response)
@@ -280,21 +313,25 @@ class UserOfferViewController: UIViewController {
                         self.activityIndicator.isHidden = true
                         switch response.result {
                         case .success:
-                            if let data = response.result.value as? [[String:Any]]{
-                                for item in data {
-                                    let region = RegionBean()
-                                    if let id = item["id"] as? Int {
-                                        region.id = id
+                            if let datares = response.result.value as? [String:Any]{
+                                if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                    for item in data {
+                                        let region = RegionBean()
+                                        if let id = item["id"] as? Int {
+                                            region.id = id
+                                        }
+                                        if let name = item["name"] as? String{
+                                            region.name = name
+                                        }
+                                        if let cityId = item["city_id"] as? Int{
+                                            region.cityId = cityId
+                                        }
+                                        self.regionList.append(region)
                                     }
-                                    if let name = item["name"] as? String{
-                                        region.name = name
-                                    }
-                                    if let cityId = item["city_id"] as? Int{
-                                        region.cityId = cityId
-                                    }
-                                    self.regionList.append(region)
+                                    self.regionBtn.isEnabled = true
+                                    self.regionPickerView.delegate = self
+                                    self.regionPickerView.dataSource = self
                                 }
-                                
                                 
                             }
                         case .failure(let error):
@@ -339,18 +376,23 @@ class UserOfferViewController: UIViewController {
     }
     
     @IBAction func cityBtnAction(_ sender: Any) {
-         getCity()
+        cityPickerView.isHidden = !cityPickerView.isHidden
+        cityDone.isHidden = !cityDone.isHidden
     }
     
     @IBAction func searchBtnAction(_ sender: Any) {
             if searchName.text != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
-                searchBusiness(categoryId:categoryList[categSelected].id!,cityId:cityList[citySelected].id!,regionId:
-                    regionList[regionSelected].id!)
+                searchBusiness()
+            }else{
+                let alert = UIAlertController(title: "Warning", message: "You should select region or category or business name", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
         }
     }
     
     @IBAction func regionBtnAction(_ sender: Any) {
-         getRegion()
+        regionPickerView.isHidden = !regionPickerView.isHidden
+        regionDone.isHidden = !regionDone.isHidden
     }
     @IBAction func cityDoneAction(_ sender: Any) {
         cityPickerView.isHidden = true
@@ -362,6 +404,7 @@ class UserOfferViewController: UIViewController {
             }else{
                 cityBtn.setTitle(cityList[citySelected].name, for: .normal)
             }
+            getRegion()
         }
     }
     @IBAction func regionDoneAction(_ sender: Any) {
@@ -402,18 +445,52 @@ extension UserOfferViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if categoryList.count > 0{
-            return categoryList.count
+        if pickerView == categoryPickerView {
+            if categoryList.count > 0{
+                return categoryList.count
+            }else{
+                return 0
+            }
+        }else if pickerView == cityPickerView{
+            if cityList.count > 0 {
+                return cityList.count
+            }else{
+                return 0
+            }
         }else{
-            return 0
+            if regionList.count > 0 {
+                return regionList.count
+            }else {
+                return 0
+            }
         }
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categoryList[row].name
+        if pickerView == categoryPickerView {
+            return categoryList[row].name
+        }else if pickerView == cityPickerView{
+            return cityList[row].name
+        }else{
+            return regionList[row].name
+        }
         
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        categSelected = row
-        categoryBtn.setTitle(categoryList[row].name, for: .normal)
+        if pickerView == categoryPickerView{
+            categSelected = row
+            categoryBtn.setTitle(categoryList[row].name, for: .normal)
+            
+        }else if pickerView == cityPickerView{
+            citySelected = row
+            cityBtn.setTitle(cityList[row].name, for: .normal)
+            
+            
+            regionBtn.setTitle("region", for: .normal)
+            
+        }else{
+            regionSelected = row
+            regionBtn.setTitle(regionList[row].name, for: .normal)
+            
+        }
     }
 }

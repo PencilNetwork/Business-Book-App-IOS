@@ -122,7 +122,8 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
                         self.activityIndicator.isHidden = true
                         self.activityIndicator.stopAnimating()
                         print(response)
-
+                        switch response.result {
+                        case .success:
                         if let datares = response.result.value as? [String:Any]{
                             if let flag = datares["flag"] as? String {
                                 if flag == "1"{
@@ -143,6 +144,14 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
                                 
                             }
 
+                        }
+                        case .failure(let error):
+                            print(error)
+                            
+                            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            
                         }
                     }
                 case .failure(let error):

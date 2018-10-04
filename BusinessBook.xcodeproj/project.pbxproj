@@ -59,6 +59,7 @@
 		04612C7F2157C16100A6306E /* UserHomeOfferCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04612C7E2157C16100A6306E /* UserHomeOfferCollectionViewCell.swift */; };
 		0462C3EF215123F60054C1F5 /* RelatedFilesBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0462C3EE215123F50054C1F5 /* RelatedFilesBean.swift */; };
 		046CA94321493F9F00E40F65 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046CA94221493F9F00E40F65 /* SecondViewController.swift */; };
+		0476F805216357950033F1EB /* UserLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476F804216357940033F1EB /* UserLeftMenuVC.swift */; };
 		0480B57321413CEE001D759B /* BusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480B57221413CEE001D759B /* BusinessProfileViewController.swift */; };
 		0480B575214141C9001D759B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480B574214141C9001D759B /* MenuViewController.swift */; };
 		0480B57721414280001D759B /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0480B57621414280001D759B /* MenuTableViewCell.swift */; };
@@ -151,6 +152,7 @@
 		04612C7E2157C16100A6306E /* UserHomeOfferCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeOfferCollectionViewCell.swift; sourceTree = "<group>"; };
 		0462C3EE215123F50054C1F5 /* RelatedFilesBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedFilesBean.swift; sourceTree = "<group>"; };
 		046CA94221493F9F00E40F65 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		0476F804216357940033F1EB /* UserLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLeftMenuVC.swift; sourceTree = "<group>"; };
 		0480B57221413CEE001D759B /* BusinessProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.swift; sourceTree = "<group>"; };
 		0480B574214141C9001D759B /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0480B57621414280001D759B /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 		04F0D7882146601400107312 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				0476F804216357940033F1EB /* UserLeftMenuVC.swift */,
 				045265CF2153C34900DB1774 /* InterestPopupViewController.swift */,
 				041880A0214667B80051BD37 /* UserLoginViewController.swift */,
 				041880A82146B4EC0051BD37 /* PopUpCategoryViewController.swift */,
@@ -678,6 +681,7 @@
 				041880A92146B4EC0051BD37 /* PopUpCategoryViewController.swift in Sources */,
 				045265D22153D90F00DB1774 /* InterestTableViewCell.swift in Sources */,
 				0439A7D6215BB2810007068A /* DetailBusinessViewController.swift in Sources */,
+				0476F805216357950033F1EB /* UserLeftMenuVC.swift in Sources */,
 				0440C1E1213FF30100082DB9 /* RootViewController.swift in Sources */,
 				041880A72146720B0051BD37 /* AnotherMapViewController.swift in Sources */,
 				044CC482215A61C30028C8BC /* UserOfferViewController.swift in Sources */,
