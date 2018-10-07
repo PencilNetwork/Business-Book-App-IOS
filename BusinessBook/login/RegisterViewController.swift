@@ -696,7 +696,7 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
             citySelected = row
             cityBtn.setTitle(cityList[row].name, for: .normal)
             
-           
+             regionSelected = -1
              regionBtn.setTitle("region", for: .normal)
         }else{
             regionSelected = row

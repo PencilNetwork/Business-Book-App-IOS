@@ -12,6 +12,7 @@ import GooglePlaces
 import Alamofire
 class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet weak var relatedFileHeight: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var offerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -90,17 +91,17 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
          if collectionView == offerCollectionView {
            
-            let captionTextWidth = 150
+            let captionTextWidth = ((view.frame.width - 10)/3) - 10
             let size = CGSize(width:captionTextWidth,height:1000)
             let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
             if offerList[indexPath.row].caption != "" && offerList[indexPath.row].caption != nil {
             let estimateFrame = NSString(string: offerList[indexPath.row].caption!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 let height  = estimateFrame.height + 130
-                return CGSize(width: 160, height: height)
+                return CGSize(width: (view.frame.width - 10)/3 , height: height)
             }else{
                  let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
                 let height  = estimateFrame.height + 130
-                return CGSize(width: 110, height: height)
+                return CGSize(width: (view.frame.width - 10)/3, height: height)
             }
             
          }else{
@@ -180,6 +181,8 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
     }
   
     func getData(){
+        offerList = []
+        relatedFileList = []
         //"https://pencilnetwork.com/bussines_book/api/bussines/\(userid!)"
              self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
@@ -245,7 +248,7 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
                             }else{
                                 if self.offerList.count > 0 {
                                 self.offerHeightConstraint.constant = self.offerCollectionView.collectionViewLayout.collectionViewContentSize.height
-                                self.viewHeight.constant = self.offerHeightConstraint.constant + 720
+                                
                                 self.view.setNeedsLayout()
                                 }
                             }
@@ -263,6 +266,14 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
                                     self.relatedFileList.append(relatedfile)
                                 }
                                 self.relatedFileCollectionView.reloadData()
+                            }
+                            if self.relatedFileList.count > 0{
+                                 self.relatedFileHeight.constant = self.relatedFileCollectionView.collectionViewLayout.collectionViewContentSize.height
+                                self.viewHeight.constant = self.offerHeightConstraint.constant + self.relatedFileHeight.constant + 550
+                                  self.view.setNeedsLayout()
+                            }else{
+                                self.viewHeight.constant = self.offerHeightConstraint.constant + 10 + 550
+                                 self.view.setNeedsLayout()
                             }
                             if let owner = data["owner"] as? [String:Any]{
                                 if let email = owner["email"] as? String {

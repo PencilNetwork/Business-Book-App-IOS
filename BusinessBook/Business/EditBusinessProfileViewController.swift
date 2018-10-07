@@ -19,6 +19,9 @@ protocol ChangeImageDelegate{
 }
 
 class EditBusinessProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,ChangeImageDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDelegateFlowLayout,SendImageDelegate, UIPickerViewDelegate, UIPickerViewDataSource,MapDelegate{
+    
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var cityDoneBtn: UIButton!
     @IBOutlet weak var regionBtnDone: UIButton!
     @IBOutlet weak var regionPickerView: UIPickerView!
@@ -111,6 +114,9 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         }
           NotificationCenter.default.addObserver(self, selector: #selector(refresh(_:)), name: NSNotification.Name(rawValue: "refresh"), object: nil)
         getCity()
+        
+           
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -270,6 +276,9 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             self.present(alert, animated: true, completion: nil)
         }
         }
+   
+    
+  
     func createMap(lat:Double,long:Double){
       self.lat = lat
         self.long = long 
@@ -905,6 +914,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
     func getData(){
         defaultRegionId  = -1
          defaultCityId = -1
+        relatedFileList = []
         //https://pencilnetwork.com/bussines_book/api/bussines/{bussines}
 //        self.activityIndicator.isHidden = false
 //        self.activityIndicator.startAnimating()
@@ -984,6 +994,20 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                                     self.relatedFileList.append(relatedfile)
                                 }
                                 self.collectionView.reloadData()
+                            }
+                            if self.relatedFileList.count > 0 {
+                                if self.collectionView.collectionViewLayout.collectionViewContentSize.height > 9000 {
+                                    
+                                    
+                                }else{
+                                    self.collectionViewHeight.constant = self.collectionView.collectionViewLayout.collectionViewContentSize.height
+                                    self.viewHeight.constant =  self.collectionViewHeight.constant + 655
+                                    self.view.setNeedsLayout()
+                                }
+                                
+                            }else{
+                                self.viewHeight.constant =   665
+                                self.view.setNeedsLayout()
                             }
                             if let owner = data["owner"] as? [String:Any]{
                                 if let email = owner["email"] as? String {

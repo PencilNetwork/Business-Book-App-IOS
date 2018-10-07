@@ -609,8 +609,8 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                                 }
                               self.categCollectionView.reloadData()
 //                                self.categConstraintHeight.constant = CGFloat(50 * (self.category.count/3))
-                                self.categConstraintHeight.constant = self.categCollectionView.collectionViewLayout.collectionViewContentSize.height
-                                self.view.setNeedsLayout()
+//                                self.categConstraintHeight.constant = self.categCollectionView.collectionViewLayout.collectionViewContentSize.height
+//                                self.view.setNeedsLayout()
                             }
                             
                         }

@@ -421,7 +421,7 @@ class UserOfferViewController: UIViewController {
     }
     
 }
-extension UserOfferViewController:UICollectionViewDelegate,UICollectionViewDataSource{
+extension UserOfferViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if offerList.count > 0{
             return offerList.count
@@ -429,11 +429,13 @@ extension UserOfferViewController:UICollectionViewDelegate,UICollectionViewDataS
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: (self.view.frame.width - 20)/2, height: 160)
+        return CGSize(width: (self.view.frame.width - 10)/3, height: 160)
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserOfferCollectionViewCell", for: indexPath)as? UserHomeOfferCollectionViewCell
+        if offerList[indexPath.row].photo != nil {
         cell?.photo.sd_setImage(with: URL(string:offerList[indexPath.row].photo!), placeholderImage: UIImage(named: "gallery.png"))
+        }
         cell?.caption.text  = offerList[indexPath.row].caption
         return cell!
     }
@@ -483,7 +485,7 @@ extension UserOfferViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         }else if pickerView == cityPickerView{
             citySelected = row
             cityBtn.setTitle(cityList[row].name, for: .normal)
-            
+            regionSelected = -1 
             
             regionBtn.setTitle("region", for: .normal)
             

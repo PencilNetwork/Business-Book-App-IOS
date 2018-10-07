@@ -59,11 +59,19 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     var categoryId:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
+        historicPlaceBtn.titleLabel?.numberOfLines = 1
+        historicPlaceBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        historicPlaceBtn.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
          menu_vc = self.storyboard?.instantiateViewController(withIdentifier: "UserMenuViewController") as! UserMenuViewController
         activityIndicator.isHidden = true
          activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         getCategory()
            getCity()
+        
+        if UIDevice().type == .iPhone5S{
+            NotificationCenter.default.addObserver(self, selector: #selector(UserHomeViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(UserHomeViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        }
         hideKeyboardWhenTappedAround()
         regionBtn.isEnabled = false
         let network = Network()
@@ -112,6 +120,27 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if segue.identifier == "DetailVC" {
             var  detailVc:DetailBusinessViewController = (segue.destination as? DetailBusinessViewController)!
             detailVc.id = BusinessNo
+        }
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if segmentIndex == 0 {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            // if self.view.frame.origin.y == 0{
+            self.view.frame.origin.y -= keyboardSize.height
+            
+            //}
+        }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if segmentIndex == 0 {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            //  if self.view.frame.origin.y != 0{
+            //                self.view.frame.origin.y += keyboardSize.height
+            self.view.frame.origin.y  = 0
+            // }
+        }
         }
     }
     func sendBusinessNo(index:Int){
@@ -751,6 +780,17 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     }
     //MARK:IBAction
     
+    @IBAction func otherBtnAction(_ sender: Any) {
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        if networkExist == true {
+            searchByCategory(categoryId:59)
+        }else{
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     @IBAction func searchBtnAction(_ sender: Any) {
         if searchName.text != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
             
@@ -784,7 +824,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:1)
+            searchByCategory(categoryId:57)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -795,7 +835,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:1)
+            searchByCategory(categoryId:37)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -807,7 +847,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:1)
+            searchByCategory(categoryId:61)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -820,10 +860,10 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         {
         case 0:
             view2.isHidden = true
-            
+            segmentIndex = 0
         case 1:
             view2.isHidden = false 
-            
+            segmentIndex = 1
         default:
             print("")
         }
@@ -907,8 +947,11 @@ extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserHomeOfferCollectionViewCell", for: indexPath)as? UserHomeOfferCollectionViewCell
+        if BussinessList[indexPath.row].logo != nil {
+            
         cell?.photo.sd_setImage(with: URL(string:BussinessList[indexPath.row].logo!), placeholderImage: UIImage(named: "gallery.png"))
-        cell?.caption.text  = BussinessList[indexPath.row].name
+        }
+            cell?.caption.text  = BussinessList[indexPath.row].name
         return cell!
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -969,7 +1012,7 @@ extension UserHomeViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         }else if pickerView == cityPickerView{
             citySelected = row
             cityBtn.setTitle(cityList[row].name, for: .normal)
-           
+             regionSelected = -1
             
             regionBtn.setTitle("region", for: .normal)
             

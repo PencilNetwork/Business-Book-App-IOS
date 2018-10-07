@@ -103,6 +103,11 @@ class UserLeftMenuVC: UIViewController,menuDelegate {
          AppDelegate.userMenu_bool = true
         switch number{
         case 0:
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as! UserHomeViewController
+            
+            self.addChildViewController(vc)
+            self.view.addSubview(vc.view)
+        case 1:
             print("AllCategory")
             //            view4.isHidden = false
             //             view2.isHidden = true
@@ -112,13 +117,13 @@ class UserLeftMenuVC: UIViewController,menuDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "AllCategoryViewController") as! AllCategoryViewController
             self.addChildViewController(vc)
             self.view.addSubview(vc.view)
-        case 1:
+        case 2:
             print("")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as! UserHomeViewController
           vc.segmentIndex = 1
             self.addChildViewController(vc)
             self.view.addSubview(vc.view)
-        case 2:
+        case 3:
             print("favourite")
             //            view3.isHidden = false
             //            view2.isHidden = true
@@ -128,7 +133,7 @@ class UserLeftMenuVC: UIViewController,menuDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserFavouriteViewController") as! UserFavouriteViewController
             self.addChildViewController(vc)
             self.view.addSubview(vc.view)
-        case 3:
+        case 4:
             print("")
             //            view5.isHidden = false
             //            view4.isHidden = true

@@ -260,6 +260,13 @@ public extension UIDevice {
         ]
         
         if let model = modelMap[String.init(validatingUTF8: modelCode!)!] {
+            if model == .simulator {
+                if let simModelCode = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
+                    if let simModel = modelMap[String.init(validatingUTF8: simModelCode)!] {
+                        return simModel
+                    }
+                }
+            }
             return model
         }
         return Model.unrecognized

@@ -39,7 +39,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         setTable()
        getCity()
         getCategory()
-       
+     
         first = true
         hideKeyboardWhenTappedAround()
         styleSearchBar(searchBar:searchBar)
@@ -68,7 +68,10 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+         self.categCollectionView.flashScrollIndicators()
+    }
     @IBAction func confirmbtnAction(_ sender: Any) {
         sendData()
     }
@@ -784,9 +787,10 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                                     self.category.append(category)
                                 }
                                 self.categCollectionView.reloadData()
+                               
                                 //                                self.categConstraintHeight.constant = CGFloat(50 * (self.category.count/3))
-                                self.categConstraintHeight.constant = self.categCollectionView.collectionViewLayout.collectionViewContentSize.height
-                                self.view.setNeedsLayout()
+//                                self.categConstraintHeight.constant = self.categCollectionView.collectionViewLayout.collectionViewContentSize.height
+//                                self.view.setNeedsLayout()
                             }
                             
                         }

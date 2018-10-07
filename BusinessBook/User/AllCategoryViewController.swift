@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
+class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout{
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -20,6 +20,12 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         getCategory()
+//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//     //   layout.sectionInset = UIEdgeInsets(top: 20, left: 5, bottom: 10, right: 0)
+//    //    layout.itemSize = CGSize(width: view.frame.width/3, height: 150)
+//        layout.minimumInteritemSpacing = 1
+//        layout.minimumLineSpacing = 1
+//        collectionView!.collectionViewLayout = layout
         // Do any additional setup after loading the view.
     }
 
@@ -27,6 +33,7 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func getCategory(){
         
         let network = Network()
@@ -86,8 +93,22 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: 125, height: 160)
+        let captionTextWidth = ((view.frame.width - 10)/4)
+        let size = CGSize(width:captionTextWidth,height:1000)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize:15)]
+        if categoryList[indexPath.row].name != "" && categoryList[indexPath.row].name != nil {
+            let estimateFrame = NSString(string: categoryList[indexPath.row].name!).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            let height  = estimateFrame.height + 20
+            return CGSize(width: (view.frame.width - 10 )/4 , height: height)
+        }else{
+            let estimateFrame = NSString(string: "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            let height  = estimateFrame.height + 10
+            //  return CGSize(width: 133, height: height)
+            return CGSize(width: (view.frame.width - 10)/4 , height: height)
+        }
+    //    return CGSize(width: (view.frame.width - 15)/4, height: 150)
     }
+   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllCategoryCollectionViewCell", for: indexPath) as! AllCategoryCollectionViewCell
       cell.name.text = categoryList[indexPath.row].name

@@ -11,7 +11,7 @@ import Alamofire
 protocol FavouriteDelegate{
     func changeFavourite(index:Int)
 }
-class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate,FavouriteDelegate{
+class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,FavouriteDelegate{
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -99,7 +99,7 @@ class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: (self.view.frame.width - 30)/2, height: 160)
+        return CGSize(width: (self.view.frame.width )/3, height: 190)
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserFavouriteCollectionViewCell", for: indexPath)as? UserFavouriteCollectionViewCell

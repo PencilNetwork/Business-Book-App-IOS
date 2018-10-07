@@ -9,7 +9,7 @@
 import UIKit
 
 class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
-  var menuList = ["All categories","OFFERS","YOUR FAVOURITE BUSINESS","EDIT YOUR default search","LOGOUT"]
+  var menuList = ["Home","All categories","OFFERS","YOUR FAVOURITE BUSINESS","EDIT YOUR default search","LOGOUT"]
     
     @IBOutlet weak var menuTableTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuTableView: UITableView!
@@ -42,7 +42,7 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
     }
     */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,10 +52,10 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
         return cell
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if  indexPath.row == 2 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 0{
+        if  indexPath.row == 2 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 0 || indexPath.row == 4{
             menuDel?.menuActionDelegate(number: indexPath.row)
             self.view.removeFromSuperview()
-        }else if  indexPath.row == 4{
+        }else if  indexPath.row == 5{
             self.view.removeFromSuperview()
             UserDefaults.standard.set("", forKey: "userType")
             UserDefaults.standard.set(false, forKey: "LoginEnter")
