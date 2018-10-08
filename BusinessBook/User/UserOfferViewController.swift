@@ -30,6 +30,11 @@ class UserOfferViewController: UIViewController {
        var categSelected = -1
     var citySelected = -1
     var regionSelected = -1
+    var defaultOfferCurrentPage = 0
+    var defaultOfferTotalPage = 0
+    var searchCurrentPage = 0
+    var searchTotalPage = 0
+    var searchFlag = false 
     override func viewDidLoad() {
         super.viewDidLoad()
      activityIndicator.isHidden =  true
@@ -37,6 +42,7 @@ class UserOfferViewController: UIViewController {
         getCategory()
         getDefaultOffer()
         getCity()
+        offerList = []
          regionBtn.isEnabled = false
         offerCollectionView.delegate = self
         offerCollectionView.dataSource = self
@@ -48,7 +54,7 @@ class UserOfferViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     func getDefaultOffer(){
-        offerList = []
+        
         let network = Network()
         
         let networkExist = network.isConnectedToNetwork()
@@ -57,7 +63,7 @@ class UserOfferViewController: UIViewController {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             let userId = UserDefaults.standard.value(forKey: "user_id") as? String
-            let url = Constant.baseURL + Constant.URIDefaultOfferSearch + userId!
+            let url = Constant.baseURL + Constant.URIDefaultOfferSearch + userId! + "/\(defaultOfferCurrentPage + 1)"
             Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
                     print(response)
@@ -66,10 +72,19 @@ class UserOfferViewController: UIViewController {
                     switch response.result {
                     case .success:
                             if let datares = response.result.value as? [String:Any]{
+                                if let meta = datares["meta"] as?[String:Any] {
+                                    if let current_page = meta["current_page"] as? Int {
+                                        self.defaultOfferCurrentPage = current_page
+                                    }
+                                    if let total = meta["total"] as? Int {
+                                        self.defaultOfferTotalPage = total
+                                    }
+                                }
                                 if let data = datares["data"] as? [Dictionary<String,Any>] {
                                     if data.count == 0 {
                                         self.noofferResult.isHidden = false
-                                        
+                                         self.defaultOfferCurrentPage = -1
+                                         self.defaultOfferTotalPage = -1
                                     }else{
                                         self.noofferResult.isHidden = true
                                     }
@@ -124,7 +139,7 @@ class UserOfferViewController: UIViewController {
        
         self.activityIndicator.isHidden = false
          self.activityIndicator.startAnimating()
-            offerList = []
+        
             var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
             var parameter :[String:AnyObject] = [String:AnyObject]()
         if categSelected != -1 {
@@ -138,6 +153,7 @@ class UserOfferViewController: UIViewController {
         if regionSelected != -1 {
             parameter["regoin_id"] = "\(regionList[regionSelected].id!)" as AnyObject?
         }
+        parameter["page_number"] = "\(searchCurrentPage + 1)" as AnyObject?
             let url = Constant.baseURL + Constant.URIOfferSearch
             Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
                 .responseJSON { response in
@@ -147,10 +163,19 @@ class UserOfferViewController: UIViewController {
                     switch response.result {
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
+                            if let meta = datares["meta"] as?[String:Any] {
+                                if let current_page = meta["current_page"] as? Int {
+                                    self.searchCurrentPage = current_page
+                                }
+                                if let total = meta["total"] as? Int {
+                                    self.searchTotalPage = total
+                                }
+                            }
                             if let data = datares["data"] as? [Dictionary<String,Any>]{
                                 if data.count == 0 {
                                    self.noofferResult.isHidden = false
-                                    
+                                     self.searchTotalPage = -1
+                                    self.searchCurrentPage = -1
                                 }else{
                                     self.noofferResult.isHidden = true
                                 }
@@ -381,7 +406,11 @@ class UserOfferViewController: UIViewController {
     }
     
     @IBAction func searchBtnAction(_ sender: Any) {
-            if searchName.text != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
+         let name = searchName.text?.trimmingCharacters(in: .whitespaces)
+            if name != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
+                offerList = []
+                searchFlag = true
+                searchCurrentPage = 0
                 searchBusiness()
             }else{
                 let alert = UIAlertController(title: "Warning", message: "You should select region or category or business name", preferredStyle: UIAlertControllerStyle.alert)
@@ -439,6 +468,25 @@ extension UserOfferViewController:UICollectionViewDelegate,UICollectionViewDataS
         cell?.caption.text  = offerList[indexPath.row].caption
         return cell!
     }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        
+            if searchFlag == true {
+                if indexPath.row == offerList.count - 1 {
+                    print("HELLO",indexPath.row)
+                    if searchCurrentPage < searchTotalPage {
+                        searchBusiness()
+                    }
+                }
+            }else{ // default search
+                if indexPath.row == offerList.count - 1 {
+                    if defaultOfferCurrentPage <   defaultOfferTotalPage {
+                        getDefaultOffer()
+                    }
+                }
+            }
+        }
+  
 }
 extension UserOfferViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     //MARK:pickerview

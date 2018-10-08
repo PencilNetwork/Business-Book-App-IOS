@@ -485,20 +485,20 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             }
         parameter["city_id"] = "\(selectedCity)" as? AnyObject
             var categString = ""
-             if isSearching1 {
-                for i in 0..<filterData1.count{
-                    if filterData1[i].checkbox == true{
-                        if categString == ""{
-                            categString = categString + "\(filterData1[i].id!)"
-                            
-                        }else{
-                            categString = categString + "," + "\(filterData1[i].id!)"
-                        }
-                        
-                    }
-                }
-              
-             }else{
+//             if isSearching1 {
+//                for i in 0..<filterData1.count{
+//                    if filterData1[i].checkbox == true{
+//                        if categString == ""{
+//                            categString = categString + "\(filterData1[i].id!)"
+//
+//                        }else{
+//                            categString = categString + "," + "\(filterData1[i].id!)"
+//                        }
+//
+//                    }
+//                }
+//
+//             }else{
                 for i in 0..<category.count{
                      if category[i].checkbox == true{
                           if categString == ""{
@@ -509,21 +509,21 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                         
                     }
                 }
-            }
+           // }
             print("categString\(categString)")
         parameter["categories_ids"] = categString as? AnyObject
             var regionString = ""
-            if issearching3 {
-                for i in 0..<filterData3.count{
-                    if filterData3[i].checkbox == true {
-                        if regionString == "" {
-                            regionString = regionString +  "\(filterData3[i].id!)"
-                        }else{
-                            regionString = regionString + "," +  "\(filterData3[i].id!)"
-                        }
-                    }
-                }
-            }else{
+//            if issearching3 {
+//                for i in 0..<filterData3.count{
+//                    if filterData3[i].checkbox == true {
+//                        if regionString == "" {
+//                            regionString = regionString +  "\(filterData3[i].id!)"
+//                        }else{
+//                            regionString = regionString + "," +  "\(filterData3[i].id!)"
+//                        }
+//                    }
+//                }
+//            }else{
                 for i in 0..<region.count{
                     if region[i].checkbox == true {
                         if  regionString == "" {
@@ -533,7 +533,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                         }
                     }
                 }
-            }
+          //  }
             print("regionString\(regionString)")
             parameter["regoins_ids"] = regionString as AnyObject
         if networkExist == true {
@@ -548,10 +548,12 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                         if let datares = response.result.value as? [String:Any]{
                             if let flag = datares["flag"] as? String{
                                 if flag == "1"{
+                                    UserDefaults.standard.set(true,forKey:"interest")
                                      self.view.removeFromSuperview()
                                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
                                     self.navigationController?.pushViewController(vc!, animated: true)
                                 }else{
+                                    UserDefaults.standard.set(false,forKey:"interest")
                                     let alert = UIAlertController(title: "", message: " fail" , preferredStyle: UIAlertControllerStyle.alert)
                                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                                     self.present(alert, animated: true, completion: nil)
@@ -780,9 +782,9 @@ extension InterestPopupViewController:UISearchBarDelegate{
             
             if searchBar.text == nil || searchBar.text == "" {
                 isSearching1 = false
-                for item in category{
-                    item.checkbox = false
-                }
+//                for item in category{
+//                    item.checkbox = false
+//                }
                 view.endEditing(true)
                 categCollectionView.reloadData()
             }else{
@@ -841,9 +843,9 @@ extension InterestPopupViewController:UISearchBarDelegate{
             
             if searchBar.text == nil || searchBar.text == "" {
                 issearching3 = false
-                for item in region {
-                    item.checkbox = false
-                }
+//                for item in region {
+//                    item.checkbox = false
+//                }
                 view.endEditing(true)
                 regionCollectionView.reloadData()
             }else{

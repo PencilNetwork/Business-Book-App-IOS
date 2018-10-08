@@ -57,6 +57,12 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     var segmentIndex = 0
     var searchCategory = false
     var categoryId:Int?
+    var searchCurrentPage = 0
+    var searchTotalPage = 0
+    var searchFlag = false
+    var defaultCurrentPage = 0
+    var defaultTotalPage = 0
+    var ShortCutCategory:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         historicPlaceBtn.titleLabel?.numberOfLines = 1
@@ -67,7 +73,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
          activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         getCategory()
            getCity()
-        
+         BussinessList = []
         if UIDevice().type == .iPhone5S{
             NotificationCenter.default.addObserver(self, selector: #selector(UserHomeViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(UserHomeViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -343,9 +349,9 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     func getData(){
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
- BussinessList = []
+
       var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
-        let url = Constant.baseURL + Constant.URIDefaultSearch + "\(user_id)"
+        let url = Constant.baseURL + Constant.URIDefaultSearch + "\(user_id)" + "/\(defaultCurrentPage + 1)"
         Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -354,6 +360,14 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 switch response.result {
                 case .success:
                     if let datares = response.result.value as? [String:Any]{
+                        if let meta = datares["meta"] as?[String:Any] {
+                           if let current_page = meta["current_page"] as? Int {
+                                self.defaultCurrentPage = current_page
+                            }
+                            if let total = meta["total"] as? Int {
+                                self.defaultTotalPage = total
+                            }
+                        }
                         if let flag = datares["flag"] as? String {
                             if flag == "0"{
                                 self.showToast(message: "fail")
@@ -362,6 +376,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                         if let data  = datares["data"] as? [Dictionary<String,Any>]{
                             if data.count == 0 {
                                 self.noDataResult.isHidden = false
+                                self.defaultCurrentPage = -1
+                                self.defaultTotalPage = -1
                             }else{
                                 self.noDataResult.isHidden = true
                             }
@@ -621,7 +637,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         }
     }
     func searchBusiness(){
-        BussinessList = []
+        
         var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
         var parameter :[String:AnyObject] = [String:AnyObject]()
         if categSelected != -1 {
@@ -634,6 +650,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if regionSelected != -1 {
         parameter["regoin_id"] = "\(regionList[regionSelected].id!)" as AnyObject?
         }
+        parameter["page_number"] = "\(searchCurrentPage + 1)"  as AnyObject?
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
         let url = Constant.baseURL + Constant.URIBusinessSearch
@@ -645,6 +662,14 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 switch response.result {
                 case .success:
                     if let datares = response.result.value as? [String:Any]{
+                        if let meta = datares["meta"] as? [String:Any]{
+                            if let current_page = meta["current_page"] as? Int {
+                                self.searchCurrentPage = current_page
+                            }
+                            if let total = meta["total"] as? Int {
+                                self.searchTotalPage = total
+                            }
+                        }
                         if let flag = datares["flag"] as? String{
                             if flag == "0"{
                                 self.showToast(message: "Response fail")
@@ -654,6 +679,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                         if let data  = datares["data"] as? [Dictionary<String,Any>]{
                             if data.count == 0 {
                                 self.noDataResult.isHidden = false
+                                 self.searchCurrentPage = -1
+                                self.searchTotalPage = -1 
                             }else{
                                 self.noDataResult.isHidden = true
                             }
@@ -781,6 +808,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     //MARK:IBAction
     
     @IBAction func otherBtnAction(_ sender: Any) {
+        ShortCutCategory = true
+          BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
@@ -792,9 +821,12 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         }
     }
     @IBAction func searchBtnAction(_ sender: Any) {
-        if searchName.text != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
-            
-       
+        let name = searchName.text?.trimmingCharacters(in: .whitespaces)
+        if  name != "" ||  categSelected != -1 ||  citySelected != -1 && (searchName.text != "" || regionSelected != -1 || categSelected != -1){
+            BussinessList = []
+           searchFlag = true
+            ShortCutCategory = false
+            searchCurrentPage = 0
             searchBusiness()
         }else{
             let alert = UIAlertController(title: "Warning", message: "You should select region or category or business name", preferredStyle: UIAlertControllerStyle.alert)
@@ -809,10 +841,12 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     }
     
     @IBAction func historicPlaceAction(_ sender: Any) {
+        ShortCutCategory = true
+          BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:1)
+            searchByCategory(categoryId:59)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -821,6 +855,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     }
  
     @IBAction func hospitalBtnAction(_ sender: Any) {
+          ShortCutCategory = true
+          BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
@@ -832,6 +868,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         }
     }
     @IBAction func IAMHUNGRYAction(_ sender: Any) {
+          ShortCutCategory = true
+          BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
@@ -844,6 +882,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     }
     
     @IBAction func INEEDHotelAction(_ sender: Any) {
+          ShortCutCategory = true
+          BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
@@ -964,7 +1004,25 @@ extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSo
         self.addChildViewController(vc)
         self.view.addSubview(vc.view)
     }
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+        if ShortCutCategory == false {
+            if searchFlag == true {
+                if indexPath.row == BussinessList.count - 1 {
+                    print("HELLO",indexPath.row)
+                    if searchCurrentPage < searchTotalPage {
+                       searchBusiness()
+                    }
+                }
+            }else{ // default search 
+                 if indexPath.row == BussinessList.count - 1 {
+                    if defaultCurrentPage <   defaultTotalPage {
+                        getData()
+                    }
+                }
+         }
+       }
+    }
 }
 extension UserHomeViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     //MARK:pickerview

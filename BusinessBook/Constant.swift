@@ -24,7 +24,7 @@ class Constant {
     public static var URIOfferSearch = "offer/search"
     public static var URIStatusFavourite = "favoirtes/"
     public static var URIInsertFavourite = "favoirtes"
-    public static var URIDeleteFavourite = "favoirtes/"
+    public static var URIDeleteFavourite = "favoirtes/delete/"
     public static var URIGetInterest = "interests/"
     public static var URICreateOffer = "offers"
     public static var URIUploadFiles = "files/store"

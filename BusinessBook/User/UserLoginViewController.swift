@@ -194,12 +194,13 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
                             if let id = data["id"] as? Int {
                                 UserDefaults.standard.set("\(id)", forKey: "user_id")
                                 if let interest = data["interest"] as? [String:Any]{
-                                    
+                                    UserDefaults.standard.set(true,forKey:"interest")
                                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
                                     self.navigationController?.pushViewController(vc!, animated: true)
                                     
                                     //
                                 }else{
+                                      UserDefaults.standard.set(false,forKey:"interest")
                                     let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "InterestPopupViewController") as! InterestPopupViewController
                                     self.addChildViewController(popupVC)
                                     popupVC.view.frame = self.view.frame

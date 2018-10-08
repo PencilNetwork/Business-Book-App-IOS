@@ -14,6 +14,8 @@ import GoogleMaps
 import GooglePlaces
 import GoogleSignIn
 import Alamofire
+import UserNotifications
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnimationDelegate{
  
@@ -24,18 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
     static var userMenu_bool = true 
     var deviceToKen:String = ""
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-//self.splashScreen()
-        //AIzaSyBBk2-xtxTDDxxEaFfw64nVsjm6QMBGu1Y
-        // Override point for customization after application launch.
-       // animationLaunchScreen()
-//        self.window = UIWindow(frame:UIScreen.main.bounds)
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        var vc:UIViewController
-//        if UserDefaults.standard.value(forKey: "Login") as? Bool == true {
-//            vc = storyboard.instantiateInitialViewController()!
-//        }else{
-//            vc = storyboard.instantiateViewController(withIdentifier: "RootViewController")
-//        }
+
+       
+
 //        self.window?.rootViewController = vc
 //        self.window?.makeKeyAndVisible()
         FirebaseApp.configure()
@@ -44,6 +37,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
           FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+       // notification
+        if #available(iOS 10.0, *) {
+            let authOptions : UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {granted, error in
+                    print(granted)
+            })
+            
+            // For iOS 10 display notification (sent via APNS)
+//            UNUserNotificationCenter.current().delegate = self
+//            // For iOS 10 data message (sent via FCM)
+//            Messaging.messaging().remoteMessageDelegate = self
+            
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        
+        application.registerForRemoteNotifications()
+        
+        
         return true
     }
     private func splashScreen(){
@@ -130,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
         // kDeviceToken=tokenString
         print("deviceToken: \(tokenString)")
         deviceToKen = tokenString
+        Auth.auth().setAPNSToken(deviceToken, type: .sandbox)
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.

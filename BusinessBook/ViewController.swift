@@ -80,8 +80,13 @@ class ViewController: UIViewController {
 
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }else{
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
-                    self.navigationController?.pushViewController(vc!, animated: true)
+                    if  UserDefaults.standard.value(forKey: "interest") as? Bool == true {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserLeftMenuVC") as? UserLeftMenuVC
+                        self.navigationController?.pushViewController(vc!, animated: true)
+                    }else{
+                         performSegue(withIdentifier: "showNavigation", sender: self)
+                    }
+                    
                 }
             }
          }else{

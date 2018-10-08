@@ -667,20 +667,20 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             }
             parameter["city_id"] = "\(selectedCity)" as? AnyObject
             var categString = ""
-            if isSearching1 {
-                for i in 0..<filterData1.count{
-                    if filterData1[i].checkbox == true{
-                        if categString == ""{
-                            categString = categString + "\(filterData1[i].id!)"
-                            
-                        }else{
-                            categString = categString + "," + "\(filterData1[i].id!)"
-                        }
-                        
-                    }
-                }
-                
-            }else{
+//            if isSearching1 {
+//                for i in 0..<filterData1.count{
+//                    if filterData1[i].checkbox == true{
+//                        if categString == ""{
+//                            categString = categString + "\(filterData1[i].id!)"
+//
+//                        }else{
+//                            categString = categString + "," + "\(filterData1[i].id!)"
+//                        }
+//
+//                    }
+//                }
+//
+//            }else{
                 for i in 0..<category.count{
                     if category[i].checkbox == true{
                         if categString == ""{
@@ -691,20 +691,20 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                         
                     }
                 }
-            }
+            //}
             parameter["categories_ids"] = categString as? AnyObject
             var regionString = ""
-            if issearching3 {
-                for i in 0..<filterData3.count{
-                    if filterData3[i].checkbox == true {
-                        if regionString == "" {
-                            regionString = regionString +  "\(filterData3[i].id!)"
-                        }else{
-                            regionString = regionString + "," +  "\(filterData3[i].id!)"
-                        }
-                    }
-                }
-            }else{
+//            if issearching3 {
+//                for i in 0..<filterData3.count{
+//                    if filterData3[i].checkbox == true {
+//                        if regionString == "" {
+//                            regionString = regionString +  "\(filterData3[i].id!)"
+//                        }else{
+//                            regionString = regionString + "," +  "\(filterData3[i].id!)"
+//                        }
+//                    }
+//                }
+//            }else{
                 for i in 0..<region.count{
                     if region[i].checkbox == true {
                         if  regionString == "" {
@@ -714,7 +714,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                         }
                     }
                 }
-            }
+         //   }
             
             parameter["regoins_ids"] = regionString as AnyObject
             if networkExist == true {
@@ -864,9 +864,9 @@ extension EditDefaultSearchViewController:UISearchBarDelegate{
             
             if searchBar.text == nil || searchBar.text == "" {
                 isSearching1 = false
-                for item in category{
-                    item.checkbox = false
-                }
+//                for item in category{
+//                    item.checkbox = false
+//                }
                 view.endEditing(true)
                 categCollectionView.reloadData()
             }else{
@@ -925,9 +925,9 @@ extension EditDefaultSearchViewController:UISearchBarDelegate{
             
             if searchBar.text == nil || searchBar.text == "" {
                 issearching3 = false
-                for item in region {
-                    item.checkbox = false
-                }
+//                for item in region {
+//                    item.checkbox = false
+//                }
                 view.endEditing(true)
                 regionCollectionView.reloadData()
             }else{
