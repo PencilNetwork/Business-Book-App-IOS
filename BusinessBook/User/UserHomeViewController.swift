@@ -205,6 +205,12 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                         if let datares = response.result.value as? [String:Any]{
                             
                             if let data  = datares["data"] as? [[String:Any]]{
+                                if data.count > 0 {
+                                    let defaultCategy = CategoryBean()
+                                    defaultCategy.id = -1
+                                    defaultCategy.name = "Select Category"
+                                    self.categoryList.append(defaultCategy)
+                                }
                                 for item in data{
                                     var category = CategoryBean()
                                     if let id = item["id"] as? Int {
@@ -251,10 +257,17 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                     print(response)
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
+                  
                     switch response.result {
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
                             if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                if data.count > 0 {
+                                    let defaultcity = CityBean()
+                                    defaultcity.id = -1
+                                    defaultcity.name = "Select City"
+                                    self.cityList.append(defaultcity)
+                                }
                             for item in data {
                                 let city = CityBean()
                                 if let id = item["id"] as? Int {
@@ -306,6 +319,12 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
                             if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                if data.count > 0 {
+                                    let defaultRegion = RegionBean()
+                                    defaultRegion.id = -1
+                                    defaultRegion.name = "Select Region"
+                                    self.regionList.append(defaultRegion)
+                                }
                             for item in data {
                                let region = RegionBean()
                                 if let id = item["id"] as? Int {
@@ -335,9 +354,9 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                     }
             }
             }else{
-                let alert = UIAlertController(title: "", message: "select city" , preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+//                let alert = UIAlertController(title: "", message: "select city" , preferredStyle: UIAlertControllerStyle.alert)
+//                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+//                self.present(alert, animated: true, completion: nil)
             }
         }else{
             
@@ -813,7 +832,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:59)
+            searchByCategory(categoryId:60)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -846,7 +865,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:59)
+            searchByCategory(categoryId:60)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -860,7 +879,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:57)
+            searchByCategory(categoryId:58)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -873,7 +892,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         if networkExist == true {
-            searchByCategory(categoryId:37)
+            searchByCategory(categoryId:38)
         }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
@@ -915,7 +934,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         categoryDone.isHidden = true
         if categoryList.count > 0 {
             if categSelected == -1 {
-                categSelected = 0
+                categSelected = -1
                 categoryBtn.setTitle(categoryList[0].name, for: .normal)
             }else{
                 categoryBtn.setTitle(categoryList[categSelected].name, for: .normal)
@@ -928,7 +947,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         cityDone.isHidden = true
         if cityList.count > 0 {
             if citySelected == -1 {
-                citySelected = 0
+                citySelected = -1
                 cityBtn.setTitle(cityList[0].name, for: .normal)
             }else{
                 cityBtn.setTitle(cityList[citySelected].name, for: .normal)
@@ -942,7 +961,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         regionDone.isHidden = true
         if regionList.count > 0 {
             if regionSelected == -1 {
-                regionSelected = 0
+                regionSelected = -1
                 regionBtn.setTitle(regionList[0].name, for: .normal)
             }else{
                 regionBtn.setTitle(regionList[regionSelected].name, for: .normal)
@@ -1064,18 +1083,34 @@ extension UserHomeViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == categoryPickerView{
-        categSelected = row
+             if row == 0 {
+                categSelected = -1
+             }else{
+                categSelected = row
+            }
+        
         categoryBtn.setTitle(categoryList[row].name, for: .normal)
             
         }else if pickerView == cityPickerView{
-            citySelected = row
+            if row == 0 {
+                citySelected = -1
+            }else{
+               citySelected = row
+            }
+            
             cityBtn.setTitle(cityList[row].name, for: .normal)
+            
              regionSelected = -1
             
-            regionBtn.setTitle("region", for: .normal)
+            regionBtn.setTitle("Select region", for: .normal)
             
         }else{
-            regionSelected = row
+                if row == 0 {
+                    regionSelected = -1
+                }else{
+                     regionSelected = row
+              }
+           
             regionBtn.setTitle(regionList[row].name, for: .normal)
             
         }

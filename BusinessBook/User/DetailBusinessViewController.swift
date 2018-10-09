@@ -15,6 +15,11 @@ import Alamofire
 class DetailBusinessViewController: UIViewController {
     //MARK:IBoutlet
     
+    @IBOutlet weak var regionLBL: UILabel!
+    @IBOutlet weak var cityLBL: UILabel!
+    @IBOutlet weak var relateFilesHeight: NSLayoutConstraint!
+    @IBOutlet weak var offerHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var favouriteBtn: UIButton!
     
     @IBOutlet weak var busRatingView: SwiftyStarRatingView!
@@ -49,7 +54,7 @@ class DetailBusinessViewController: UIViewController {
         offerCollectionView.delegate = self
         busRatingView.isEnabled = false
      // NotificationCenter.default.addObserver(self, selector: #selector(SendBusID(_:)), name: NSNotification.Name(rawValue: "SendBusID"), object: nil)
-        rateUsView.addTarget(self, action: #selector(tapFunction), for: .valueChanged)
+       
         // Do any additional setup after loading the view.
     }
 
@@ -109,6 +114,10 @@ class DetailBusinessViewController: UIViewController {
                 switch response.result {
                 case .success:
                     if let data = response.result.value as? [String:Any]{
+                        if let rating = data["rating"] as? Double {
+                            self.rateUsView.value = CGFloat(rating)
+                        }
+                        self.rateUsView.addTarget(self, action: #selector(self.tapFunction), for: .valueChanged)
                         if let flag = data["flag"] as? String{
                             if flag == "0" {
                                 self.favouriteBtn.setImage(UIImage(named: "emptyheart.png"), for: .normal)
@@ -216,6 +225,14 @@ class DetailBusinessViewController: UIViewController {
                             if let description = data["description"] as? String{
                                 self.businessDescription.text = description
                             }
+                            if let city = data["city"] as? String{
+                                self.cityLBL.text = city
+                            }
+                            if let region = data["regoin"] as? Dictionary<String,Any>{
+                                if let name = region["name"] as? String{
+                                    self.regionLBL.text = name
+                                }
+                            }
                             if let average_rating = data["average_rating"] as? Double {
                                 self.busRatingView.value = CGFloat(average_rating)
                             }
@@ -265,7 +282,20 @@ class DetailBusinessViewController: UIViewController {
                                     self.offerList.append(offer)
                                 }
                                 self.offerCollectionView.reloadData()
+                               
                             }
+                            if self.offerCollectionView.collectionViewLayout.collectionViewContentSize.height > 9000{
+                                
+                            }else{
+                                if self.offerList.count > 0 {
+                                    self.offerHeight.constant = self.offerCollectionView.collectionViewLayout.collectionViewContentSize.height
+                                     self.relateFilesHeight.constant = 10
+                                    self.viewHeight.constant = self.offerHeight.constant + self.relateFilesHeight.constant + 740
+                                   
+                                    self.view.setNeedsLayout()
+                                }
+                            }
+                            
                             if let files = data["files"] as? [Dictionary<String,Any>]{
                                 
                                 for item in files{
@@ -279,6 +309,15 @@ class DetailBusinessViewController: UIViewController {
                                     self.relatedFileList.append(relatedfile)
                                 }
                                 self.relatedFileCollectionView.reloadData()
+                            }
+                            if self.relatedFileList.count > 0{
+                                self.relateFilesHeight.constant = self.relatedFileCollectionView.collectionViewLayout.collectionViewContentSize.height
+                                self.viewHeight.constant = self.offerHeight.constant + self.relateFilesHeight.constant + 740
+                                self.view.setNeedsLayout()
+                            }else{
+                                 self.relateFilesHeight.constant = 10
+                                self.viewHeight.constant = self.offerHeight.constant + 10 + 740
+                                self.view.setNeedsLayout()
                             }
                             if let owner = data["owner"] as? [String:Any]{
                                 if let email = owner["email"] as? String {

@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/AppDelegate.swift"
-            timestampString = "560702163.480087"
+            timestampString = "560703865.1910419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "225"
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/AppDelegate.swift"
-            timestampString = "560702163.480153"
+            timestampString = "560703865.191106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
@@ -138,7 +138,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/login/RegisterViewController.swift"
-                  timestampString = "560699718.359534"
+                  timestampString = "560784969.728723"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "146"
@@ -153,7 +153,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/login/RegisterViewController.swift"
-                  timestampString = "560699718.361354"
+                  timestampString = "560784969.730808"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "146"
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/Business/BusinessSubProfileViewController.swift"
-            timestampString = "560610339.432145"
+            timestampString = "560786156.006451"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "getData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/Business/BusinessSubProfileViewController.swift"
-            timestampString = "560610339.432502"
+            timestampString = "560786156.006632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "getData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -570,7 +570,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserLoginViewController.swift"
-            timestampString = "560702163.48066"
+            timestampString = "560703865.191606"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "142"
@@ -586,7 +586,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/UserLoginViewController.swift"
-                  timestampString = "560699718.463478"
+                  timestampString = "560784969.833154"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "143"
@@ -601,7 +601,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/UserLoginViewController.swift"
-                  timestampString = "560699718.465259"
+                  timestampString = "560784969.835367"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "143"
@@ -618,7 +618,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserLoginViewController.swift"
-            timestampString = "560702163.480709"
+            timestampString = "560703865.191664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
@@ -634,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.480754"
+            timestampString = "560786156.006791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
             landmarkName = "getCategory()"
             landmarkType = "7">
          </BreakpointContent>
@@ -762,7 +762,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.480918"
+            timestampString = "560786156.007358"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"
@@ -810,7 +810,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.480974"
+            timestampString = "560786156.007762"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "155"
@@ -826,11 +826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.481027"
+            timestampString = "560786156.0081199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -842,11 +842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.481364"
+            timestampString = "560786156.00819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "didReceiveMemoryWarning()"
             landmarkType = "7">
          </BreakpointContent>
@@ -858,7 +858,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserLoginViewController.swift"
-            timestampString = "560702163.4816051"
+            timestampString = "560703865.1930211"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
@@ -1034,11 +1034,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/Business/BusinessSubProfileViewController.swift"
-            timestampString = "560610339.433799"
+            timestampString = "560786156.008364"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "getData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1146,7 +1146,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserLoginViewController.swift"
-            timestampString = "560702163.4819061"
+            timestampString = "560703865.193329"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "167"
@@ -1162,7 +1162,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/InterestPopupViewController.swift"
-            timestampString = "560702163.481953"
+            timestampString = "560703865.193393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "537"
@@ -1178,7 +1178,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/InterestPopupViewController.swift"
-            timestampString = "560702163.481995"
+            timestampString = "560703865.19344"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "513"
@@ -1194,11 +1194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.482035"
+            timestampString = "560786156.008516"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "createRating()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1210,11 +1210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.482272"
+            timestampString = "560786156.008579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "insertFavourite()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1226,75 +1226,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.482504"
+            timestampString = "560786156.008639"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "getFavourite()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.482733"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "getFavourite()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.4829611"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "getFavourite()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.4831899"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "getFavourite()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
-            timestampString = "560702163.483417"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "favouriteBtnAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1306,23 +1242,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.483665"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "getDefaultOffer()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.4840291"
+            timestampString = "560703865.194113"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
@@ -1338,7 +1258,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484326"
+            timestampString = "560703865.194428"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "482"
@@ -1354,7 +1274,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484376"
+            timestampString = "560703865.194486"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "477"
@@ -1370,7 +1290,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484419"
+            timestampString = "560703865.1945291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "510"
@@ -1386,7 +1306,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.4844609"
+            timestampString = "560703865.194571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "505"
@@ -1402,7 +1322,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484501"
+            timestampString = "560703865.194611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "504"
@@ -1418,7 +1338,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484542"
+            timestampString = "560703865.194651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "495"
@@ -1434,7 +1354,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.4845819"
+            timestampString = "560703865.1946909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
@@ -1450,7 +1370,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484622"
+            timestampString = "560703865.19473"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
@@ -1466,7 +1386,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.4846621"
+            timestampString = "560703865.194769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "451"
@@ -1482,7 +1402,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484702"
+            timestampString = "560703865.194808"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "418"
@@ -1498,7 +1418,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484742"
+            timestampString = "560703865.1948479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "293"
@@ -1514,7 +1434,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.4847831"
+            timestampString = "560703865.194888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
@@ -1530,7 +1450,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484822"
+            timestampString = "560703865.194927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "647"
@@ -1546,7 +1466,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484861"
+            timestampString = "560703865.1949641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "719"
@@ -1562,7 +1482,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.4849"
+            timestampString = "560703865.195002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "695"
@@ -1578,7 +1498,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484939"
+            timestampString = "560703865.1950409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "771"
@@ -1594,7 +1514,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.484977"
+            timestampString = "560703865.195079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "668"
@@ -1610,7 +1530,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.4850169"
+            timestampString = "560703865.195117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "725"
@@ -1626,7 +1546,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.485056"
+            timestampString = "560786156.0088741"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -1642,11 +1562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.485105"
+            timestampString = "560786156.0092109"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "508"
-            endingLineNumber = "508"
+            startingLineNumber = "527"
+            endingLineNumber = "527"
             landmarkName = "searchByCategory(categoryId:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1657,60 +1577,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BusinessBook/ViewController.swift"
-            timestampString = "560702163.485157"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "showNavigation()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BusinessBook.ViewController.showNavigation() -&gt; ()"
-                  moduleName = "BusinessBook"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac/BusinessBook/BusinessBook/ViewController.swift"
-                  timestampString = "560699718.7135251"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "2591">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BusinessBook.ViewController.showNavigation() -&gt; ()"
-                  moduleName = "BusinessBook"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac/BusinessBook/BusinessBook/ViewController.swift"
-                  timestampString = "560699718.715358"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "5675">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "BusinessBook/Business/BusinessSubProfileViewController.swift"
-            timestampString = "560610339.435612"
+            timestampString = "560786156.009542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "collectionView(_:layout:sizeForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1722,7 +1594,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserLoginViewController.swift"
-            timestampString = "560702163.485221"
+            timestampString = "560703865.195858"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "176"
@@ -1738,7 +1610,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.485262"
+            timestampString = "560703865.195904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "508"
@@ -1754,7 +1626,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/EditDefaultSearchViewController.swift"
-            timestampString = "560702163.485302"
+            timestampString = "560703865.195945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "509"
@@ -1770,7 +1642,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.485343"
+            timestampString = "560703865.195999"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -1786,7 +1658,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.485638"
+            timestampString = "560703865.196324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "142"
@@ -1802,7 +1674,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.485926"
+            timestampString = "560703865.196619"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "160"
@@ -1818,7 +1690,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.486213"
+            timestampString = "560703865.196907"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "414"
@@ -1834,7 +1706,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.486533"
+            timestampString = "560703865.1971999"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "141"
@@ -1866,7 +1738,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/AllCategoryViewController.swift"
-                  timestampString = "560699718.755133"
+                  timestampString = "560784970.2093821"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -1881,7 +1753,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/AllCategoryViewController.swift"
-                  timestampString = "560699718.756982"
+                  timestampString = "560784970.211468"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -1896,7 +1768,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/AllCategoryViewController.swift"
-                  timestampString = "560699718.759061"
+                  timestampString = "560784970.2134"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "13"
@@ -1911,7 +1783,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/AllCategoryViewController.swift"
-                  timestampString = "560699718.760932"
+                  timestampString = "560784970.215804"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -1926,7 +1798,7 @@
                   moduleName = "BusinessBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/BusinessBook/BusinessBook/User/AllCategoryViewController.swift"
-                  timestampString = "560699718.762908"
+                  timestampString = "560784970.21781"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "13"
@@ -1959,11 +1831,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.486861"
+            timestampString = "560786156.00969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "876"
-            endingLineNumber = "876"
+            startingLineNumber = "895"
+            endingLineNumber = "895"
             landmarkName = "IAMHUNGRYAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1975,11 +1847,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.486917"
+            timestampString = "560786156.010028"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
+            startingLineNumber = "520"
+            endingLineNumber = "520"
             landmarkName = "searchByCategory(categoryId:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1991,11 +1863,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.486969"
+            timestampString = "560786156.010353"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "889"
-            endingLineNumber = "889"
+            startingLineNumber = "908"
+            endingLineNumber = "908"
             landmarkName = "INEEDHotelAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2007,75 +1879,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.4871269"
+            timestampString = "560786156.010673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
-            landmarkName = "getData()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.487184"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1012"
-            endingLineNumber = "1012"
-            landmarkName = "collectionView(_:willDisplay:forItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/UserHomeViewController.swift"
-            timestampString = "560702163.487236"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
-            landmarkName = "getData()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/ViewController.swift"
-            timestampString = "560702163.4872839"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "showNavigation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.487326"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "474"
-            endingLineNumber = "474"
+            startingLineNumber = "1031"
+            endingLineNumber = "1031"
             landmarkName = "collectionView(_:willDisplay:forItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2087,7 +1895,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.487579"
+            timestampString = "560703865.2000329"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "410"
@@ -2103,11 +1911,187 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BusinessBook/User/UserOfferViewController.swift"
-            timestampString = "560702163.487832"
+            timestampString = "560703865.200334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "411"
             endingLineNumber = "411"
+            landmarkName = "searchBtnAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
+            timestampString = "560786156.011061"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "getData(busId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
+            timestampString = "560786156.01113"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
+            landmarkName = "getData(busId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
+            timestampString = "560786156.011187"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "getData(busId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
+            timestampString = "560786156.0112391"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "getFavourite()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/DetailBusinessViewController.swift"
+            timestampString = "560786156.01129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "getFavourite()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/UserHomeViewController.swift"
+            timestampString = "560786156.01134"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "666"
+            endingLineNumber = "666"
+            landmarkName = "searchBusiness()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/UserHomeViewController.swift"
+            timestampString = "560786156.011645"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
+            landmarkName = "searchBusiness()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/UserHomeViewController.swift"
+            timestampString = "560786156.011946"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
+            landmarkName = "searchBusiness()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/UserHomeViewController.swift"
+            timestampString = "560786156.012244"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1095"
+            endingLineNumber = "1095"
+            landmarkName = "pickerView(_:didSelectRow:inComponent:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/UserHomeViewController.swift"
+            timestampString = "560786156.01254"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "948"
+            endingLineNumber = "948"
+            landmarkName = "cityDoneAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BusinessBook/User/UserHomeViewController.swift"
+            timestampString = "560786156.013051"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "844"
+            endingLineNumber = "844"
             landmarkName = "searchBtnAction(_:)"
             landmarkType = "7">
          </BreakpointContent>

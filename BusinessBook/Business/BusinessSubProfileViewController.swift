@@ -12,6 +12,8 @@ import GooglePlaces
 import Alamofire
 class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet weak var regionLbl: UILabel!
+    @IBOutlet weak var cityLbl: UILabel!
     @IBOutlet weak var relatedFileHeight: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var offerHeightConstraint: NSLayoutConstraint!
@@ -186,8 +188,8 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
         //"https://pencilnetwork.com/bussines_book/api/bussines/\(userid!)"
              self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
-        var userid = UserDefaults.standard.value(forKey: "id") as? Int
-        var url = Constant.baseURL + Constant.URIGetBusiness
+        let userid = UserDefaults.standard.value(forKey: "id") as? Int
+        let url = Constant.baseURL + Constant.URIGetBusiness
         Alamofire.request(url + "\(userid!)", method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -199,6 +201,14 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
                         if let data = datares["data"] as? [String:Any]{
                             if let description = data["description"] as? String{
                                self.businessDescription.text = description
+                            }
+                            if let city = data["city"] as? String{
+                                self.cityLbl.text = city
+                            }
+                            if let region = data["regoin"] as? Dictionary<String,Any>{
+                                if let name = region["name"] as? String{
+                                    self.regionLbl.text = name
+                                }
                             }
                             if let name = data["name"] as? String {
                                 self.businessName.text = name
@@ -248,7 +258,8 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
                             }else{
                                 if self.offerList.count > 0 {
                                 self.offerHeightConstraint.constant = self.offerCollectionView.collectionViewLayout.collectionViewContentSize.height
-                                
+                                    self.relatedFileHeight.constant = 10
+                                    self.viewHeight.constant = self.offerHeightConstraint.constant + self.relatedFileHeight.constant + 620
                                 self.view.setNeedsLayout()
                                 }
                             }
@@ -269,10 +280,10 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
                             }
                             if self.relatedFileList.count > 0{
                                  self.relatedFileHeight.constant = self.relatedFileCollectionView.collectionViewLayout.collectionViewContentSize.height
-                                self.viewHeight.constant = self.offerHeightConstraint.constant + self.relatedFileHeight.constant + 550
+                                self.viewHeight.constant = self.offerHeightConstraint.constant + self.relatedFileHeight.constant + 620
                                   self.view.setNeedsLayout()
                             }else{
-                                self.viewHeight.constant = self.offerHeightConstraint.constant + 10 + 550
+                                self.viewHeight.constant = self.offerHeightConstraint.constant + 10 + 620
                                  self.view.setNeedsLayout()
                             }
                             if let owner = data["owner"] as? [String:Any]{
