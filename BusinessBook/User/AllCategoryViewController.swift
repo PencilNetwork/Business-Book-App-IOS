@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreData
 class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout{
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -33,9 +34,72 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func getCategoryDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    for result in results as! [NSManagedObject]{
+                            var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                      self.collectionView.reloadData()
+                }
+               
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    
+                    for result in results as! [NSManagedObject]{
+                            var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                    self.collectionView.reloadData()
+                }
+               
+            }catch{
+                print("error to retrieve category ")
+            }
+        }
+    }
     func getCategory(){
-        
+        categoryList = []
+        if UserDefaults.standard.value(forKey: "StoreCategory") as? Bool == true  { // sql
+            getCategoryDataBaseIOS()
+            
+        }else {
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -84,6 +148,7 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
             self.present(alert, animated: true, completion: nil)
         }
     }
+    }
 
     //MARK:COllectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -117,6 +182,7 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserHomeViewController") as! UserHomeViewController
         vc.searchCategory = true
+        vc.ShortCutCategory = true 
         vc.categoryId = categoryList[indexPath.row].id!
         self.addChildViewController(vc)
         self.view.addSubview(vc.view)

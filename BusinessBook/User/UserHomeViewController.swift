@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreData
 protocol SendBusinessDelegate{
     func sendBusinessNo(index:Int)
 }
@@ -63,6 +64,11 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     var defaultCurrentPage = 0
     var defaultTotalPage = 0
     var ShortCutCategory:Bool = false
+    var categoryCurrentPage = 0
+    var categoryTotalPage = 0
+    let appdelegate = UIApplication.shared.delegate as! AppDelegate
+    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         historicPlaceBtn.titleLabel?.numberOfLines = 1
@@ -85,6 +91,9 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if networkExist == true {
             
             if searchCategory == true {
+                
+                 categoryCurrentPage = 0
+                
                 searchByCategory(categoryId:categoryId!)
             }else{
                 getData()
@@ -185,8 +194,149 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         gradientLayer.cornerRadius =  button.layer.cornerRadius
         button.layer.insertSublayer(gradientLayer, at: 0)
     }
+    func getCityDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    let defaultcity = CityBean()
+                    defaultcity.id = -1
+                    defaultcity.name = "Select City"
+                    self.cityList.append(defaultcity)
+                    
+                    for result in results as! [NSManagedObject]{
+                        let city = CityBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.cityList.append(city)
+                    }
+                    
+                }
+                self.cityPickerView.delegate = self
+                self.cityPickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{  /// 9
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    let defaultcity = CityBean()
+                    defaultcity.id = -1
+                    defaultcity.name = "Select City"
+                    self.cityList.append(defaultcity)
+                    for result in results as! [NSManagedObject]{
+                        let city = CityBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.cityList.append(city)
+                    }
+                    
+                }
+                self.cityPickerView.delegate = self
+                self.cityPickerView.dataSource = self
+            }catch{
+                print("error to retrieve city ")
+            }
+        }
+    }
+    func getCategoryDataBaseIOS(){
+          if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+           let context = appdelegate.persistentContainer.viewContext
+           let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+           request.returnsObjectsAsFaults = false // to return data as way as you saved it
+           do {
+            let results = try context.fetch(request)
+            if results.count > 0 {
+                let defaultCategy = CategoryBean()
+                defaultCategy.id = -1
+                defaultCategy.name = "Select Category"
+                self.categoryList.append(defaultCategy)
+                for result in results as! [NSManagedObject]{
+                   var category = CategoryBean()
+                    if let name = result.value(forKey: "name") as? String {
+                        print("name:\(name)")
+                        category.name = name
+                    }
+                    if let id = result.value(forKey: "id") as? Int {
+                        
+                        category.id =  id
+                    }
+                  
+                      self.categoryList.append(category)
+                }
+                
+              }
+            self.categoryPickerView.delegate = self
+            self.categoryPickerView.dataSource = self
+          }catch{
+            print("error to retrieve category ")
+          }
+          }else{
+           
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    let defaultCategy = CategoryBean()
+                    defaultCategy.id = -1
+                    defaultCategy.name = "Select Category"
+                    self.categoryList.append(defaultCategy)
+                    for result in results as! [NSManagedObject]{
+                        var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                    
+                }
+                self.categoryPickerView.delegate = self
+                self.categoryPickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }
+    }
     func getCategory(){
-        
+        categoryList  = []
+        if UserDefaults.standard.value(forKey: "StoreCategory") as? Bool == true  { // sql
+          getCategoryDataBaseIOS()
+//
+        }else {
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -210,15 +360,49 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                                     defaultCategy.id = -1
                                     defaultCategy.name = "Select Category"
                                     self.categoryList.append(defaultCategy)
+                                   
                                 }
                                 for item in data{
                                     var category = CategoryBean()
                                     if let id = item["id"] as? Int {
                                         category.id = id
+                                        if let name = item["name"] as? String{
+                                            category.name = name
+                                            if #available(iOS 10.0, *) {
+                                                let context = self.appdelegate.persistentContainer.viewContext
+                                                let categoryData = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context)
+                                                                categoryData.setValue(id, forKey: "id")
+                                                               categoryData.setValue(name, forKey: "name")
+                                                
+                                                    do{
+                                                                try context.save()
+                                                                print("Saved")
+                                                         UserDefaults.standard.set(true, forKey: "StoreCategory")
+                                                    }catch{
+                                                                print("error")
+                                                         UserDefaults.standard.set(false, forKey: "StoreCategory")
+                                                        }
+                                            }else{ // 9
+                                                
+                                                let managedObjectContext = Storage.shared.context
+                                                let categoryData = NSEntityDescription.insertNewObject(forEntityName: "Category", into: managedObjectContext)
+                                                categoryData.setValue(id, forKey: "id")
+                                                categoryData.setValue(name, forKey: "name")
+                                                
+                                                do{
+                                                    try managedObjectContext.save()
+                                                    print("Saved")
+                                                     UserDefaults.standard.set(true, forKey: "StoreCategory")
+                                                }catch{
+                                                    print("error")
+                                                     UserDefaults.standard.set(false, forKey: "StoreCategory")
+                                                }
+                                                
+                                                
+                                          }
+                                        }
                                     }
-                                    if let name = item["name"] as? String{
-                                        category.name = name
-                                    }
+                                   
                                     self.categoryList.append(category)
                                 }
                                 self.categoryPickerView.delegate = self
@@ -242,9 +426,13 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+        }
     }
     func getCity(){
         cityList = []
+        if UserDefaults.standard.value(forKey: "StoreCity") as? Bool == true  {
+             getCityDataBaseIOS()
+        }else{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -272,11 +460,45 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                                 let city = CityBean()
                                 if let id = item["id"] as? Int {
                                     city.id = id
+                                    if let name = item["name"] as? String{
+                                        city.name = name
+                                        if #available(iOS 10.0, *) {
+                                            let context = self.appdelegate.persistentContainer.viewContext
+                                            let cityData = NSEntityDescription.insertNewObject(forEntityName: "City", into: context)
+                                            cityData.setValue(id, forKey: "id")
+                                            cityData.setValue(name, forKey: "name")
+                                            
+                                            do{
+                                                try context.save()
+                                                print("Saved")
+                                                 UserDefaults.standard.set(true, forKey: "StoreCity")
+                                            }catch{
+                                                UserDefaults.standard.set(false, forKey: "StoreCity")
+                                                print("error")
+                                            }
+                                        }else{ // 9
+                                            
+                                            let managedObjectContext = Storage.shared.context
+                                            let cityData = NSEntityDescription.insertNewObject(forEntityName: "City", into: managedObjectContext)
+                                            cityData.setValue(id, forKey: "id")
+                                            cityData.setValue(name, forKey: "name")
+                                            
+                                            do{
+                                                try managedObjectContext.save()
+                                                print("Saved")
+                                                 UserDefaults.standard.set(true, forKey: "StoreCity")
+                                            }catch{
+                                                print("error")
+                                                 UserDefaults.standard.set(false, forKey: "StoreCity")
+                                            }
+                                            
+                                            
+                                        }
+                                    }
                                 }
-                                if let name = item["name"] as? String{
-                                    city.name = name
-                                }
+                                
                                 self.cityList.append(city)
+                                
                             }
                                 self.cityPickerView.delegate = self
                                 self.cityPickerView.dataSource = self
@@ -297,7 +519,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-        }
+            }}
     }
     func getRegion(){
         regionList = []
@@ -514,14 +736,18 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         }
     }
     func searchByCategory(categoryId:Int){
-        self.BussinessList = []
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
         var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
         var parameter :[String:AnyObject] = [String:AnyObject]()
-        parameter["category_id"] =  "\(categoryId)" as AnyObject?
-        parameter["searcher_id"] = user_id as AnyObject?
-        let url = Constant.baseURL + "bussines/search/category"
+      
+            parameter["category_id"] =  "\(categoryId)" as AnyObject?
+        
+        parameter["bussines_name"] = searchName.text!  as AnyObject?
+      
+        
+        parameter["page_number"] = "\(categoryCurrentPage + 1)"  as AnyObject?
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        let url = Constant.baseURL + Constant.URIBusinessSearch
         Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
@@ -530,6 +756,14 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 switch response.result {
                 case .success:
                     if let datares = response.result.value as? [String:Any]{
+                        if let meta = datares["meta"] as? [String:Any]{
+                            if let current_page = meta["current_page"] as? Int {
+                                self.categoryCurrentPage = current_page
+                            }
+                            if let total = meta["total"] as? Int {
+                                self.categoryTotalPage = total
+                            }
+                        }
                         if let flag = datares["flag"] as? String{
                             if flag == "0"{
                                 self.showToast(message: "Response fail")
@@ -539,6 +773,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                         if let data  = datares["data"] as? [Dictionary<String,Any>]{
                             if data.count == 0 {
                                 self.noDataResult.isHidden = false
+                                self.categoryCurrentPage = -1
+                                self.categoryTotalPage = -1
                             }else{
                                 self.noDataResult.isHidden = true
                             }
@@ -641,7 +877,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                                 self.BussinessList.append(business)
                             }//end for
                             self.offerCollectionView.reloadData()
-                           
+                            
                         }
                         
                     }
@@ -655,6 +891,148 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 }
         }
     }
+//    func searchByCategory(categoryId:Int){
+//        self.BussinessList = []
+//        self.activityIndicator.isHidden = false
+//        self.activityIndicator.startAnimating()
+//        var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
+//        var parameter :[String:AnyObject] = [String:AnyObject]()
+//        parameter["category_id"] =  "\(categoryId)" as AnyObject?
+//        parameter["searcher_id"] = user_id as AnyObject?
+//        let url = Constant.baseURL + "bussines/search/category"
+//        Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
+//            .responseJSON { response in
+//                print(response)
+//                self.activityIndicator.stopAnimating()
+//                self.activityIndicator.isHidden = true
+//                switch response.result {
+//                case .success:
+//                    if let datares = response.result.value as? [String:Any]{
+//                        if let flag = datares["flag"] as? String{
+//                            if flag == "0"{
+//                                self.showToast(message: "Response fail")
+//                            }
+//                        }
+//
+//                        if let data  = datares["data"] as? [Dictionary<String,Any>]{
+//                            if data.count == 0 {
+//                                self.noDataResult.isHidden = false
+//                            }else{
+//                                self.noDataResult.isHidden = true
+//                            }
+//                            for item in data{
+//                                let business = BusinessBean()
+//                                if let address = item["address"] as? String{
+//                                    business.address = address
+//                                }
+//                                if let average_rating = item["average_rating"] as? String{
+//
+//                                }
+//                                if let logo = item["logo"] as? String{
+//                                    business.logo = logo
+//                                }
+//                                var catego = CategoryBean()
+//                                if let category = item["category"] as? [String:Any]{
+//                                    if let id = category["id"] as? Int {
+//                                        catego.id = id
+//                                    }
+//                                    if let name = category["name"] as? String{
+//                                        catego.name = name
+//                                    }
+//                                    business.category = catego
+//                                }
+//
+//                                if let city = item["city"] as? String{
+//                                    business.city = city
+//                                }
+//                                if let   regoin = item["regoin"] as? String{
+//                                    business.region = regoin
+//                                }
+//                                if let contact_number = item["contact_number"] as? String{
+//                                    business.contact_number = contact_number
+//                                }
+//                                if let description = item["description"] as? String{
+//                                    business.description = description
+//                                }
+//                                if let files = item["files"] as? [Dictionary<String,Any>]{
+//
+//                                    for ite in files{
+//                                        var relatedfile = RelatedFilesBean()
+//                                        if let id = ite["id"] as? Int{
+//                                            relatedfile.id = id
+//                                        }
+//                                        if let image = ite["image"] as? String{
+//                                            relatedfile.image = image
+//                                        }
+//                                        if let bussines_id = ite["bussines_id"] as? Int{
+//                                            relatedfile.bussines_id = bussines_id
+//                                        }
+//                                        business.files.append(relatedfile)
+//                                    }
+//
+//
+//                                }
+//                                if let langitude = item["langitude"] as? String{
+//                                    // business.long = Double(langitude)!
+//                                }
+//                                if let lattitude = item["lattitude"] as? String{
+//                                    //  business.lat = Double(lattitude)!
+//                                }
+//                                if let name = item["name"] as? String{
+//                                    business.name = name
+//                                }
+//                                if let image = item["image"] as? String{
+//                                    business.image = image
+//                                }
+//                                if let id = item["id"] as? Int {
+//                                    business.id = id
+//                                }
+//                                if let offers = item["offers"] as? [Dictionary<String,Any>]{
+//                                    for ite in offers{
+//                                        var offer = OfferBean()
+//                                        if let id = ite["id"] as? Int{
+//                                            offer.id = id
+//                                        }
+//                                        if let caption = ite["caption"] as? String{
+//                                            offer.caption = caption
+//                                        }
+//                                        if let photo = ite["image"] as? String{
+//                                            offer.photo = photo
+//                                        }
+//                                        if let bussines_id = ite["bussines_id"] as? Int{
+//                                            offer.bussines_id = bussines_id
+//                                        }
+//                                        business.offers.append(offer)
+//                                    }
+//
+//                                }
+//                                if let owner = item["owner"] as? [String:Any]{
+//                                    var own = OwnerBean()
+//                                    if let email = owner["email"] as? String {
+//                                        own.email = email
+//                                    }
+//                                    if let username = owner["name"] as? String{
+//                                        own.name = username
+//                                    }
+//                                    business.owner = own
+//                                }
+//                                self.BussinessList.append(business)
+//                            }//end for
+//                            self.offerCollectionView.reloadData()
+//
+//                        }
+//
+//                    }
+//                case .failure(let error):
+//                    print(error)
+//
+//                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+//                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+//                    self.present(alert, animated: true, completion: nil)
+//
+//                }
+//        }
+//    }
     func searchBusiness(){
         
         var user_id = UserDefaults.standard.value(forKey: "user_id") as! String
@@ -828,6 +1206,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     
     @IBAction func otherBtnAction(_ sender: Any) {
         ShortCutCategory = true
+        categoryId = 60
+        categoryCurrentPage = 0
           BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
@@ -861,6 +1241,9 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     
     @IBAction func historicPlaceAction(_ sender: Any) {
         ShortCutCategory = true
+        categoryId = 60
+         categoryCurrentPage = 0
+        
           BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
@@ -875,6 +1258,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
  
     @IBAction func hospitalBtnAction(_ sender: Any) {
           ShortCutCategory = true
+          categoryId = 58
+         categoryCurrentPage = 0
           BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
@@ -888,6 +1273,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     }
     @IBAction func IAMHUNGRYAction(_ sender: Any) {
           ShortCutCategory = true
+          categoryId = 38
+         categoryCurrentPage = 0
           BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
@@ -902,6 +1289,8 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     
     @IBAction func INEEDHotelAction(_ sender: Any) {
           ShortCutCategory = true
+           categoryId = 61
+         categoryCurrentPage = 0
           BussinessList = []
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
@@ -1020,8 +1409,9 @@ extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSo
 //        view6.isHidden = false
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailBusinessViewController") as! DetailBusinessViewController
         vc.id = BussinessList[indexPath.row].id!
-        self.addChildViewController(vc)
-        self.view.addSubview(vc.view)
+//        self.addChildViewController(vc)
+//        self.view.addSubview(vc.view)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
@@ -1040,7 +1430,13 @@ extension UserHomeViewController:UICollectionViewDelegate,UICollectionViewDataSo
                     }
                 }
          }
-       }
+        }else{ // search by category
+              if indexPath.row == BussinessList.count - 1 {
+                if categoryCurrentPage < categoryTotalPage {
+                      searchByCategory(categoryId:categoryId!)
+                }
+            }
+        }
     }
 }
 extension UserHomeViewController:UIPickerViewDelegate,UIPickerViewDataSource{

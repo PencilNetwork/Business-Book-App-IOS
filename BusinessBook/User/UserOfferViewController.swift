@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreData
 class UserOfferViewController: UIViewController {
     @IBOutlet weak var regionDone: UIButton!
     @IBOutlet weak var regionPickerView: UIPickerView!
@@ -52,6 +53,144 @@ class UserOfferViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    //MARK:Function
+    func getCategoryDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    let defaultCategy = CategoryBean()
+                    defaultCategy.id = -1
+                    defaultCategy.name = "Select Category"
+                    self.categoryList.append(defaultCategy)
+                    for result in results as! [NSManagedObject]{
+                        var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                    
+                }
+                self.categoryPickerView.delegate = self
+                self.categoryPickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    let defaultCategy = CategoryBean()
+                    defaultCategy.id = -1
+                    defaultCategy.name = "Select Category"
+                    self.categoryList.append(defaultCategy)
+                    for result in results as! [NSManagedObject]{
+                        var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                    
+                }
+                self.categoryPickerView.delegate = self
+                self.categoryPickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }
+    }
+    func getCityDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    let defaultcity = CityBean()
+                    defaultcity.id = -1
+                    defaultcity.name = "Select City"
+                    self.cityList.append(defaultcity)
+                    
+                    for result in results as! [NSManagedObject]{
+                        let city = CityBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.cityList.append(city)
+                    }
+                    
+                }
+                self.cityPickerView.delegate = self
+                self.cityPickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{  /// 9
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    let defaultcity = CityBean()
+                    defaultcity.id = -1
+                    defaultcity.name = "Select City"
+                    self.cityList.append(defaultcity)
+                    for result in results as! [NSManagedObject]{
+                        let city = CityBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.cityList.append(city)
+                    }
+                    
+                }
+                self.cityPickerView.delegate = self
+                self.cityPickerView.dataSource = self
+            }catch{
+                print("error to retrieve city ")
+            }
+        }
     }
     func getDefaultOffer(){
         
@@ -220,8 +359,11 @@ class UserOfferViewController: UIViewController {
             }
     }
     func getCategory(){
-       
-        let network = Network()
+     if UserDefaults.standard.value(forKey: "StoreCategory") as? Bool == true  { // sql
+            getCategoryDataBaseIOS()
+            
+     }else {
+          let network = Network()
         
         let networkExist = network.isConnectedToNetwork()
         
@@ -270,9 +412,13 @@ class UserOfferViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+     }
     }
     func getCity(){
         cityList = []
+        if UserDefaults.standard.value(forKey: "StoreCity") as? Bool == true  {
+            getCityDataBaseIOS()
+        }else{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -318,6 +464,7 @@ class UserOfferViewController: UIViewController {
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
+        }
         }
     }
     func getRegion(){

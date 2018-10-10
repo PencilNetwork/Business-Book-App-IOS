@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreData
 class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegate,UICollectionViewDataSource,changecategDelegate,UICollectionViewDelegateFlowLayout{
 @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var categConstraintHeight: NSLayoutConstraint!
@@ -37,8 +38,9 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
          activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         setStyle()
         setTable()
+         getCategory()
        getCity()
-        getCategory()
+       
      
         first = true
         hideKeyboardWhenTappedAround()
@@ -353,9 +355,133 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         
     }
     //MARK:Function
-  
+    func getCategoryDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    for result in results as! [NSManagedObject]{
+                      var category = Interest()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                       self.category.append(category)
+                    }
+                    
+                }
+               self.categCollectionView.reloadData()
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                   
+                    for result in results as! [NSManagedObject]{
+                         var category = Interest()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                       self.category.append(category)
+                    }
+                    
+                }
+                self.categCollectionView.reloadData()
+            }catch{
+                print("error to retrieve category ")
+            }
+        }
+    }
+    func getCityDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    
+                    for result in results as! [NSManagedObject]{
+                        let city = Interest()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.city.append(city)
+                    }
+                    self.cityCollectionView.reloadData()
+                }
+                  self.getData()
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{  /// 9
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                  
+                    for result in results as! [NSManagedObject]{
+                        let city = Interest()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                         self.city.append(city)
+                    }
+                     self.cityCollectionView.reloadData()
+                }
+               
+                 self.getData()
+            }catch{
+                print("error to retrieve city ")
+            }
+        }
+    }
     func getCity(){
         city = []
+        if UserDefaults.standard.value(forKey: "StoreCity") as? Bool == true  {
+            getCityDataBaseIOS()
+        }else{
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -400,6 +526,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
+        }
         }
     }
     func getRegion(cityId:Int){
@@ -759,6 +886,11 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         }
     }
     func getCategory(){
+        category = []
+        if UserDefaults.standard.value(forKey: "StoreCategory") as? Bool == true  { // sql
+            getCategoryDataBaseIOS()
+           
+        }else {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         let network = Network()
@@ -809,6 +941,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+     }
     }
     func setTable(){
         

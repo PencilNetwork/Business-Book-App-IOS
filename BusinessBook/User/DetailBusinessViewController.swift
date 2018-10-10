@@ -47,6 +47,8 @@ class DetailBusinessViewController: UIViewController {
     var favourite :Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.tintColor = UIColor.white
          activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         relatedFileCollectionView.dataSource = self
         relatedFileCollectionView.delegate = self

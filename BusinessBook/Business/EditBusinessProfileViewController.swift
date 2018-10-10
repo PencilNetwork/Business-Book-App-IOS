@@ -11,6 +11,7 @@ import GoogleMaps
 import GooglePlaces
 import Alamofire
 import SDWebImage
+import CoreData
 protocol ChangeImageDelegate{
     func minusImage(index:Int,imageId:Int)
     func addImage(index:Int)
@@ -70,6 +71,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
     var oldCategory:CategoryBean = CategoryBean()
     var regionList:[RegionBean] = []
     var cityList :[Interest] = []
+     let appdelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(editLogoFunc))
@@ -365,6 +367,10 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         imageBtn.setImage(image, for: .normal)
     }
     func getCategory(){
+      if UserDefaults.standard.value(forKey: "StoreCategory") as? Bool == true  { // sql
+            getCategoryDataBaseIOS()
+        
+      }else {
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -378,14 +384,53 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
                             if let data  = datares["data"] as? [[String:Any]]{
+                                if data.count > 0 {
+                                    
+                                }
                                 for item in data{
+                                    
                                     var category = CategoryBean()
                                     if let id = item["id"] as? Int {
+                                      
                                         category.id = id
+                                        if let name = item["name"] as? String{
+                                            category.name = name
+                                            // save data to database
+                                            if #available(iOS 10.0, *) {
+                                                let context = self.appdelegate.persistentContainer.viewContext
+                                                let categoryData = NSEntityDescription.insertNewObject(forEntityName: "Category", into: context)
+                                                categoryData.setValue(id, forKey: "id")
+                                                categoryData.setValue(name, forKey: "name")
+                                                
+                                                do{
+                                                    try context.save()
+                                                    print("Saved")
+                                                     UserDefaults.standard.set(true, forKey: "StoreCategory")
+                                                }catch{
+                                                    print("error")
+                                                     UserDefaults.standard.set(false, forKey: "StoreCategory")
+                                                }
+                                            }else{ // 9
+                                                
+                                                let managedObjectContext = Storage.shared.context
+                                                let categoryData = NSEntityDescription.insertNewObject(forEntityName: "Category", into: managedObjectContext)
+                                                categoryData.setValue(id, forKey: "id")
+                                                categoryData.setValue(name, forKey: "name")
+                                                
+                                                do{
+                                                    try managedObjectContext.save()
+                                                    print("Saved")
+                                                     UserDefaults.standard.set(true, forKey: "StoreCategory")
+                                                }catch{
+                                                    print("error")
+                                                     UserDefaults.standard.set(false, forKey: "StoreCategory")
+                                                }
+                                                
+                                                
+                                            }
+                                        }
                                     }
-                                    if let name = item["name"] as? String{
-                                        category.name = name
-                                    }
+                                    
                                     self.categoryList.append(category)
                                 }
                                 self.pickerView.delegate = self
@@ -409,6 +454,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+      }
     }
     // MARK:Collectionview
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -590,10 +636,147 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             self.present(alert, animated: true, completion: nil)
         }
     }
+    func getCategoryDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    let defaultCategy = CategoryBean()
+                    defaultCategy.id = -1
+                    defaultCategy.name = "Select Category"
+                    self.categoryList.append(defaultCategy)
+                    for result in results as! [NSManagedObject]{
+                        var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                    
+                }
+                self.pickerView.delegate = self
+                self.pickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"Category")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+                    let defaultCategy = CategoryBean()
+                    defaultCategy.id = -1
+                    defaultCategy.name = "Select Category"
+                    self.categoryList.append(defaultCategy)
+                    for result in results as! [NSManagedObject]{
+                        var category = CategoryBean()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            category.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            category.id =  id
+                        }
+                        
+                        self.categoryList.append(category)
+                    }
+                    
+                }
+                self.pickerView.delegate = self
+                self.pickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }
+    }
+    func getCityDataBaseIOS(){
+        if #available(iOS 10.0, *) {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                   
+                    
+                    for result in results as! [NSManagedObject]{
+                        let city = Interest()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.cityList.append(city)
+                    }
+                    
+                }
+                self.cityPickerView.delegate = self
+                self.cityPickerView.dataSource = self
+            }catch{
+                print("error to retrieve category ")
+            }
+        }else{  /// 9
+            
+            let context = Storage.shared.context
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName:"City")
+            request.returnsObjectsAsFaults = false // to return data as way as you saved it
+            do {
+                let results = try context.fetch(request)
+                if results.count > 0 {
+                    
+//                    let defaultcity = Interest()
+//                    defaultcity.id = -1
+//                    defaultcity.name = "Select City"
+//                    self.cityList.append(defaultcity)
+                    for result in results as! [NSManagedObject]{
+                        let city = Interest()
+                        if let name = result.value(forKey: "name") as? String {
+                            print("name:\(name)")
+                            city.name = name
+                        }
+                        if let id = result.value(forKey: "id") as? Int {
+                            
+                            city.id =  id
+                        }
+                        
+                        self.cityList.append(city)
+                    }
+                    
+                }
+                self.cityPickerView.delegate = self
+                self.cityPickerView.dataSource = self
+            }catch{
+                print("error to retrieve city ")
+            }
+        }
+    }
     func getCity(){
         cityList = []
-        let network = Network()
-        let networkExist = network.isConnectedToNetwork()
+        if UserDefaults.standard.value(forKey: "StoreCity") as? Bool == true  {
+            getCityDataBaseIOS()
+        }else{
+          let network = Network()
+         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
             activityIndicator.isHidden = false
@@ -608,14 +791,48 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
                     case .success:
                         if let datares = response.result.value as? [String:Any]{
                             if let data = datares["data"] as? [Dictionary<String,Any>]{
+                                
                                 for item in data {
                                     let city = Interest()
                                     if let id = item["id"] as? Int {
                                         city.id = id
+                                        if let name = item["name"] as? String{
+                                            city.name = name
+                                            if #available(iOS 10.0, *) {
+                                                let context = self.appdelegate.persistentContainer.viewContext
+                                                let cityData = NSEntityDescription.insertNewObject(forEntityName: "City", into: context)
+                                                cityData.setValue(id, forKey: "id")
+                                                cityData.setValue(name, forKey: "name")
+                                                
+                                                do{
+                                                    try context.save()
+                                                    print("Saved")
+                                                    UserDefaults.standard.set(true, forKey: "StoreCity")
+                                                }catch{
+                                                    UserDefaults.standard.set(false, forKey: "StoreCity")
+                                                    print("error")
+                                                }
+                                            }else{ // 9
+                                                
+                                                let managedObjectContext = Storage.shared.context
+                                                let cityData = NSEntityDescription.insertNewObject(forEntityName: "City", into: managedObjectContext)
+                                                cityData.setValue(id, forKey: "id")
+                                                cityData.setValue(name, forKey: "name")
+                                                
+                                                do{
+                                                    try managedObjectContext.save()
+                                                    print("Saved")
+                                                    UserDefaults.standard.set(true, forKey: "StoreCity")
+                                                }catch{
+                                                    print("error")
+                                                    UserDefaults.standard.set(false, forKey: "StoreCity")
+                                                }
+                                                
+                                                
+                                            }
+                                        }
                                     }
-                                    if let name = item["name"] as? String{
-                                        city.name = name
-                                    }
+                                    
                                     self.cityList.append(city)
                                     
                                 }
@@ -640,6 +857,7 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+    }
     }
     func checkTxtField()->Bool{
         var validFlag = true

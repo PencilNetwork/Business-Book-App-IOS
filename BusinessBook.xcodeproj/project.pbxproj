@@ -39,6 +39,8 @@
 		0442147D214A6FB700D4C798 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0442147C214A6FB700D4C798 /* SignUpViewController.swift */; };
 		0442147F214A9A3900D4C798 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0442147E214A9A3800D4C798 /* Network.swift */; };
 		0446417121526FEF007E1F8B /* CategoryBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446417021526FEF007E1F8B /* CategoryBean.swift */; };
+		044B4984216E108E0000DF41 /* storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4983216E108E0000DF41 /* storage.swift */; };
+		044B4986216E19430000DF41 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044B4985216E19430000DF41 /* CoreDataStack.swift */; };
 		044CC47E215A4D110028C8BC /* BusinessBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC47D215A4D110028C8BC /* BusinessBean.swift */; };
 		044CC480215A4EC50028C8BC /* OwnerBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC47F215A4EC50028C8BC /* OwnerBean.swift */; };
 		044CC482215A61C30028C8BC /* UserOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044CC481215A61C30028C8BC /* UserOfferViewController.swift */; };
@@ -132,6 +134,8 @@
 		0442147C214A6FB700D4C798 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		0442147E214A9A3800D4C798 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		0446417021526FEF007E1F8B /* CategoryBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBean.swift; sourceTree = "<group>"; };
+		044B4983216E108E0000DF41 /* storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = storage.swift; sourceTree = "<group>"; };
+		044B4985216E19430000DF41 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		044CC47D215A4D110028C8BC /* BusinessBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessBean.swift; sourceTree = "<group>"; };
 		044CC47F215A4EC50028C8BC /* OwnerBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerBean.swift; sourceTree = "<group>"; };
 		044CC481215A61C30028C8BC /* UserOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOfferViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 		0440C1AD213FF19F00082DB9 /* BusinessBook */ = {
 			isa = PBXGroup;
 			children = (
+				044B4983216E108E0000DF41 /* storage.swift */,
 				0442147E214A9A3800D4C798 /* Network.swift */,
 				04F0D7882146601400107312 /* User */,
 				0480B57B21416032001D759B /* View */,
@@ -245,6 +250,7 @@
 				0419370421411AEA0062582A /* AlertImageViewController.swift */,
 				046CA94221493F9F00E40F65 /* SecondViewController.swift */,
 				045265C921539A6700DB1774 /* Constant.swift */,
+				044B4985216E19430000DF41 /* CoreDataStack.swift */,
 			);
 			path = BusinessBook;
 			sourceTree = "<group>";
@@ -685,7 +691,9 @@
 				0440C1E1213FF30100082DB9 /* RootViewController.swift in Sources */,
 				041880A72146720B0051BD37 /* AnotherMapViewController.swift in Sources */,
 				044CC482215A61C30028C8BC /* UserOfferViewController.swift in Sources */,
+				044B4986216E19430000DF41 /* CoreDataStack.swift in Sources */,
 				045265D02153C34900DB1774 /* InterestPopupViewController.swift in Sources */,
+				044B4984216E108E0000DF41 /* storage.swift in Sources */,
 				0440C1B7213FF1A000082DB9 /* BusinessBook.xcdatamodeld in Sources */,
 				045F74702145598600E90970 /* EditOfferViewController.swift in Sources */,
 				0462C3EF215123F60054C1F5 /* RelatedFilesBean.swift in Sources */,
