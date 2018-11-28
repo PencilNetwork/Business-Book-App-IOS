@@ -15,6 +15,9 @@ protocol SendBusinessDelegate{
 class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     //MARK:IBOUTlet
     
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var ifYouDonotHaveLBL: UILabel!
     @IBOutlet weak var view6: UIView!
     @IBOutlet weak var view5: UIView!
     @IBOutlet weak var view4: UIView!
@@ -109,7 +112,29 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
       
        styleBtn()
         
-      
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            segmentControl.setTitle("business".localized(lang: "ar"), forSegmentAt: 0)
+            segmentControl.setTitle("offers".localized(lang: "ar"), forSegmentAt: 1)
+            ifYouDonotHaveLBL.text = "ifYouDonotHaveTime".localized(lang: "ar")
+            iamHungryBtn.setTitle("iamHungry".localized(lang: "ar"), for: .normal)
+            ineedHotelBtn.setTitle("ineedHotel".localized(lang: "ar"), for: .normal)
+            historicPlaceBtn.setTitle("historicPlaces".localized(lang: "ar"), for: .normal)
+            hospitalBtn.setTitle("hospitals".localized(lang: "ar"), for: .normal)
+            anotherBtn.setTitle("other".localized(lang: "ar"), for: .normal)
+            searchName.placeholder = "selectName".localized(lang: "ar")
+            searchName.textAlignment = .right
+            categoryBtn.setTitle("selectCategory".localized(lang: "ar"), for: .normal)
+            regionBtn.setTitle("selectRegion".localized(lang: "ar"), for: .normal)
+            cityBtn.setTitle("selectCity".localized(lang: "ar"), for: .normal)
+            searchBtn.setTitle("search".localized(lang: "ar"), for: .normal)
+            containerView.semanticContentAttribute = .forceRightToLeft
+            offerCollectionView.semanticContentAttribute = .forceRightToLeft
+        }else{
+            searchName.textAlignment = .left
+             containerView.semanticContentAttribute = .forceLeftToRight
+            offerCollectionView.semanticContentAttribute = .forceLeftToRight
+        }
 //        let myimage = UIImage(named: "menu.png")?.withRenderingMode(.alwaysOriginal)
 //        let barButtonItem2 = UIBarButtonItem(image: myimage, style: .plain, target: self, action: #selector(MenuButtonTapped))
 //        self.navigationItem.leftBarButtonItem = barButtonItem2

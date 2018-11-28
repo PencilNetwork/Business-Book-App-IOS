@@ -7,10 +7,14 @@
 //
 
 import UIKit
-
+import GoogleSignIn
+import SDWebImage
+import FBSDKLoginKit
 class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
   var menuList = ["Home","All categories","OFFERS","YOUR FAVOURITE BUSINESS","EDIT YOUR default search","LOGOUT"]
+    var menuArabicList = ["الصفحة الرئيسية","جميع الاصناف","عروض","عملك المفضل","تحرير البحث الافتراضي الخاص بك","خروج"]
     
+    @IBOutlet var containerView: UIView!
     @IBOutlet weak var menuTableTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuTableView: UITableView!
     var menuDel:menuDelegate?
@@ -22,6 +26,12 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
         menuTableView.backgroundColor = UIColor.gray
         if UIDevice.isIphoneX { // it is iphone x or iphonesx or xs max
             menuTableTopConstraint.constant = 24
+        }
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            containerView.semanticContentAttribute = .forceRightToLeft
+        }else{
+            containerView.semanticContentAttribute = .forceLeftToRight
         }
         // Do any additional setup after loading the view.
     }
@@ -47,7 +57,14 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuUserTableViewCell", for: indexPath) as! MenuTableViewCell
-        cell.menuItem.text = menuList[indexPath.row]
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+        cell.menuItem.text = menuArabicList[indexPath.row]
+            cell.menuItem.textAlignment = .right
+        }else{
+            cell.menuItem.text = menuList[indexPath.row]
+            cell.menuItem.textAlignment = .left
+        }
         cell.backgroundColor = UIColor.gray
         return cell
     }
@@ -61,6 +78,15 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
             UserDefaults.standard.set(false, forKey: "LoginEnter")
             UserDefaults.standard.set(true,forKey: "logout")
             AppDelegate.userMenu_bool = true
+//            let manager = FBSDKLoginManager()
+//            manager.logOut()
+//            let deletepermission = FBSDKGraphRequest(graphPath: "me/permissions/", parameters: nil, httpMethod: "DELETE")
+//            deletepermission?.start(completionHandler: {(connection,result,error)-> Void in
+//                print("the delete permission is (result)")
+//            })
+         
+            
+         
             self.navigationController?.popToRootViewController( animated: false )
 //            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
 //            for aViewController in viewControllers {

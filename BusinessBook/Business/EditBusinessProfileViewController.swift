@@ -21,6 +21,9 @@ protocol ChangeImageDelegate{
 
 class EditBusinessProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,ChangeImageDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDelegateFlowLayout,SendImageDelegate, UIPickerViewDelegate, UIPickerViewDataSource,MapDelegate{
     
+    @IBOutlet weak var setYourLocation: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var relatedFilesLBL: UILabel!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var cityDoneBtn: UIButton!
@@ -116,7 +119,43 @@ class EditBusinessProfileViewController: UIViewController,UICollectionViewDelega
         }
           NotificationCenter.default.addObserver(self, selector: #selector(refresh(_:)), name: NSNotification.Name(rawValue: "refresh"), object: nil)
         getCity()
-        
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+          containerView.semanticContentAttribute = .forceRightToLeft
+            collectionView.semanticContentAttribute = .forceRightToLeft
+            editImageLBL.text = "editBusinessImage".localized(lang: "ar")
+            editLogoLBL.text = "editLogoImage".localized(lang: "ar")
+            editLogoLBL.textAlignment = .right
+            editImageLBL.textAlignment = .right
+            businessNameTxt.textAlignment = .right
+            emailTxt.textAlignment = .right
+            userNametxt.textAlignment = .right
+            addressTxt.textAlignment = .right
+            contactTxt.textAlignment = .right
+            categoryBtn.contentHorizontalAlignment = .right
+            regionBtn.contentHorizontalAlignment = .right
+            cityBtn.contentHorizontalAlignment = .right
+            setYourLocation.setTitle("setYourLocation".localized(lang: "ar"), for: .normal)
+            relatedFilesLBL.text = "relatedFiles".localized(lang: "ar")
+            relatedFilesLBL.textAlignment = .right
+            confirmBtn.setTitle("confirmEdit".localized(lang: "ar"), for: .normal)
+            businessDescTxt.textAlignment = .right
+        }else{
+            containerView.semanticContentAttribute = .forceLeftToRight
+             collectionView.semanticContentAttribute = .forceLeftToRight
+            businessNameTxt.textAlignment = .left
+            emailTxt.textAlignment = .left
+            userNametxt.textAlignment = .left
+            addressTxt.textAlignment = .left
+            contactTxt.textAlignment = .left
+            categoryBtn.contentHorizontalAlignment = .left
+            regionBtn.contentHorizontalAlignment = .left
+            cityBtn.contentHorizontalAlignment = .left
+            relatedFilesLBL.textAlignment = .left
+            businessDescTxt.textAlignment = .left
+            editLogoLBL.textAlignment = .left
+            editImageLBL.textAlignment = .left
+        }
            
        
     }

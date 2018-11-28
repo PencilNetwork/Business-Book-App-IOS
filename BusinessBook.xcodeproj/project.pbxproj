@@ -21,6 +21,7 @@
 		0439A7D2215B961F0007068A /* AllCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7D1215B961F0007068A /* AllCategoryCollectionViewCell.swift */; };
 		0439A7D4215BA2980007068A /* EditDefaultSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7D3215BA2980007068A /* EditDefaultSearchViewController.swift */; };
 		0439A7D6215BB2810007068A /* DetailBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439A7D5215BB2810007068A /* DetailBusinessViewController.swift */; };
+		043A518A21AAD224006F74DD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 043A518C21AAD224006F74DD /* Localizable.strings */; };
 		0440C1AF213FF19F00082DB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440C1AE213FF19F00082DB9 /* AppDelegate.swift */; };
 		0440C1B1213FF19F00082DB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440C1B0213FF19F00082DB9 /* ViewController.swift */; };
 		0440C1B4213FF19F00082DB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0440C1B2213FF19F00082DB9 /* Main.storyboard */; };
@@ -110,6 +111,10 @@
 		0439A7D1215B961F0007068A /* AllCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0439A7D3215BA2980007068A /* EditDefaultSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDefaultSearchViewController.swift; sourceTree = "<group>"; };
 		0439A7D5215BB2810007068A /* DetailBusinessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBusinessViewController.swift; sourceTree = "<group>"; };
+		043A518621AAD199006F74DD /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		043A518721AAD19C006F74DD /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		043A518B21AAD224006F74DD /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		043A518D21AAD228006F74DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0440C1AB213FF19F00082DB9 /* BusinessBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0440C1AE213FF19F00082DB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0440C1B0213FF19F00082DB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +256,7 @@
 				046CA94221493F9F00E40F65 /* SecondViewController.swift */,
 				045265C921539A6700DB1774 /* Constant.swift */,
 				044B4985216E19430000DF41 /* CoreDataStack.swift */,
+				043A518C21AAD224006F74DD /* Localizable.strings */,
 			);
 			path = BusinessBook;
 			sourceTree = "<group>";
@@ -496,6 +502,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043A518A21AAD224006F74DD /* Localizable.strings in Resources */,
 				0440C1BC213FF1AA00082DB9 /* LaunchScreen.storyboard in Resources */,
 				041880A321466B840051BD37 /* GoogleService-Info.plist in Resources */,
 				0440C1B9213FF1AA00082DB9 /* Assets.xcassets in Resources */,
@@ -735,10 +742,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		043A518C21AAD224006F74DD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				043A518B21AAD224006F74DD /* ar */,
+				043A518D21AAD228006F74DD /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		0440C1B2213FF19F00082DB9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0440C1B3213FF19F00082DB9 /* Base */,
+				043A518621AAD199006F74DD /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -747,6 +764,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0440C1BB213FF1AA00082DB9 /* Base */,
+				043A518721AAD19C006F74DD /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -758,6 +776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -818,6 +837,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -875,7 +895,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BusinessBook/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -894,7 +914,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BusinessBook/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

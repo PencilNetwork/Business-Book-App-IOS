@@ -9,11 +9,28 @@
 import UIKit
 
 class AlertImageViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
- var pickerController = UIImagePickerController()
+    @IBOutlet weak var cancelBtn: UIButton!
+    
+    @IBOutlet weak var chooseImage: UILabel!
+    
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var gallerylbl: UILabel!
+    @IBOutlet weak var camera: UILabel!
+    var pickerController = UIImagePickerController()
     var sendDelegate:SendImageDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
    self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            containerView.semanticContentAttribute = .forceRightToLeft
+            chooseImage.text = "chooseImage".localized(lang: "ar")
+            camera.text = "camera".localized(lang: "ar")
+            gallerylbl.text = "gallery".localized(lang: "ar")
+            cancelBtn.setTitle("الغاء", for: .normal)
+        }else{
+            containerView.semanticContentAttribute = .forceLeftToRight
+        }
         // Do any additional setup after loading the view.
     }
 

@@ -21,6 +21,12 @@ class UserFavouriteViewController: UIViewController ,UICollectionViewDataSource,
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
          collectionView.delegate = self
         collectionView.dataSource = self
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            collectionView.semanticContentAttribute = .forceRightToLeft
+        }else{
+            collectionView.semanticContentAttribute = .forceLeftToRight
+        }
         getFavourite()
         // Do any additional setup after loading the view.
     }

@@ -1,0 +1,501 @@
+
+/* Class = "UIButton"; normalTitle = "Select Category"; ObjectID = "0Bk-4s-MbH"; */
+"0Bk-4s-MbH.normalTitle" = "Select Category";
+
+/* Class = "UILabel"; text = "Address:"; ObjectID = "0JX-JO-tut"; */
+"0JX-JO-tut.text" = "Address:";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "0QS-bg-9Ho"; */
+"0QS-bg-9Ho.normalTitle" = "Confirm";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "0oS-FN-pKn"; */
+"0oS-FN-pKn.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Historic places"; ObjectID = "0qs-gV-mm4"; */
+"0qs-gV-mm4.normalTitle" = "Historic places";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "19O-G9-3pC"; */
+"19O-G9-3pC.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Region"; ObjectID = "1AK-gc-QX2"; */
+"1AK-gc-QX2.normalTitle" = "Region";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "217-61-hRf"; */
+"217-61-hRf.normalTitle" = "Confirm";
+
+/* Class = "UILabel"; text = "Camera"; ObjectID = "2cm-IH-JJP"; */
+"2cm-IH-JJP.text" = "Camera";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "30H-ex-AUT"; */
+"30H-ex-AUT.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "39S-ue-hZs"; */
+"39S-ue-hZs.normalTitle" = "Confirm";
+
+/* Class = "UILabel"; text = "Offers:"; ObjectID = "3do-E6-ubB"; */
+"3do-E6-ubB.text" = "Offers:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "3lG-jH-zl0"; */
+"3lG-jH-zl0.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Business Name:"; ObjectID = "4Et-ek-ilu"; */
+"4Et-ek-ilu.placeholder" = "Business Name:";
+
+/* Class = "UILabel"; text = " Name:"; ObjectID = "4eL-cC-dgo"; */
+"4eL-cC-dgo.text" = " Name:";
+
+/* Class = "UIButton"; normalTitle = "Search for business"; ObjectID = "52W-Zc-RcQ"; */
+"52W-Zc-RcQ.normalTitle" = "Search for business";
+
+/* Class = "UISegmentedControl"; 5Lf-zk-gcA.segmentTitles[0] = "Business profile"; ObjectID = "5Lf-zk-gcA"; */
+"5Lf-zk-gcA.segmentTitles[0]" = "Business profile";
+
+/* Class = "UISegmentedControl"; 5Lf-zk-gcA.segmentTitles[1] = "Create Offer"; ObjectID = "5Lf-zk-gcA"; */
+"5Lf-zk-gcA.segmentTitles[1]" = "Create Offer";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5NC-IB-aNt"; */
+"5NC-IB-aNt.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5S7-h0-SNT"; */
+"5S7-h0-SNT.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "5le-gZ-fy8"; */
+"5le-gZ-fy8.normalTitle" = "Continue";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5vR-aG-Vt2"; */
+"5vR-aG-Vt2.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Create New Business Account"; ObjectID = "6R6-r2-nBR"; */
+"6R6-r2-nBR.normalTitle" = "Create New Business Account";
+
+/* Class = "UILabel"; text = "Shop Business"; ObjectID = "6XP-jm-xqq"; */
+"6XP-jm-xqq.text" = "Shop Business";
+
+/* Class = "UISearchBar"; placeholder = "Search for fav Region"; ObjectID = "73y-ep-2a6"; */
+"73y-ep-2a6.placeholder" = "Search for fav Region";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7cK-WU-bPb"; */
+"7cK-WU-bPb.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Search"; ObjectID = "7ea-7C-oM3"; */
+"7ea-7C-oM3.normalTitle" = "Search";
+
+/* Class = "UINavigationItem"; title = "Business Book"; ObjectID = "7h7-sE-nfc"; */
+"7h7-sE-nfc.title" = "Business Book";
+
+/* Class = "UIButton"; normalTitle = "Select City"; ObjectID = "8zl-sC-1qF"; */
+"8zl-sC-1qF.normalTitle" = "Select City";
+
+/* Class = "UITextField"; placeholder = "Contact No:"; ObjectID = "9ag-JN-Xcd"; */
+"9ag-JN-Xcd.placeholder" = "Contact No:";
+
+/* Class = "UILabel"; text = "Gallery"; ObjectID = "9gV-CP-9NU"; */
+"9gV-CP-9NU.text" = "Gallery";
+
+/* Class = "UIButton"; normalTitle = "select Region"; ObjectID = "AAH-3x-cJs"; */
+"AAH-3x-cJs.normalTitle" = "select Region";
+
+/* Class = "UILabel"; text = "Choose Image"; ObjectID = "B1n-ed-L2N"; */
+"B1n-ed-L2N.text" = "Choose Image";
+
+/* Class = "UIButton"; normalTitle = "Upload Offers Image"; ObjectID = "BXc-qz-52J"; */
+"BXc-qz-52J.normalTitle" = "Upload Offers Image";
+
+/* Class = "UIButton"; normalTitle = "Hospitals"; ObjectID = "Bjg-PR-qjt"; */
+"Bjg-PR-qjt.normalTitle" = "Hospitals";
+
+/* Class = "UILabel"; text = "Related Files"; ObjectID = "ByU-N8-Zby"; */
+"ByU-N8-Zby.text" = "Related Files";
+
+/* Class = "UITextField"; placeholder = "Address:"; ObjectID = "CpD-qp-7Bm"; */
+"CpD-qp-7Bm.placeholder" = "Address:";
+
+/* Class = "UIButton"; normalTitle = " I M Hungry"; ObjectID = "Cvs-IO-VLR"; */
+"Cvs-IO-VLR.normalTitle" = " I M Hungry";
+
+/* Class = "UILabel"; text = "Username"; ObjectID = "DOO-1E-b3Z"; */
+"DOO-1E-b3Z.text" = "Username";
+
+/* Class = "UIButton"; normalTitle = "Other"; ObjectID = "DiL-jz-ZyW"; */
+"DiL-jz-ZyW.normalTitle" = "Other";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DkF-3x-KOc"; */
+"DkF-3x-KOc.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EB9-Ei-WAG"; */
+"EB9-Ei-WAG.text" = "Label";
+
+/* Class = "UISearchBar"; placeholder = "Search for favourite city"; ObjectID = "EMN-63-WYL"; */
+"EMN-63-WYL.placeholder" = "Search for favourite city";
+
+/* Class = "UILabel"; text = "Food"; ObjectID = "EUr-Bv-sQL"; */
+"EUr-Bv-sQL.text" = "Food";
+
+/* Class = "UITextField"; placeholder = "Contact No:"; ObjectID = "Eqr-Jz-Ude"; */
+"Eqr-Jz-Ude.placeholder" = "Contact No:";
+
+/* Class = "UILabel"; text = "Food"; ObjectID = "EzL-6X-p4K"; */
+"EzL-6X-p4K.text" = "Food";
+
+/* Class = "UILabel"; text = "Email:"; ObjectID = "Foh-8r-j04"; */
+"Foh-8r-j04.text" = "Email:";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "G87-NN-ONn"; */
+"G87-NN-ONn.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "GI7-LU-f8e"; */
+"GI7-LU-f8e.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Business description:"; ObjectID = "GIL-17-ept"; */
+"GIL-17-ept.placeholder" = "Business description:";
+
+/* Class = "UILabel"; text = "mostreetcity"; ObjectID = "H35-XD-m4m"; */
+"H35-XD-m4m.text" = "mostreetcity";
+
+/* Class = "UITextField"; placeholder = "User Name:"; ObjectID = "H9Z-SL-vXv"; */
+"H9Z-SL-vXv.placeholder" = "User Name:";
+
+/* Class = "UITextField"; placeholder = "Email:"; ObjectID = "HLP-5B-29L"; */
+"HLP-5B-29L.placeholder" = "Email:";
+
+/* Class = "UILabel"; text = "Rate us"; ObjectID = "HPE-XP-BLI"; */
+"HPE-XP-BLI.text" = "Rate us";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "HYQ-PA-v6n"; */
+"HYQ-PA-v6n.normalTitle" = "Login";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "IxB-US-Olw"; */
+"IxB-US-Olw.normalTitle" = "Skip";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "J4i-GV-PP9"; */
+"J4i-GV-PP9.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "No Offer Result"; ObjectID = "JhI-JA-EMg"; */
+"JhI-JA-EMg.text" = "No Offer Result";
+
+/* Class = "UITextField"; placeholder = "Address:"; ObjectID = "Ktm-B5-y8a"; */
+"Ktm-B5-y8a.placeholder" = "Address:";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "LCr-Dm-YDw"; */
+"LCr-Dm-YDw.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Business Description:"; ObjectID = "Lss-Bp-8YC"; */
+"Lss-Bp-8YC.text" = "Business Description:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Mqv-Eh-sQ3"; */
+"Mqv-Eh-sQ3.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Mwq-PD-l7H"; */
+"Mwq-PD-l7H.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "City"; ObjectID = "N43-9C-8E8"; */
+"N43-9C-8E8.normalTitle" = "City";
+
+/* Class = "UIButton"; normalTitle = "Forget Password"; ObjectID = "NE2-d8-MPe"; */
+"NE2-d8-MPe.normalTitle" = "Forget Password";
+
+/* Class = "UIButton"; normalTitle = "Select City"; ObjectID = "NIv-dD-mmB"; */
+"NIv-dD-mmB.normalTitle" = "Select City";
+
+/* Class = "UISearchBar"; placeholder = "Search for category"; ObjectID = "O8g-PB-UNl"; */
+"O8g-PB-UNl.placeholder" = "Search for category";
+
+/* Class = "UILabel"; text = "Region:"; ObjectID = "OdX-2X-Mf0"; */
+"OdX-2X-Mf0.text" = "Region:";
+
+/* Class = "UISearchBar"; placeholder = "Search for fav Region"; ObjectID = "PB0-9r-kAd"; */
+"PB0-9r-kAd.placeholder" = "Search for fav Region";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Pu3-hc-SfV"; */
+"Pu3-hc-SfV.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "confirm editing"; ObjectID = "QN9-hH-Fnk"; */
+"QN9-hH-Fnk.normalTitle" = "confirm editing";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "R3G-ZE-qKR"; */
+"R3G-ZE-qKR.text" = "Label";
+
+/* Class = "UILabel"; text = "Edit Logo for business (Option)"; ObjectID = "Rjz-mb-Qhc"; */
+"Rjz-mb-Qhc.text" = "Edit Logo for business (Option)";
+
+/* Class = "UIButton"; normalTitle = "Upload related Files"; ObjectID = "SGW-WF-HkP"; */
+"SGW-WF-HkP.normalTitle" = "Upload related Files";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "SZG-qC-K3c"; */
+"SZG-qC-K3c.text" = "Label";
+
+/* Class = "UILabel"; text = "dfsgdfgdgdhh"; ObjectID = "Sd3-Kh-6lj"; */
+"Sd3-Kh-6lj.text" = "dfsgdfgdgdhh";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "SuY-Mv-ONt"; */
+"SuY-Mv-ONt.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Sx0-GJ-WRD"; */
+"Sx0-GJ-WRD.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "T7J-Ho-Jvk"; */
+"T7J-Ho-Jvk.normalTitle" = "Login";
+
+/* Class = "UILabel"; text = "01233242342"; ObjectID = "U9Z-KT-bir"; */
+"U9Z-KT-bir.text" = "01233242342";
+
+/* Class = "UILabel"; text = "Jasd@dsfs.com"; ObjectID = "UAs-EI-CIH"; */
+"UAs-EI-CIH.text" = "Jasd@dsfs.com";
+
+/* Class = "UILabel"; text = "Contact Number:"; ObjectID = "UHv-tU-S2O"; */
+"UHv-tU-S2O.text" = "Contact Number:";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "V65-Cr-TEy"; */
+"V65-Cr-TEy.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "VQS-EM-8Ew"; */
+"VQS-EM-8Ew.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Select Category"; ObjectID = "Vkj-GO-Y2n"; */
+"Vkj-GO-Y2n.normalTitle" = "Select Category";
+
+/* Class = "UILabel"; text = "Category:"; ObjectID = "VpL-c0-y2N"; */
+"VpL-c0-y2N.text" = "Category:";
+
+/* Class = "UILabel"; text = "IF YOU DON'T HAVE A TIME!"; ObjectID = "W8M-zI-K9r"; */
+"W8M-zI-K9r.text" = "IF YOU DON'T HAVE A TIME!";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "WIv-62-87j"; */
+"WIv-62-87j.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "WOe-Ie-f0X"; */
+"WOe-Ie-f0X.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "WPW-nS-K8u"; */
+"WPW-nS-K8u.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Wjd-gW-gl7"; */
+"Wjd-gW-gl7.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Upload Logo for business (Option)"; ObjectID = "Wto-LH-mSw"; */
+"Wto-LH-mSw.text" = "Upload Logo for business (Option)";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "XFj-e6-I60"; */
+"XFj-e6-I60.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Add Caption:"; ObjectID = "ZNs-dy-iDK"; */
+"ZNs-dy-iDK.placeholder" = "Add Caption:";
+
+/* Class = "UILabel"; text = "Related Files"; ObjectID = "Zes-wb-bzT"; */
+"Zes-wb-bzT.text" = "Related Files";
+
+/* Class = "UILabel"; text = "City:"; ObjectID = "Zrs-od-dJZ"; */
+"Zrs-od-dJZ.text" = "City:";
+
+/* Class = "UISearchBar"; placeholder = "Search for category"; ObjectID = "aKR-lY-wSF"; */
+"aKR-lY-wSF.placeholder" = "Search for category";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "aOs-go-QAX"; */
+"aOs-go-QAX.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "aZL-ts-N0z"; */
+"aZL-ts-N0z.normalTitle" = "Done";
+
+/* Class = "UITextField"; placeholder = "Business description:"; ObjectID = "bjx-r4-0o5"; */
+"bjx-r4-0o5.placeholder" = "Business description:";
+
+/* Class = "UILabel"; text = "Jasd@dsfs.com"; ObjectID = "cQ5-Q3-GoS"; */
+"cQ5-Q3-GoS.text" = "Jasd@dsfs.com";
+
+/* Class = "UIButton"; normalTitle = "Search"; ObjectID = "co3-Jx-nuH"; */
+"co3-Jx-nuH.normalTitle" = "Search";
+
+/* Class = "UILabel"; text = "Upload Image for business"; ObjectID = "d9p-0f-3JA"; */
+"d9p-0f-3JA.text" = "Upload Image for business";
+
+/* Class = "UILabel"; text = "Business Name:"; ObjectID = "dPw-Nl-kbj"; */
+"dPw-Nl-kbj.text" = "Business Name:";
+
+/* Class = "UILabel"; text = "Address:"; ObjectID = "dks-lt-g3b"; */
+"dks-lt-g3b.text" = "Address:";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "drd-7G-fhY"; */
+"drd-7G-fhY.normalTitle" = "Confirm";
+
+/* Class = "UITextField"; placeholder = "Select Name "; ObjectID = "eRz-x4-F4H"; */
+"eRz-x4-F4H.placeholder" = "Select Name ";
+
+/* Class = "UILabel"; text = "Category:"; ObjectID = "ecb-EM-7db"; */
+"ecb-EM-7db.text" = "Category:";
+
+/* Class = "UILabel"; text = "mostreetcity"; ObjectID = "fDN-yn-6ud"; */
+"fDN-yn-6ud.text" = "mostreetcity";
+
+/* Class = "UIButton"; normalTitle = "English"; ObjectID = "fKt-aP-UWw"; */
+"fKt-aP-UWw.normalTitle" = "English";
+
+/* Class = "UILabel"; text = "Businesss"; ObjectID = "fM3-MN-vtC"; */
+"fM3-MN-vtC.text" = "Businesss";
+
+/* Class = "UILabel"; text = "Contact Number:"; ObjectID = "fcq-8Q-mqZ"; */
+"fcq-8Q-mqZ.text" = "Contact Number:";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "h0t-gZ-xeU"; */
+"h0t-gZ-xeU.normalTitle" = "Next";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "h7k-sF-7kV"; */
+"h7k-sF-7kV.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Businesss"; ObjectID = "hZw-sw-8Ch"; */
+"hZw-sw-8Ch.text" = "Businesss";
+
+/* Class = "UIButton"; normalTitle = "Arabic"; ObjectID = "hc6-m5-vez"; */
+"hc6-m5-vez.normalTitle" = "Arabic";
+
+/* Class = "UITextField"; placeholder = "Select Name"; ObjectID = "hzB-1r-jHJ"; */
+"hzB-1r-jHJ.placeholder" = "Select Name";
+
+/* Class = "UILabel"; text = "remember me"; ObjectID = "i34-wS-VSM"; */
+"i34-wS-VSM.text" = "remember me";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "iNa-SS-lMP"; */
+"iNa-SS-lMP.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Category"; ObjectID = "iQd-Oz-0d5"; */
+"iQd-Oz-0d5.normalTitle" = "Category";
+
+/* Class = "UISearchBar"; placeholder = "Search for category"; ObjectID = "ihF-aH-nQp"; */
+"ihF-aH-nQp.placeholder" = "Search for category";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "its-ID-BzI"; */
+"its-ID-BzI.normalTitle" = "Skip";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "j42-bE-YKW"; */
+"j42-bE-YKW.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "jB8-dN-49z"; */
+"jB8-dN-49z.normalTitle" = "Skip";
+
+/* Class = "UIButton"; normalTitle = "+ Log in with Google"; ObjectID = "jZv-m7-R5y"; */
+"jZv-m7-R5y.normalTitle" = "+ Log in with Google";
+
+/* Class = "UITextField"; placeholder = "User Name or Email:"; ObjectID = "lAd-Gz-HkW"; */
+"lAd-Gz-HkW.placeholder" = "User Name or Email:";
+
+/* Class = "UILabel"; text = "Region:"; ObjectID = "lUk-oB-1oA"; */
+"lUk-oB-1oA.text" = "Region:";
+
+/* Class = "UILabel"; text = "Email:"; ObjectID = "lhc-JD-j9b"; */
+"lhc-JD-j9b.text" = "Email:";
+
+/* Class = "UILabel"; text = "Offers"; ObjectID = "lkc-xS-yrN"; */
+"lkc-xS-yrN.text" = "Offers";
+
+/* Class = "UIButton"; normalTitle = "Create your business profile"; ObjectID = "lrR-Bt-By2"; */
+"lrR-Bt-By2.normalTitle" = "Create your business profile";
+
+/* Class = "UIButton"; normalTitle = "Set your location"; ObjectID = "mJD-65-y7Y"; */
+"mJD-65-y7Y.normalTitle" = "Set your location";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mVK-f8-DGW"; */
+"mVK-f8-DGW.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "niO-IC-pkP"; */
+"niO-IC-pkP.normalTitle" = "Done";
+
+/* Class = "UITextField"; placeholder = "Business Name:"; ObjectID = "oZj-ME-qpq"; */
+"oZj-ME-qpq.placeholder" = "Business Name:";
+
+/* Class = "UIButton"; normalTitle = "Go TO Home"; ObjectID = "p85-zE-lD2"; */
+"p85-zE-lD2.normalTitle" = "Go TO Home";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "prs-9o-HEe"; */
+"prs-9o-HEe.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "qBE-N2-zF8"; */
+"qBE-N2-zF8.normalTitle" = "Confirm";
+
+/* Class = "UILabel"; text = "01233242342"; ObjectID = "qE8-nL-qib"; */
+"qE8-nL-qib.text" = "01233242342";
+
+/* Class = "UIButton"; normalTitle = "confirm"; ObjectID = "qSF-th-9te"; */
+"qSF-th-9te.normalTitle" = "confirm";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "qed-Z8-XPb"; */
+"qed-Z8-XPb.normalTitle" = "Confirm";
+
+/* Class = "UILabel"; text = "Edit Image for business"; ObjectID = "r7b-ZZ-s7o"; */
+"r7b-ZZ-s7o.text" = "Edit Image for business";
+
+/* Class = "UILabel"; text = "Shop Business"; ObjectID = "rJG-ka-tcU"; */
+"rJG-ka-tcU.text" = "Shop Business";
+
+/* Class = "UITextField"; placeholder = "Password:"; ObjectID = "rW6-6b-j6z"; */
+"rW6-6b-j6z.placeholder" = "Password:";
+
+/* Class = "UIButton"; normalTitle = "+ Log in with facebook"; ObjectID = "rYZ-b0-KY4"; */
+"rYZ-b0-KY4.normalTitle" = "+ Log in with facebook";
+
+/* Class = "UIButton"; normalTitle = "City"; ObjectID = "rYe-uN-8hn"; */
+"rYe-uN-8hn.normalTitle" = "City";
+
+/* Class = "UIButton"; normalTitle = "I Need A Hotel"; ObjectID = "rqg-2q-AmZ"; */
+"rqg-2q-AmZ.normalTitle" = "I Need A Hotel";
+
+/* Class = "UILabel"; text = "City:"; ObjectID = "s9f-FQ-foH"; */
+"s9f-FQ-foH.text" = "City:";
+
+/* Class = "UISearchBar"; placeholder = "Search for fav Region"; ObjectID = "sj2-KM-eqL"; */
+"sj2-KM-eqL.placeholder" = "Search for fav Region";
+
+/* Class = "UIButton"; normalTitle = "Region"; ObjectID = "tX4-cs-0hY"; */
+"tX4-cs-0hY.normalTitle" = "Region";
+
+/* Class = "UILabel"; text = "Related Files"; ObjectID = "taH-ez-2A8"; */
+"taH-ez-2A8.text" = "Related Files";
+
+/* Class = "UILabel"; text = "Offers"; ObjectID = "tsC-ta-qVL"; */
+"tsC-ta-qVL.text" = "Offers";
+
+/* Class = "UILabel"; text = "No Data Result"; ObjectID = "uch-S4-RLH"; */
+"uch-S4-RLH.text" = "No Data Result";
+
+/* Class = "UITextField"; placeholder = "Email:"; ObjectID = "ug5-Hh-fgF"; */
+"ug5-Hh-fgF.placeholder" = "Email:";
+
+/* Class = "UITextField"; placeholder = "Email:"; ObjectID = "uuN-sH-sVw"; */
+"uuN-sH-sVw.placeholder" = "Email:";
+
+/* Class = "UIButton"; normalTitle = "Set your location"; ObjectID = "vNb-WL-bp0"; */
+"vNb-WL-bp0.normalTitle" = "Set your location";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vs3-Ex-FL1"; */
+"vs3-Ex-FL1.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Select Region"; ObjectID = "w8F-at-tjG"; */
+"w8F-at-tjG.normalTitle" = "Select Region";
+
+/* Class = "UISearchBar"; placeholder = "Search for favourite city"; ObjectID = "wCw-WI-9b9"; */
+"wCw-WI-9b9.placeholder" = "Search for favourite city";
+
+/* Class = "UITextField"; placeholder = "Password:"; ObjectID = "wKi-Hc-Hc6"; */
+"wKi-Hc-Hc6.placeholder" = "Password:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wWL-7C-IP2"; */
+"wWL-7C-IP2.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "User Name:"; ObjectID = "weC-Un-htf"; */
+"weC-Un-htf.placeholder" = "User Name:";
+
+/* Class = "UISearchBar"; placeholder = "Search for favourite city"; ObjectID = "wkl-SS-gze"; */
+"wkl-SS-gze.placeholder" = "Search for favourite city";
+
+/* Class = "UISegmentedControl"; xgA-PP-UrN.segmentTitles[0] = "Business"; ObjectID = "xgA-PP-UrN"; */
+"xgA-PP-UrN.segmentTitles[0]" = "Business";
+
+/* Class = "UISegmentedControl"; xgA-PP-UrN.segmentTitles[1] = "Offers"; ObjectID = "xgA-PP-UrN"; */
+"xgA-PP-UrN.segmentTitles[1]" = "Offers";
+
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "xhk-AW-UPW"; */
+"xhk-AW-UPW.normalTitle" = "Send";
+
+/* Class = "UIButton"; normalTitle = "Category"; ObjectID = "z1w-bE-hwC"; */
+"z1w-bE-hwC.normalTitle" = "Category";
+
+/* Class = "UILabel"; text = "Business Description:"; ObjectID = "zaf-sW-gYl"; */
+"zaf-sW-gYl.text" = "Business Description:";

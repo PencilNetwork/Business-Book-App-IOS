@@ -10,8 +10,10 @@ import UIKit
 import Alamofire
 class CreateOfferViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    @IBOutlet weak var confirmBtn: UIButton!
     @IBOutlet weak var defaultImg: UIImageView!
-   
+    @IBOutlet weak var uploadOfferImageBtn: UIButton!
+    
     @IBOutlet weak var caption: UITextField!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -27,6 +29,16 @@ class CreateOfferViewController: UIViewController,UINavigationControllerDelegate
         NotificationCenter.default.addObserver(self, selector: #selector(CreateOfferViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
           NotificationCenter.default.addObserver(self, selector: #selector(deleteCreateOffer(_:)), name: NSNotification.Name(rawValue: "deleteCreateOffer"), object: nil)
         // Do any additional setup after loading the view.
+      
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            uploadOfferImageBtn.setTitle("uploadOfferImage".localized(lang: "ar"), for: .normal)
+             caption.placeholder = "addCaption".localized(lang: "ar")
+            caption.textAlignment = .right
+            confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
+        }else{
+            caption.textAlignment = .left
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -10,6 +10,8 @@ import UIKit
 import Alamofire
 class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
 
+    @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var uploadRelatedFileBtn: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var defaultImg: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -24,6 +26,12 @@ class UploadRelatedFilesViewController: UIViewController,UICollectionViewDataSou
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
           NotificationCenter.default.addObserver(self, selector: #selector(deletefiles(_:)), name: NSNotification.Name(rawValue: "deletefiles"), object: nil)
         // Do any additional setup after loading the view.
+        //uploadRelatesFiles
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            uploadRelatedFileBtn.setTitle("uploadRelatesFiles".localized(lang: "ar"), for: .normal)
+            confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

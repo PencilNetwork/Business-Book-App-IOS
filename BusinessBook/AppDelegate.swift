@@ -15,7 +15,7 @@ import GooglePlaces
 import GoogleSignIn
 import Alamofire
 import UserNotifications
-
+import FBSDKLoginKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnimationDelegate{
  
@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
        
-
+//    FBSDKLoginButton.classForCoder()
 //        self.window?.rootViewController = vc
 //        self.window?.makeKeyAndVisible()
         FirebaseApp.configure()
@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
     }
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil, userInfo: nil)
             return
         }
         
@@ -87,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , GIDSignInDelegate,CAAnim
                                                        accessToken: authentication.accessToken)
         Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
             if let error = error {
+                  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil, userInfo: nil)
                 print("failed to create a firbase user with google account",error)
                 return
             }

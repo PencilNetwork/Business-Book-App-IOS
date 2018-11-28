@@ -12,6 +12,7 @@ import GoogleSignIn
 import SDWebImage
 import FBSDKLoginKit
 import Alamofire
+import FBSDKCoreKit
 class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
 
     @IBOutlet weak var lineView: UIView!
@@ -27,7 +28,7 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
     var id:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteActivityIndicator(_:)), name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil)
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = UIColor.white
            GIDSignIn.sharedInstance().uiDelegate = self
@@ -35,11 +36,21 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         // Do any additional setup after loading the view.
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            continueBtn.setTitle("continue".localized(lang: "ar"), for: .normal)
+            loginFacebookBtn.setTitle("تسجيل الدخول facebook", for: .normal)
+            loginGoogleBtn.setTitle("تسجيل الدخول google", for: .normal)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @objc func deleteActivityIndicator(_ notification: NSNotification){
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     @objc func putImage(_ notification: NSNotification){
         profileImg.isHidden = false
@@ -69,6 +80,7 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
             if let id = dict["id"] as? String{
                 self.id = id
             }
+            try GIDSignIn.sharedInstance().signOut()
         }
     }
 
@@ -76,14 +88,19 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.loginBehavior = FBSDKLoginBehavior.web
         fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
             if let error = error {
                 print("Failed to login: \(error.localizedDescription)")
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
                 return
             }
             
             guard let accessToken = FBSDKAccessToken.current() else {
                 print("Failed to get access token")
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
                 return
             }
             
@@ -139,6 +156,14 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
                             
                         }
                     }
+               //     let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
+                    
+                    
+
+                        FBSDKLoginManager().logOut()
+                    FBSDKAccessToken.setCurrent(nil)
+                    FBSDKProfile.setCurrent(nil)
+            //      FBSDKLoginManager().logOut()
                     
                 })
                 // Present the main view
@@ -152,7 +177,10 @@ class UserLoginViewController: UIViewController ,GIDSignInUIDelegate{
             
         }
     }
-    
+    func logout(){
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut()
+    }
     @IBAction func LoginWithGoogle(_ sender: Any) {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()

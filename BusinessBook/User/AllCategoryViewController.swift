@@ -28,6 +28,12 @@ class AllCategoryViewController: UIViewController,UICollectionViewDelegate,UICol
 //        layout.minimumLineSpacing = 1
 //        collectionView!.collectionViewLayout = layout
         // Do any additional setup after loading the view.
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            collectionView.semanticContentAttribute = .forceRightToLeft
+        }else{
+            collectionView.semanticContentAttribute = .forceLeftToRight
+        }
     }
 
     override func didReceiveMemoryWarning() {

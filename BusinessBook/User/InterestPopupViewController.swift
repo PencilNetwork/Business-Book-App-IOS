@@ -16,6 +16,8 @@ protocol changecategDelegate{
 class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UICollectionViewDataSource,changecategDelegate,UICollectionViewDelegateFlowLayout{
     
     
+    @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var chooseCategoryLBL: UILabel!
     
@@ -43,7 +45,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
          self.navigationController?.isNavigationBarHidden = true
-        
+        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         setStyle()
          setTable()
    getCity()
@@ -68,6 +70,25 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                     textFieldInsideUISearchBarLabel?.font = UIFont.systemFont(ofSize: 12.0)
                 }
             }
+        }
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            searchBar.semanticContentAttribute = .forceRightToLeft
+            citySearchBar.semanticContentAttribute = .forceRightToLeft
+            regionSearchBar.semanticContentAttribute = .forceRightToLeft
+            containerView.semanticContentAttribute = .forceRightToLeft
+            searchBar.placeholder = "searchForCategory".localized(lang: "ar")
+            citySearchBar.placeholder = "searchFavouriteCity".localized(lang: "ar")
+            regionSearchBar.placeholder = "searchForRegion".localized(lang: "ar")
+            categCollectionView.semanticContentAttribute = .forceRightToLeft
+            cityCollectionView.semanticContentAttribute = .forceRightToLeft
+            regionCollectionView.semanticContentAttribute = .forceRightToLeft
+            confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
+        }else{
+            containerView.semanticContentAttribute = .forceLeftToRight
+            categCollectionView.semanticContentAttribute = .forceLeftToRight
+            cityCollectionView.semanticContentAttribute = .forceLeftToRight
+            regionCollectionView.semanticContentAttribute = .forceLeftToRight
         }
         // Do any additional setup after loading the view.
     }
@@ -111,11 +132,17 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
         self.navigationController?.isNavigationBarHidden = false
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+         let lang = UserDefaults.standard.value(forKey: "lang") as!String
         if collectionView == categCollectionView {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categ", for: indexPath) as! InterestCollectionViewCell
            cell.index = indexPath.row
             cell.changecategDelegate = self
+            if lang == "ar" {
+                cell.nameLBL.textAlignment = .right
+            }else{
+                cell.nameLBL.textAlignment = .left
+            }
             if isSearching1 {
                 cell.nameLBL.text = filterData1[indexPath.row].name
                 
@@ -143,6 +170,11 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "city", for: indexPath) as! InterestCollectionViewCell
             cell.index = indexPath.row
             cell.changecategDelegate = self
+            if lang == "ar" {
+                cell.nameLBL.textAlignment = .right
+            }else{
+                cell.nameLBL.textAlignment = .left
+            }
              if isSearching2 {
                cell.nameLBL.text = filterData2[indexPath.row].name
            
@@ -169,6 +201,11 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "region", for: indexPath) as! InterestCollectionViewCell
               cell.index = indexPath.row
             cell.changecategDelegate = self
+            if lang == "ar" {
+                cell.nameLBL.textAlignment = .right
+            }else{
+                cell.nameLBL.textAlignment = .left
+            }
             if issearching3{
                 cell.nameLBL.text = filterData3[indexPath.row].name
                 

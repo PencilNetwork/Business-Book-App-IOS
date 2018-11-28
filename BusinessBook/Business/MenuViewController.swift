@@ -10,8 +10,9 @@ import UIKit
 
 class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var menuList = ["Home","Add related files","Edit Business Profile","Edit offers","LOGOUT"]
-    
+    var menuArabicList = ["الصفحة الرئيسية","إضافة الملفات ذات الصلة","تحرير ملف تعريف العمل","تحرير العرض","خروج"]
 
+    @IBOutlet var containerView: UIView!
     @IBOutlet weak var menuTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuTableView: UITableView!
    var menuDel:menuDelegate?
@@ -23,6 +24,14 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
        menuTableView.backgroundColor = UIColor.gray
          if UIDevice.isIphoneX { // it is iphone x or iphonesx or xs max 
             menuTopConstraint.constant = 24
+        }
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            menuTableView.semanticContentAttribute = .forceRightToLeft
+            containerView.semanticContentAttribute = .forceRightToLeft
+        }else{
+             menuTableView.semanticContentAttribute = .forceLeftToRight
+             containerView.semanticContentAttribute = .forceLeftToRight
         }
         // Do any additional setup after loading the view.
     }
@@ -38,7 +47,15 @@ class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
-        cell.menuItem.text = menuList[indexPath.row]
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            cell.menuItem.textAlignment = .right
+            cell.menuItem.text = menuArabicList[indexPath.row]
+            }else{
+            cell.menuItem.textAlignment = .left
+             cell.menuItem.text = menuList[indexPath.row]
+            }
+        
         cell.backgroundColor = UIColor.gray
         return cell
     }

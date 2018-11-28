@@ -11,7 +11,19 @@ import GoogleMaps
 import GooglePlaces
 import Alamofire
 class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-
+    @IBOutlet weak var offerlbl: UILabel!
+    
+    @IBOutlet weak var relatedFiles: UILabel!
+    @IBOutlet weak var userNameTxt: UILabel!
+    @IBOutlet weak var emailTxt: UILabel!
+    @IBOutlet weak var categoryTxt: UILabel!
+    @IBOutlet weak var regionTxt: UILabel!
+    @IBOutlet weak var cityTxt: UILabel!
+    @IBOutlet weak var addressTxt: UILabel!
+    @IBOutlet weak var contactNoTxt: UILabel!
+    @IBOutlet weak var businessDesTxt: UILabel!
+    @IBOutlet weak var businessNameTxt: UILabel!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var regionLbl: UILabel!
     @IBOutlet weak var cityLbl: UILabel!
     @IBOutlet weak var relatedFileHeight: NSLayoutConstraint!
@@ -58,7 +70,63 @@ class BusinessSubProfileViewController: UIViewController,UICollectionViewDelegat
         relatedFileCollectionView.delegate = self
         relatedFileCollectionView.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(refreshOffer(_:)), name: NSNotification.Name(rawValue: "refreshOffer"), object: nil)
-       
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            containerView.semanticContentAttribute = .forceRightToLeft
+            relatedFileCollectionView.semanticContentAttribute = .forceRightToLeft
+            offerCollectionView.semanticContentAttribute = .forceRightToLeft
+            userNameTxt.text = "username".localized(lang: "ar") + ":"
+            emailTxt.text = "email".localized(lang: "ar") + ":"
+            businessNameTxt.text = "businessName".localized(lang: "ar") + ":"
+            businessDesTxt.text = "busDes".localized(lang: "ar") + ":"
+            contactNoTxt.text = "contactNo".localized(lang: "ar") + ":"
+            categoryTxt.text = "category".localized(lang: "ar") + ":"
+            regionTxt.text = "region".localized(lang: "ar") + ":"
+            cityTxt.text = "city".localized(lang: "ar") + ":"
+            addressTxt.text = "address".localized(lang: "ar") + ":"
+            offerlbl.text = "offer".localized(lang: "ar") 
+            relatedFiles.text = "relatedFiles".localized(lang: "ar")
+            businessNameTxt.textAlignment = .right
+            businessName.textAlignment = .right
+            businessDesTxt.textAlignment = .right
+            businessDescription.textAlignment = .right
+            contactNoTxt.textAlignment = .right
+            contactNO.textAlignment = .right
+            addressTxt.textAlignment = .right
+            addressLbl.textAlignment = .right
+            cityTxt.textAlignment = .right
+            cityLbl.textAlignment = .right
+            regionLbl.textAlignment = .right
+            regionTxt.textAlignment = .right
+            categoryLBL.textAlignment = .right
+            categoryTxt.textAlignment = .right
+            emailTxt.textAlignment = .right
+            emailLBL.textAlignment = .right
+            userNameTxt.textAlignment = .right
+            nameLBl.textAlignment = .right
+        }else{
+             containerView.semanticContentAttribute = .forceLeftToRight
+            relatedFileCollectionView.semanticContentAttribute = .forceLeftToRight
+            offerCollectionView.semanticContentAttribute = .forceLeftToRight
+            businessNameTxt.textAlignment = .left
+            businessName.textAlignment = .left
+            businessDesTxt.textAlignment = .left
+            businessDescription.textAlignment = .left
+            contactNoTxt.textAlignment = .left
+            contactNO.textAlignment = .left
+            addressTxt.textAlignment = .left
+            addressLbl.textAlignment = .left
+            cityTxt.textAlignment = .left
+            cityLbl.textAlignment = .left
+            regionLbl.textAlignment = .left
+            regionTxt.textAlignment = .left
+            categoryLBL.textAlignment = .left
+            categoryTxt.textAlignment = .left
+            emailTxt.textAlignment = .left
+            emailLBL.textAlignment = .left
+            userNameTxt.textAlignment = .left
+            nameLBl.textAlignment = .left
+        }
         // Do any additional setup after loading the view.
     }
 

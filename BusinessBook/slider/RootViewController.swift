@@ -17,7 +17,7 @@ class RootViewController: UIPageViewController,UIPageViewControllerDataSource,UI
     private var pendingIndex: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+  UserDefaults.standard.set(true, forKey: "Login")
         self.dataSource = self
         if let firstViewController = orderdViewControllers.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)

@@ -15,7 +15,7 @@ var pageViewController: RootViewController!
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-         UserDefaults.standard.set(true, forKey: "Login")
+         
          self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
     }
 

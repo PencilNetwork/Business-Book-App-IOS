@@ -17,7 +17,10 @@ protocol SendImageDelegate{
 }
 class RegisterViewController: UIViewController,SendImageDelegate , UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate,MapDelegate{
     //MARK:IBOUtlet
+    @IBOutlet weak var coinView: UIView!
     
+    @IBOutlet weak var uploadLogo: UILabel!
+    @IBOutlet weak var uploadImageforBus: UILabel!
     @IBOutlet weak var cityDoneBtn: UIButton!
     @IBOutlet weak var regionBtnDone: UIButton!
     @IBOutlet weak var regionPickerView: UIPickerView!
@@ -63,6 +66,7 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
       var cityList :[Interest] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
         activityindicator.isHidden = true
         activityindicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         confirmBtn.layer.cornerRadius = 10 
@@ -81,7 +85,11 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
         setLocation.layer.cornerRadius = 10
          self.navigationController?.navigationBar.topItem?.title = ""
          self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationItem.title = "Creating business"
+         if lang == "ar" {
+            self.navigationItem.title = "createBusiness".localized(lang: "ar")
+         }else{
+           self.navigationItem.title = "Creating business"
+        }
         hideKeyboardWhenTappedAround()
         
        
@@ -93,6 +101,40 @@ class RegisterViewController: UIViewController,SendImageDelegate , UINavigationC
          getCity()
         regionBtn.isEnabled = false
         // Do any additional setup after loading the view.
+        
+        if lang == "ar" {
+            coinView.semanticContentAttribute = .forceRightToLeft
+            addressTxt.placeholder = "address".localized(lang: "ar")
+            addressTxt.textAlignment = .right
+            contactNo.placeholder = "contactNo".localized(lang: "ar")
+            contactNo.textAlignment = .right
+            businessName.placeholder = "businessName".localized(lang: "ar")
+            businessName.textAlignment = .right
+            category.setTitle("category".localized(lang: "ar"), for: .normal)
+            category.contentHorizontalAlignment = .right
+            businessdesTxt.placeholder = "busDes".localized(lang: "ar")
+            businessdesTxt.textAlignment = .right
+            cityBtn.setTitle("city".localized(lang: "ar"), for: .normal)
+            cityBtn.contentHorizontalAlignment = .right
+            regionBtn.setTitle("region".localized(lang: "ar"), for: .normal)
+            regionBtn.contentHorizontalAlignment = .right
+            confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
+            setLocation.setTitle("setYourLocation".localized(lang: "ar"), for: .normal)
+            uploadImageforBus.text = "uploadImageForBusiness".localized(lang: "ar")
+            uploadLogo.text = "uploadlogoForBusiness".localized(lang: "ar")
+            uploadLogo.textAlignment = .right
+            uploadImageforBus.textAlignment = .right
+        }else{
+            coinView.semanticContentAttribute = .forceLeftToRight
+            addressTxt.textAlignment = .left
+            contactNo.textAlignment = .left
+             businessName.textAlignment = .left
+             category.contentHorizontalAlignment = .left
+            regionBtn.contentHorizontalAlignment = .left
+             cityBtn.contentHorizontalAlignment = .left
+            uploadLogo.textAlignment = .left
+            uploadImageforBus.textAlignment = .left
+        }
     }
 
     override func didReceiveMemoryWarning() {

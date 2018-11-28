@@ -37,18 +37,39 @@ class BusinessProfileViewController: UIViewController ,menuDelegate{
         self.view.addGestureRecognizer(swipeLeft)
         // Do any additional setup after loading the view.
          NotificationCenter.default.addObserver(self, selector: #selector(returnToBusiness(_:)), name: NSNotification.Name(rawValue: "returnToBusiness"), object: nil)
+        
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            segmentControl.setTitle("businessProfile".localized(lang: "ar"), forSegmentAt: 0)
+            segmentControl.setTitle("createOffer".localized(lang: "ar"), forSegmentAt: 1)
+        }
     }
         //MARK:Function
     @objc func respondToGesture(gesture:UISwipeGestureRecognizer){
-        switch gesture.direction{
-        case UISwipeGestureRecognizerDirection.right:
-            print("right")
-            showMenu()
-        case UISwipeGestureRecognizerDirection.left:
-            print("left Swipe")
-            close_on_swipe()
-        default:
-            print("")
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            switch gesture.direction{
+            case UISwipeGestureRecognizerDirection.right:
+                print("right")
+                
+                close_on_swipe()
+            case UISwipeGestureRecognizerDirection.left:
+                print("left Swipe")
+                showMenu()
+            default:
+                print("")
+            }
+        }else{
+            switch gesture.direction{
+            case UISwipeGestureRecognizerDirection.right:
+                print("right")
+                showMenu()
+            case UISwipeGestureRecognizerDirection.left:
+                print("left Swipe")
+                close_on_swipe()
+            default:
+                print("")
+            }
         }
     }
     override func didReceiveMemoryWarning() {

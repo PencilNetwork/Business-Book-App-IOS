@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  BusinessBook
+
+  Created by Mac on 11/25/18.
+  Copyright © 2018 pencil. All rights reserved.
+*/
+createYourBus = "إنشاء ملف تعريف عملك";
+searchForBus = "البحث عن العمل";
+password = "كلمه السر";
+rememberme = "تذكرنى";
+login = "تسجيل الدخول";
+forgetPassword = "هل نسيت كلمة المرور";
+createNewBus = "إنشاء ملف تعريف عمل جديد";
+usernameorm = "اسم المستخدم أو البريد الالكتروني";
+username = "اسم المستخدم";
+email = "البريد الالكتروني";
+address = "العنوان";
+contactNo = "رقم الاتصال" ;
+businessName = "الاسم التجاري";
+category =  "الصنف";
+region = "المنطقة";
+confirm = "تؤكد";
+busDes = "وصف العمل";
+city = "المدينة";
+offer = "عرض";
+relatedFiles = "الملفات";
+setYourLocation = "اختار موقعك";
+createBusiness = "انشاء عمل" ;
+uploadImageForBusiness = "تحميل صورة للعمل";
+uploadlogoForBusiness = "تحميل الشعار للعمل ";
+createOffer = "خلق العرض";
+businessProfile = "الملف الشخصي للأعمال";
+uploadOfferImage = "تحميل صور العروض";
+addCaption = "إضافة تعليق";
+uploadRelatesFiles = "تحميل الملفات ذات الصلة";
+editBusinessImage = "تحرير صورة للعمل";
+editLogoImage = "تحرير الشعار للعمل";
+confirmEdit = "تأكيد التحرير";
+continue = "استمرار";
+business = "اعمال";
+offers  = "عروض";
+ifYouDonotHaveTime = "إذا لم يكن لديك وقت";
+iamHungry = "أنا جائع";
+ineedHotel = "انا بحاجة الى فندق";
+historicPlaces = "اماكن تاريخية";
+hospitals = "المستشفيات";
+other = "اخرى";
+selectName = "اختر الاسم";
+selectCity = "اختر المدينة";
+selectCategory = "اختار الصنف";
+selectRegion = "اختار المنطقة";
+search = "ابحث";
+searchForCategory = "البحث عن الصنف";
+searchFavouriteCity = "البحث عن المدينة المفضلة" ;
+searchForRegion = "البحث عن المنطقة المفضلة";
+rateUs = "قيمنا";
+chooseImage = "اختر صورة";
+camera = "خد صورة";
+gallery = "اختار من المعرض" ;

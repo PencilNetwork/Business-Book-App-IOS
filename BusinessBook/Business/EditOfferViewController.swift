@@ -10,7 +10,8 @@ import UIKit
 import Alamofire
 class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,ChangeImageDelegate,UICollectionViewDelegateFlowLayout {
     
-
+    @IBOutlet weak var offerLBL: UILabel!
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var offercollectionView: UICollectionView!
     var offerList:[OfferBean] = []
@@ -25,6 +26,14 @@ class EditOfferViewController: UIViewController,UICollectionViewDataSource,UICol
         self.activityIndicator.isHidden = true
          NotificationCenter.default.addObserver(self, selector: #selector(refreshOfferPage(_:)), name: NSNotification.Name(rawValue: "refreshPageOffer"), object: nil)
         // Do any additional setup after loading the view.
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            offerLBL.text = "offer".localized(lang: "ar") + ":"
+            offercollectionView.semanticContentAttribute = .forceRightToLeft
+        }else{
+            offercollectionView.semanticContentAttribute = .forceLeftToRight
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

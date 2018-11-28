@@ -10,7 +10,10 @@ import UIKit
 import Alamofire
 import Firebase
 class SignUpViewController: UIViewController {
-
+    
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var iconImg: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var passwordTxt: UITextField!
     @IBOutlet weak var emailTxt: UITextField!
@@ -28,6 +31,22 @@ class SignUpViewController: UIViewController {
         passwordTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         userNameTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         emailTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            containerView.semanticContentAttribute = .forceRightToLeft
+            userNameTxt.placeholder = "username".localized(lang: "ar")
+            userNameTxt.textAlignment = .right
+            passwordTxt.placeholder = "password".localized(lang: "ar")
+            passwordTxt.textAlignment = .right
+            emailTxt.placeholder = "email".localized(lang: "ar")
+            emailTxt.textAlignment = .right
+            loginBtn.setTitle("login".localized(lang: "ar"), for: .normal)
+        }else{
+             containerView.semanticContentAttribute = .forceLeftToRight
+            userNameTxt.textAlignment = .left
+            passwordTxt.textAlignment = .left
+            emailTxt.textAlignment = .left
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,8 +63,10 @@ class SignUpViewController: UIViewController {
     @IBAction func iconAction(sender: AnyObject) {
         if(iconClick == true) {
             passwordTxt.isSecureTextEntry = false
+             iconImg.setImage(UIImage(named:"visibleeye.png"), for: .normal)
         } else {
             passwordTxt.isSecureTextEntry = true
+              iconImg.setImage(UIImage(named:"invisibleeye.png"), for: .normal)
         }
         
         iconClick = !iconClick

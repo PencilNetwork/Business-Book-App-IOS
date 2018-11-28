@@ -10,6 +10,9 @@ import UIKit
 import Alamofire
 import CoreData
 class UserOfferViewController: UIViewController {
+    
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var regionDone: UIButton!
     @IBOutlet weak var regionPickerView: UIPickerView!
     @IBOutlet weak var cityDone: UIButton!
@@ -48,6 +51,21 @@ class UserOfferViewController: UIViewController {
         offerCollectionView.delegate = self
         offerCollectionView.dataSource = self
         // Do any additional setup after loading the view.
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            containerView.semanticContentAttribute = .forceRightToLeft
+            searchName.placeholder = "selectName".localized(lang: "ar")
+            searchName.textAlignment = .right
+            categoryBtn.setTitle("selectCategory".localized(lang: "ar"), for: .normal)
+            regionBtn.setTitle("selectRegion".localized(lang: "ar"), for: .normal)
+            cityBtn.setTitle("selectCity".localized(lang: "ar"), for: .normal)
+            searchBtn.setTitle("search".localized(lang: "ar"), for: .normal)
+            offerCollectionView.semanticContentAttribute = .forceRightToLeft
+            
+        }else{
+            containerView.semanticContentAttribute = .forceLeftToRight
+             offerCollectionView.semanticContentAttribute = .forceLeftToRight
+        }
     }
 
     override func didReceiveMemoryWarning() {

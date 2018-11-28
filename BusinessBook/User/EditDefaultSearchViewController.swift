@@ -13,6 +13,8 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
 @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var categConstraintHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var citySearchBar: UISearchBar!
     
     @IBOutlet weak var regionSearchBar: UISearchBar!
@@ -62,6 +64,25 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                 }
             }
         }
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            searchBar.semanticContentAttribute = .forceRightToLeft
+            citySearchBar.semanticContentAttribute = .forceRightToLeft
+            regionSearchBar.semanticContentAttribute = .forceRightToLeft
+            containerView.semanticContentAttribute = .forceRightToLeft
+            searchBar.placeholder = "searchForCategory".localized(lang: "ar")
+            citySearchBar.placeholder = "searchFavouriteCity".localized(lang: "ar")
+            regionSearchBar.placeholder = "searchForRegion".localized(lang: "ar")
+            categCollectionView.semanticContentAttribute = .forceRightToLeft
+            cityCollectionView.semanticContentAttribute = .forceRightToLeft
+            regionCollectionView.semanticContentAttribute = .forceRightToLeft
+             confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
+        }else{
+             containerView.semanticContentAttribute = .forceLeftToRight
+            categCollectionView.semanticContentAttribute = .forceLeftToRight
+            cityCollectionView.semanticContentAttribute = .forceLeftToRight
+            regionCollectionView.semanticContentAttribute = .forceLeftToRight
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -99,10 +120,17 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
         if collectionView == categCollectionView {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categ", for: indexPath) as! InterestCollectionViewCell
             cell.index = indexPath.row
+            
+            if lang == "ar" {
+                cell.nameLBL.textAlignment = .right
+            }else{
+                cell.nameLBL.textAlignment = .left
+            }
             cell.changecategDelegate = self
             if isSearching1 {
                 cell.nameLBL.text = filterData1[indexPath.row].name
@@ -131,6 +159,11 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "city", for: indexPath) as! InterestCollectionViewCell
             cell.index = indexPath.row
             cell.changecategDelegate = self
+            if lang == "ar" {
+                cell.nameLBL.textAlignment = .right
+            }else{
+                cell.nameLBL.textAlignment = .left
+            }
             if isSearching2 {
                 cell.nameLBL.text = filterData2[indexPath.row].name
                 
@@ -157,6 +190,11 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "region", for: indexPath) as! InterestCollectionViewCell
             cell.index = indexPath.row
             cell.changecategDelegate = self
+            if lang == "ar" {
+                cell.nameLBL.textAlignment = .right
+            }else{
+                cell.nameLBL.textAlignment = .left
+            }
             if issearching3{
                 cell.nameLBL.text = filterData3[indexPath.row].name
                 
@@ -966,6 +1004,10 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                 view.alpha = 0.0
             }
         }
+//        let searchTextField:UITextField = searchBar.subviews[0].subviews.last as! UITextField
+//         searchTextField.textAlignment = NSTextAlignment.right
+//        searchTextField.leftView = nil
+//        searchTextField.rightViewMode = UITextFieldViewMode.always
     }
     func setStyle(){
         //        chooseCategoryLBL.layer.masksToBounds = true

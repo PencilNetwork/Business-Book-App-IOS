@@ -45,6 +45,7 @@ class UserLeftMenuVC: UIViewController,menuDelegate {
         self.addChildViewController(vc)
         self.view.addSubview(vc.view)
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,15 +54,30 @@ class UserLeftMenuVC: UIViewController,menuDelegate {
     }
     //MARK:MENU FUnction
     @objc func respondToGesture(gesture:UISwipeGestureRecognizer){
-        switch gesture.direction{
-        case UISwipeGestureRecognizerDirection.right:
-            print("right")
-            showMenu()
-        case UISwipeGestureRecognizerDirection.left:
-            print("left Swipe")
-            close_on_swipe()
-        default:
-            print("")
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            switch gesture.direction{
+            case UISwipeGestureRecognizerDirection.right:
+                print("right")
+                
+                close_on_swipe()
+            case UISwipeGestureRecognizerDirection.left:
+                print("left Swipe")
+                showMenu()
+            default:
+                print("")
+            }
+        }else{
+            switch gesture.direction{
+            case UISwipeGestureRecognizerDirection.right:
+                print("right")
+                showMenu()
+            case UISwipeGestureRecognizerDirection.left:
+                print("left Swipe")
+                close_on_swipe()
+            default:
+                print("")
+            }
         }
     }
     func close_on_swipe(){

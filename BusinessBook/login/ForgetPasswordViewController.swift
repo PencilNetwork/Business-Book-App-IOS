@@ -21,8 +21,17 @@ class ForgetPasswordViewController: UIViewController {
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         // Do any additional setup after loading the view.
         email.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            email.placeholder = "email".localized(lang: "ar")
+            sendBtn.setTitle("ابحث"
+                , for: .normal)
+            email.textAlignment = .right
+        }else{
+             email.textAlignment = .left
+        }
     }
-    @IBOutlet weak var forgetPassTxt: UITextField!
+   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
