@@ -393,6 +393,18 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
         
     }
     //MARK:Function
+    func networkNotFound(){
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     func getCategoryDataBaseIOS(){
         if #available(iOS 10.0, *) {
             let appdelegate = UIApplication.shared.delegate as! AppDelegate
@@ -553,17 +565,13 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                     case .failure(let error):
                         print(error)
                         
-                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                         self.networkFail()
                         
                     }
             }
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotFound()
         }
         }
     }
@@ -619,9 +627,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                         case .failure(let error):
                             print(error)
                             
-                            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                            self.present(alert, animated: true, completion: nil)
+                             self.networkFail()
                             
                         }
                 }
@@ -632,9 +638,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
             }
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+          networkNotFound()
         }
     }
     func getData(){
@@ -708,9 +712,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                 case .failure(let error):
                     print(error)
                     
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    self.networkFail()
                     
                 }
           }
@@ -917,9 +919,7 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                 }
             }else{
                 
-                let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                networkNotFound()
             }
         }
     }
@@ -966,20 +966,27 @@ class EditDefaultSearchViewController: UIViewController ,UICollectionViewDelegat
                         }
                     case .failure(let error):
                         print(error)
-                        
-                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        self.networkFail()
                         
                     }
             }
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+           networkNotFound()
         }
      }
+    }
+    func networkFail(){
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "", message: "خطأ في الشبكة" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     func setTable(){
         

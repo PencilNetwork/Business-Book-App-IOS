@@ -12,7 +12,7 @@ import SDWebImage
 import FBSDKLoginKit
 class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
   var menuList = ["Home","All categories","OFFERS","YOUR FAVOURITE BUSINESS","EDIT YOUR default search","LOGOUT"]
-    var menuArabicList = ["الصفحة الرئيسية","جميع الاصناف","عروض","عملك المفضل","تحرير البحث الافتراضي الخاص بك","خروج"]
+    var menuArabicList = ["الصفحة الرئيسية","جميع الفئات","عروض","القائمة المفضلة","تعديل اهتماماتك","خروج"]
     
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var menuTableTopConstraint: NSLayoutConstraint!

@@ -102,9 +102,16 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 getData()
             }
         }else{
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let lang = UserDefaults.standard.value(forKey: "lang") as!String
+            if lang == "ar" {
+                let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+               let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+               alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+              self.present(alert, animated: true, completion: nil)
+            }
         }
         offerCollectionView.delegate = self
         offerCollectionView.dataSource = self
@@ -439,18 +446,34 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                     case .failure(let error):
                         print(error)
                         
-                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        self.networkFail()
                         
                     }
             }
         }else{
-            
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let lang = UserDefaults.standard.value(forKey: "lang") as!String
+            if lang == "ar" {
+                let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+              let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+              alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+              self.present(alert, animated: true, completion: nil)
+            }
         }
+        }
+    }
+    func networkFail(){
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "", message: "خطأ في الشبكة" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func getCity(){
@@ -533,18 +556,22 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                     case .failure(let error):
                         print(error)
                         
-                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                       self.networkFail()
                         
                     }
             }
         }else{
-            
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            }}
+            let lang = UserDefaults.standard.value(forKey: "lang") as!String
+            if lang == "ar" {
+                let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+              self.present(alert, animated: true, completion: nil)
+             }}
+        }
     }
     func getRegion(){
         regionList = []
@@ -594,9 +621,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                     case .failure(let error):
                         print(error)
                         
-                        let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        self.networkFail()
                         
                     }
             }
@@ -606,10 +631,16 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
 //                self.present(alert, animated: true, completion: nil)
             }
         }else{
-            
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let lang = UserDefaults.standard.value(forKey: "lang") as!String
+            if lang == "ar" {
+                let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+               let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+              alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+              self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     func getData(){
@@ -753,9 +784,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 case .failure(let error):
                     print(error)
                     
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                   self.networkFail()
                     
                 }
         }
@@ -909,9 +938,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 case .failure(let error):
                     print(error)
                     
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    self.networkFail()
                     
                 }
         }
@@ -1212,9 +1239,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
                 case .failure(let error):
                     print(error)
                     
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                   self.networkFail()
                     
                 }
         }
@@ -1226,6 +1251,18 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
     }
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    func networkNotFound(){
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     //MARK:IBAction
     
@@ -1239,9 +1276,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if networkExist == true {
             searchByCategory(categoryId:60)
         }else{
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotFound()
         }
     }
     @IBAction func searchBtnAction(_ sender: Any) {
@@ -1275,9 +1310,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if networkExist == true {
             searchByCategory(categoryId:60)
         }else{
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotFound()
         }
     }
  
@@ -1291,9 +1324,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if networkExist == true {
             searchByCategory(categoryId:58)
         }else{
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotFound()
         }
     }
     @IBAction func IAMHUNGRYAction(_ sender: Any) {
@@ -1306,9 +1337,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if networkExist == true {
             searchByCategory(categoryId:38)
         }else{
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotFound()
         }
     }
     
@@ -1322,9 +1351,7 @@ class UserHomeViewController: UIViewController ,SendBusinessDelegate{
         if networkExist == true {
             searchByCategory(categoryId:61)
         }else{
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+           networkNotFound()
         }
     }
     

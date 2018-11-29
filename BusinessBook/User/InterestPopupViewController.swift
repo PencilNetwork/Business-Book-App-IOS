@@ -611,10 +611,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
                     }
             }
         }else{
-            
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+             networkNotFound()
         }
         }
     }
@@ -664,9 +661,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             }
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+             networkNotFound()
         }
     }
     func setTable(){
@@ -744,6 +739,16 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             }
         }else{
             
+          networkNotFound()
+        }
+    }
+    func networkNotFound(){
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -803,9 +808,7 @@ class InterestPopupViewController: UIViewController ,UICollectionViewDelegate,UI
             }
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+           networkNotFound()
         }
     }
 }

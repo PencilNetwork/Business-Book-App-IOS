@@ -24,6 +24,7 @@ class LoginViewController: UIViewController {
     var iconClick = true
     override func viewDidLoad() {
         super.viewDidLoad()
+        let lang = UserDefaults.standard.value(forKey: "lang") as!String
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
          self.navigationController?.navigationBar.topItem?.title = ""
@@ -31,13 +32,18 @@ class LoginViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         passwordTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         usernameTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
-       self.navigationItem.title = "Login"
+         if lang == "ar" {
+             self.navigationItem.title = "تسجيل الدخول"
+         }else{
+             self.navigationItem.title = "Login"
+        }
+      
         if (UserDefaults.standard.bool(forKey: "remember") as? Bool)! == true{
             usernameTxt.text = UserDefaults.standard.string(forKey: "username")
             passwordTxt.text = UserDefaults.standard.string(forKey: "password")
             checkBtn.setImage(UIImage(named:"greenCheckbox.png"), for: .normal)
         }
-       let lang = UserDefaults.standard.value(forKey: "lang") as!String
+       
         if lang == "ar" {
                 containerView.semanticContentAttribute = .forceRightToLeft
                 usernameTxt.textAlignment = .right
@@ -95,10 +101,17 @@ class LoginViewController: UIViewController {
                 sendData()
                 
             }else{
-                
-                let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                let lang = UserDefaults.standard.value(forKey: "lang") as!String
+                if lang == "ar" {
+                    let alert = UIAlertController(title: "تحذير", message:"لا يوجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+              
             }
 //
         }

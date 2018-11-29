@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var menuList = ["Home","Add related files","Edit Business Profile","Edit offers","LOGOUT"]
-    var menuArabicList = ["الصفحة الرئيسية","إضافة الملفات ذات الصلة","تحرير ملف تعريف العمل","تحرير العرض","خروج"]
+    var menuArabicList = ["الصفحة الرئيسية","إضافة الملفات ذات الصلة","تعديل الملف الشخصى للبيزنس","تعديل العروض","خروج"]
 
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var menuTopConstraint: NSLayoutConstraint!
